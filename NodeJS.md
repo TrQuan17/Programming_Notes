@@ -1,6 +1,6 @@
 # **NodeJS**
 
-## 🔹 Một số khái niệm cơ bản
+## 🔹 Lý thuyết
 ### NodeJS
 - NodeJS là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
 
@@ -32,7 +32,14 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 - **Asynchronous** xử lý xong đưa vào **callback queue**
 - **Call stack** xử lý xong các câu lệnh **synchronized,** đưa hàm **callback** từ **callback queue** thực hiện
 
-## 🔹 Cấu trúc lệnh
+## 🔹 Json Web Token (JWT)
+* Một JWT gồm 3 phần cơ bản:
+    - Header chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
+    - Payload chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
+    - Verify signature được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
+
+
+## 🔹 Module
 ### Module Inport và Export
 - Module.exports (CommonJS Modules)
     ``` JS

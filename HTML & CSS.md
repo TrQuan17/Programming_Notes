@@ -1,4 +1,17 @@
 # **HTML & CSS**
+## 🔹 Lý thuyết
+### HTML DOM
+- DOM là tên gọi viết tắt của (Document Object      Model – tạm dịch Mô hình Các Đối tượng Tài liệu). Là một chuẩn được định nghĩa bởi W3C (Tổ Chức Web Toàn Cầu – World Wide Web Consortium). DOM được dùng để truy xuất và thao tác trên các tài liệu có cấu trúc dạng HTML hay XML bằng các ngôn ngữ lập trình thông dụng như Javascript, PHP…
+
+- **HTML DOM** là một tiêu chuẩn cho phép bạn thực hiện những công việc thao tác với bất kì một trang web: get, change, add, or delete các thành phần của HTML.
+
+* HTML DOM là một chuẩn mô hình object và programming interface cho HTML. Nó định nghĩa:
+    - HTML elements như là objects
+    - properties của tất cả HTML elements
+    - methods để truy cập đến tất cả HTML elements
+    - events cho tất cả HTML elements
+
+- Có 3 thành phần cơ bản bao gồm Element, Atrribute, Text
 
 ## 🔹 Image 
 ### Fallback image
