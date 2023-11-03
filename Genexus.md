@@ -1,6 +1,12 @@
 # **Genexus**
-
-## 🔹 Transactions
+## 🔹 Quá trình Build của Genexus
+ - Khi nhấn F5, thực hiện phân tích tác động cơ sở dữ liệu để kiểm tra xem có cần thay đổi cấu trúc CSDL hay không
+ - Nếu CSDL cần đã điều chỉnh, một báo cáo phân tích tác động được hiển thị nêu chi tiết những thay đổi cần thực hiện và các câu lệnh SQL sẽ được thực thi nếu được tổ chức lại
+ - Đến gia đoạn đặc tả, Genexus kiểm tra chính tả và cú pháp các đối tượng KB, cập nhật các module và phiên bản mẫu cũng như các tài nguyên cần thiết
+ - Cuối giai đoạn Genexus tạo ra khung nhìn điều hướng danh sách rất hữu ít để kiểm tra bất kì lỗi nào trong đặc tả và cũng xem điều hướng đến các công thức và bảng, xác định các bảng cơ sở lọc thứ tự và các phần tử khác 
+ - Sau quá trình kiểm tra hoàn tất, quá trình tạo ra source code bắt đầu, sau đó source code sẽ được biên dịch
+ - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
+## 🔹 Transaction
 ### Rule triggering Event
 - AfterLevel
 	```
@@ -113,3 +119,46 @@
 		...
 	endfor
 	```
+
+## 🔹 Cập nhật Database
+### Cập nhật DB sử dụng Business Components
+
+	```
+	// Insert
+	&collectionTable = new()
+
+	&collectionTable.attribute1 = 'value1'
+	&collectionTable.attribute1 = 'value1'
+	...
+
+	// Update
+	&collectionTable.Load(collectionTableId)
+
+	&collectionTable.attribute1 = 'value update'
+	...
+
+	if &collectionTable.Insert() and
+	   &collectionTable.Update()  
+		Commit
+	endif
+
+	// Delete
+	&collectionTable.Load(collectionTableId)
+	&collectionTable.Delete()
+
+	if &collectionTable.Success()
+		Commit
+	endif
+	```
+
+- Khi cập nhật dữ liệu, dữ liệu vẫn phải tuân theo các Rule đã được quy định (chẳng hạn nếu trong Rule quy định Name không được để trống thì khi cập nhật dữ liệu sẽ không thể thêm được)
+
+- Sau khi cập nhật, dữ liệu vẫn chưa thể đảm bảo chắc chắn lưu vào DB vì vậy phải sử dụng lệnh Commit để dữ liệu chắc chắn được cập nhật vào DB
+
+- Trong trường hợp xoá dữ liệu, nếu dữ liệu đó có liên quan đến bảng khác (có quan hệ), kiểm soát tính toàn vẹn tham chiếu được thực hiện bởi Transaction và Business Components sẽ ngăn chặn và thông báo lỗi
+
+### Cập nhật DB sử dụng các lệnh dành riêng cho Produce
+- Sử dụng các lệnh như New, Delete,... để cập nhật dữ liệu, tuy nhiên cách này có nhiều hạn chế:
+	+ Không thể kiểm tra tính toàn vẹn của tham chiếu
+	+ Không thể kích hoạt được các Rule
+- Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
