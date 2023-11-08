@@ -1,7 +1,7 @@
 # **HTML & CSS**
 ## 🔹 Lý thuyết
 ### HTML DOM
-- DOM là tên gọi viết tắt của (Document Object      Model – tạm dịch Mô hình Các Đối tượng Tài liệu). Là một chuẩn được định nghĩa bởi W3C (Tổ Chức Web Toàn Cầu – World Wide Web Consortium). DOM được dùng để truy xuất và thao tác trên các tài liệu có cấu trúc dạng HTML hay XML bằng các ngôn ngữ lập trình thông dụng như Javascript, PHP…
+- **DOM** là tên gọi viết tắt của (Document Object Model – tạm dịch Mô hình Các Đối tượng Tài liệu). Là một chuẩn được định nghĩa bởi W3C (Tổ Chức Web Toàn Cầu – World Wide Web Consortium). DOM được dùng để truy xuất và thao tác trên các tài liệu có cấu trúc dạng HTML hay XML bằng các ngôn ngữ lập trình thông dụng như Javascript, PHP…
 
 - **HTML DOM** là một tiêu chuẩn cho phép bạn thực hiện những công việc thao tác với bất kì một trang web: get, change, add, or delete các thành phần của HTML.
 
@@ -35,12 +35,12 @@
     docment.forms.firstForm // [form#firstForm]
     ```   
 * **innerText và textContent**
-    - innerText: Lấy nội dung văn bản trong thẻ đó ( Những nội dung mà mình có thể nhìn thấy ), thuộc tính chỉ tồn tại trên ElementNode
-    - textContent: Lấy tất cả TextNode trong thẻ đó ( Khoảng trắng, xuống dòng, code trong thẻ script, style cũng được xem như là một TextNode ), thuộc tính tồn tại ở cả TextNode và ElementNode
+    - **innerText**: Lấy nội dung văn bản trong thẻ đó ( Những nội dung mà mình có thể nhìn thấy ), thuộc tính chỉ tồn tại trên ElementNode
+    - **textContent**: Lấy tất cả TextNode trong thẻ đó ( Khoảng trắng, xuống dòng, code trong thẻ script, style cũng được xem như là một TextNode ), thuộc tính tồn tại ở cả TextNode và ElementNode
 
 * **innerHTML và outerHTML**
-    - innerHTML: Đối với get, lấy tất cả nội dung HTML chứa bên trong tag, với set thì nó sẽ ghi đè nội dung HTML bên trong tag
-    - outerHTML: Đối với get, Lấy tất cả nội dung HTML chứa bên trong tag và chính nó, với set thì nó sẽ ghi đè tất cả nội dung HTML bên trong cũng như chính nó
+    - **innerHTML**: Đối với get, lấy tất cả nội dung HTML chứa bên trong tag, với set thì nó sẽ ghi đè nội dung HTML bên trong tag
+    - **outerHTML**: Đối với get, Lấy tất cả nội dung HTML chứa bên trong tag và chính nó, với set thì nó sẽ ghi đè tất cả nội dung HTML bên trong cũng như chính nó
 
     ``` HTML
     <div class='box'></div>

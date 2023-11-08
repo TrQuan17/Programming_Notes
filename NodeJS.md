@@ -2,7 +2,7 @@
 
 ## 🔹 Lý thuyết
 ### NodeJS
-- NodeJS là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
+- **NodeJS** là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
 
 - Phần Core bên dưới của NodeJS được viết hầu hết bằng C++ nên cho tốc độ xử lý và hiệu năng khá cao.
 NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realtime thời gian thực.
@@ -34,9 +34,9 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 
 ## 🔹 Json Web Token (JWT)
 * Một JWT gồm 3 phần cơ bản:
-    - Header chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
-    - Payload chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
-    - Verify signature được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
+    - **Header** chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
+    - **Payload** chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
+    - **Verify signature** được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
 
 
 ## 🔹 Module
