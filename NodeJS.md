@@ -1,6 +1,7 @@
 # **NodeJS**
 
 ## 🔹 Lý thuyết
+
 ### NodeJS
 - **NodeJS** là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
 
@@ -14,52 +15,8 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 
 - Khi gõ code JS lên màn hình shell, NodeJS sẽ thực hiện việc đọc thông tin (Read) và tự động lưu trữ trong bộ nhớ; tự động đánh giá cấu trúc dữ liệu và sự hợp lệ của các dòng lệnh (Eval); xử lý thực thi code sau đó in ra kết quả nếu có (Print) và hỗ trợ lặp lại các dòng lệnh trên để thực thi chương trình (Loop).
 
-### Buffer
-
-### Package
-- **Node Package Manager (npm)**     
-     
-- **Global package**    
-    Gói cài đặt có thể dùng chung cho tất cả các package của các project khởi tạo
-    ``` 
-    > npm install -g nodemoon
-    ```
-
-## 🔹 Cơ chế Event-Loop
-- Câu lệnh **Asynchronous** được đưa vào **call stack**
-- **Call stack** nhận diện đưa qua **Web APIs**
-- **Call stack** tiếp tục được nhận những câu lệnh khác
-- **Asynchronous** xử lý xong đưa vào **callback queue**
-- **Call stack** xử lý xong các câu lệnh **synchronized,** đưa hàm **callback** từ **callback queue** thực hiện
-
-## 🔹 Json Web Token (JWT)
+## 🔹 Authentication và Json Web Token (JWT)
 * Một JWT gồm 3 phần cơ bản:
     - **Header** chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
     - **Payload** chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
     - **Verify signature** được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
-
-
-## 🔹 Module
-### Module Inport và Export
-- Module.exports (CommonJS Modules)
-    ``` JS
-    module.exports = { function, class }
-    ...
-    const fileImport = require('fileModuleExports.js')
-    const function = fileImport.function()
-    const class = fileImport.class
-    ```
-    
-- Import / export (ES6 - ECMAScript 6 Module)
-    ``` JS
-    export const func = () => {
-        ...
-    }
-
-    export default funcDefault = () => {
-        ...
-    }
-
-    import funcDefault from 'fileModuleExports.js'
-    import { func } from 'fileModuleExports.js'
-    ```

@@ -49,17 +49,14 @@
     ``` JS
     const boxDiv = document.querySelector('.box')
     console.log(boxDiv.innnerHTML) // ''
-    console.log(boxDiv.outerHTML) 
-    // '<div class='box'></div>'
+    console.log(boxDiv.outerHTML) // '<div class='box'></div>'
 
     boxDiv.innnerHTML = '<span>Hello</span>'
     // <div class='box'>
     //    <span> Hello </span>
     // </div>
 
-    boxDiv.outerHTML = '<span>Hello</span>'
-    // <span> Hello </span>
-
+    boxDiv.outerHTML = '<span>Hello</span>' // <span> Hello </span>
     ```
 ## 🔹 Image 
 ### Fallback image
