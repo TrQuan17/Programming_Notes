@@ -1,6 +1,6 @@
 # **Typescript**
 
-## Lý thuyết cơ bản
+## Lý thuyết cơ sở
 ## Type, Enum, Keyof
 ## Generic type
 ## Interface, Class

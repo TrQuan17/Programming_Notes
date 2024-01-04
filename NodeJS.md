@@ -1,6 +1,6 @@
 # **NodeJS**
 
-## 🔹 Lý thuyết
+## 🔹 Lý thuyết cơ sở
 
 ### NodeJS
 - **NodeJS** là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
@@ -15,8 +15,76 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 
 - Khi gõ code JS lên màn hình shell, NodeJS sẽ thực hiện việc đọc thông tin (Read) và tự động lưu trữ trong bộ nhớ; tự động đánh giá cấu trúc dữ liệu và sự hợp lệ của các dòng lệnh (Eval); xử lý thực thi code sau đó in ra kết quả nếu có (Print) và hỗ trợ lặp lại các dòng lệnh trên để thực thi chương trình (Loop).
 
+## 🔹 REST API (REpresentational State Transfer)
+
+### HATEOAS (Hypermedia As The Engine Of Application State)
+- HATEOAS là một trong những chuẩn được khuyến nghị cho RESTful API. Thuật ngữ 'Hypermedia' có nghĩa là bất kỳ nội dung nào có chứa các liên kết (link) đến các media khác như image, movie và text.
+
+- Kiểu kiến trúc này cho phép bạn sử dụng các liên kết hypermedia trong nội dung response để client có thể tự động điều hướng đến tài nguyên phù hợp bằng cách duyệt qua các liên kết hypermedia. Nó tương tự như một người dùng web điều hướng qua các trang web bằng cách nhấp vào các link thích hợp để chuyển đến nội dung mong muốn.
+
+- HATEOAS mong muốn phía client không cần biết chút nào về cấu trúc phía server, client chỉ cần request đến một URL duy nhất, rồi từ đó mọi đường đi nước bước tiếp theo sẽ do chỉ dẫn của phía server trả về.
+
+```JS
+HTTP/1.1 200 OK
+{
+    "account": {
+        "account_number": 12345,
+        "balance": {
+            "currency": "usd",
+            "value": 100.00
+        },
+        "links": {
+            "deposits": "/accounts/12345/deposits",
+            "withdrawals": "/accounts/12345/withdrawals",
+            "transfers": "/accounts/12345/transfers",
+            "close-requests": "/accounts/12345/close-requests"
+        }
+    }
+}
+```
 ## 🔹 Authentication và Json Web Token (JWT)
+
 * Một JWT gồm 3 phần cơ bản:
     - **Header** chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
     - **Payload** chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
     - **Verify signature** được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
+
+## 🔹 Tip
+
+### Một số thư viện cần thiết khi tạo dự án (dành cho dev)
+- **dotenv**: cài đặt file môi trường (file .env)
+```
+npm i dotenv
+```     
+```JS
+require('dotenv').config()
+const PORT = process.env.PORT
+```
+- **Nodemon**: tự động reload lại project khi code có sự thay đổi
+```
+npm i nodemon
+```
+```JSON
+// config package.json
+"scripts": {
+    "start": "nodemon app.js"
+}
+```
+
+- **Helmet**: giúp bảo mật các ứng dụng Express bằng cách đặt tiêu đề phản hồi HTTP
+```
+npm i helmet
+```
+```JS
+const helmet = require('helmet')
+app.use(helmet())
+```
+
+- **morgan**: HTTP request logger middleware dành cho NodeJS
+```
+npm i morgan
+```
+```JS
+const morgan = require('morgan')
+app.use(morgan('common')) // tiny, dev, ...
+```

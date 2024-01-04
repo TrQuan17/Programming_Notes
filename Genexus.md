@@ -183,5 +183,5 @@
 	+ Không thể kích hoạt được các Rule
 - Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
 
-## 🔹 Trip
+## 🔹 Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa

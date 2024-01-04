@@ -1,6 +1,6 @@
 # **Javascript**
 
-## 🔹 Lý thuyết
+## 🔹 Lý thuyết cơ sở
 
 ### Kiểu dữ liệu và khai báo biến
 - **const**: không thể thay đổi giá trị nguyên thuỷ, tuy nhiên có thể thay đổi thuộc tính của đối tượng const cũng như các thao tác như thêm, xoá, thay đổi phần tử với mảng const
@@ -83,6 +83,7 @@
     ```
 
 ## 🔹 Tip
+
 - Chuyển đổi nhanh giữa string sang number và ngược 
 lại: 
     ``` JS

@@ -1,6 +1,6 @@
 # **Angular**
 
-## 🔹 Lý thuyết
+## 🔹 Lý thuyết cơ sở
 ## 🔹 Pipe
 ## 🔹 Một số lỗi thường gặp và cách khắc phục
 
