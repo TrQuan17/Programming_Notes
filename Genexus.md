@@ -8,8 +8,8 @@
  - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
 ## 🔹 Transaction
 ### Rule
-- **Xử lý ở phía máy khách - Client-Side Validation** (xử lý và hiển thị tức thời khi người dùng thao tác)
-- Serial: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
+- Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa (thực hiện như thể đó là người dùng)
+- **Serial**: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
 	```
  	Serial(attr1, attr2, step)
  	// attr1: thuộc tính cần tăng tự động (Attribute của bảng level 2, level 3, ...)
@@ -17,7 +17,8 @@
  	// step: bước tăng
  	```
 ### Rule triggering Event
-- **AfterLevel**
+- Tất cả các Rule có sự kiện kích hoạt liên quan (có tiền tố ON đi kèm) sẽ được thực thi tại thời điểm tương ứng với sự kiện đó, đây là những sự kiện chỉ diễn ra trên Server thường liên quan đến CSDL
+- **On AfterLevel**
 	```
 	on AfterLevel level <tên level>
 	```
@@ -25,13 +26,11 @@
 	+ Sau quá trình thêm dữ liệu vào thì mới thực hiện
 	+ Dữ liệu được lưu nhưng chưa được xác thực
 
-- **BeforeInsert**: Thực hiện trước khi dữ liệu được chèn từng dòng vào DB
+- **On BeforeInsert**: Thực hiện trước khi dữ liệu được chèn từng dòng vào DB
 
-- **AfterInsert**: Thực hiện sau khi dữ liệu được chèn từng dòng vào DB
+- **On AfterInsert**: Thực hiện sau khi dữ liệu được chèn từng dòng vào DB
 
-- **AfterComplete**: Thực hiện sau cả AfterLevel, khi dữ liệu đã được xác thực và thêm vào thành công
-
-=> Tất cả các rule với sự kiện kích hoạt với tiền tố on ở cuối câu lệnh sẽ được thực thi tương ứng với sự kiện đó, những sự kiện này chỉ diễn ra trên máy chủ và ghi lại khoảnh khắc trước hoặc sau cột mốc thường liên quan đến cơ sở dữ liệu
+- **On AfterComplete**: Thực hiện sau cả AfterLevel, khi dữ liệu đã được xác thực và thêm vào thành công (ngay sau Commit)
 
 ### Event
 - **Start**: 
@@ -191,6 +190,6 @@
 	+ Không thể kiểm tra tính toàn vẹn của tham chiếu
 	+ Không thể kích hoạt được các Rule
 - Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
-
+- Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soạt được commit dữ liệu lên CSDL
 ## 🔹 Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
