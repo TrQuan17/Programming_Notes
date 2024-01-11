@@ -7,12 +7,21 @@
  - Sau quá trình kiểm tra hoàn tất, quá trình tạo ra source code bắt đầu, sau đó source code sẽ được biên dịch
  - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
 ## 🔹 Transaction
+### Rule
+- **Xử lý ở phía máy khách - Client-Side Validation** (xử lý và hiển thị tức thời khi người dùng thao tác)
+- Serial: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
+	```
+ 	Serial(attr1, attr2, step)
+ 	// attr1: thuộc tính cần tăng tự động (Attribute của bảng level 2, level 3, ...)
+ 	// attr2: thuộc tính cuối của level 1
+ 	// step: bước tăng
+ 	```
 ### Rule triggering Event
 - **AfterLevel**
 	```
 	on AfterLevel level <tên level>
 	```
-
+	
 	+ Sau quá trình thêm dữ liệu vào thì mới thực hiện
 	+ Dữ liệu được lưu nhưng chưa được xác thực
 
