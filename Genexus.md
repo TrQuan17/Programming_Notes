@@ -8,7 +8,7 @@
  - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
 ## 🔹 Transaction
 ### Rule
-- Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa (thực hiện như thể đó là người dùng)
+- Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa như thể đó là người dùng (đối với các rule check lỗi)
 - **Serial**: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
 	```
  	Serial(attr1, attr2, step)
