@@ -88,3 +88,9 @@ npm i morgan
 const morgan = require('morgan')
 app.use(morgan('common')) // tiny, dev, ...
 ```
+
+### Config router tránh bị nhập sai đường dẫn
+- '/ab?cd': router có thể có chứa b hoặc không (router '/acd' và '/abcd' là giống nhau)
+- '/ab+cd': router có thể chứa nhiều chữ b (router '/abbbbcd' và '/abcd' là giống nhau)
+- '/ab\*cd': '/ab' + anything + 'cd' (router '/abtrquancd' và '/abcd' là giống nhau)
+- /a/: router sử dụng regex (router '/abc', '/bca', 'trquan' là giống nhau)
