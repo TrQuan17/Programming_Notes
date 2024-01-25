@@ -7,6 +7,11 @@
  - Sau quá trình kiểm tra hoàn tất, quá trình tạo ra source code bắt đầu, sau đó source code sẽ được biên dịch
  - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
 ## 🔹 Transaction
+
+### Base Table và Extended Table
+- **Base Table (Bảng cơ sở)**: là bảng bất kì được định vị để chỉnh sửa trong một khoảng thời gian cụ thể
+- **Extended Table (Bảng mở rộng)**: tại một thời điểm nhất định, Extended table của một Base table là tổng tất cả thuộc tính của chính Base table đó, cộng với tất cả thuộc tính của các bảng liên quan trực tiếp hoặc gián tiếp đến nó thông quan quan hệ N - 1
+
 ### Rule
 - Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa như thể đó là người dùng (đối với các rule check lỗi)
 - **Serial**: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
@@ -97,7 +102,7 @@
 	+ Là công thức được nên dưới dạng hướng dẫn cụ thể trong một mã nhất định
 	+ Có thể sử dụng cả biến và attribute
 
-### Truy vấn dữ liệu với ForEach
+### Truy vấn dữ liệu các giữa các Transaction
 - Dữ liệu được hiểu thị độc lập với nhau 
 	```
 	for each Category
@@ -121,7 +126,7 @@
 	for each Attraction order AttractionName ...   // sắp xếp AttractionName theo ASC
 	for each Attraction order (AttractionName) ... // sắp xếp AttractionName theo DESC
 	```
-
+- Inner Join và Outer Join (Left Join)
 
 ## 🔹 Giao tiếp giữa các đối tượng
 - Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
