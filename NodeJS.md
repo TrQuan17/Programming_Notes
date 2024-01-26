@@ -24,24 +24,24 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 
 - HATEOAS mong muốn phía client không cần biết chút nào về cấu trúc phía server, client chỉ cần request đến một URL duy nhất, rồi từ đó mọi đường đi nước bước tiếp theo sẽ do chỉ dẫn của phía server trả về.
 
-```JS
-HTTP/1.1 200 OK
-{
-    "account": {
-        "account_number": 12345,
-        "balance": {
-            "currency": "usd",
-            "value": 100.00
-        },
-        "links": {
-            "deposits": "/accounts/12345/deposits",
-            "withdrawals": "/accounts/12345/withdrawals",
-            "transfers": "/accounts/12345/transfers",
-            "close-requests": "/accounts/12345/close-requests"
+    ```JS
+    HTTP/1.1 200 OK
+    {
+        "account": {
+            "account_number": 12345,
+            "balance": {
+                "currency": "usd",
+                "value": 100.00
+            },
+            "links": {
+                "deposits": "/accounts/12345/deposits",
+                "withdrawals": "/accounts/12345/withdrawals",
+                "transfers": "/accounts/12345/transfers",
+                "close-requests": "/accounts/12345/close-requests"
+            }
         }
     }
-}
-```
+    ```
 ## 🔹 Authentication và Json Web Token (JWT)
 
 * Một JWT gồm 3 phần cơ bản:
@@ -53,41 +53,41 @@ HTTP/1.1 200 OK
 
 ### Một số thư viện cần thiết khi tạo dự án (dành cho dev)
 - **dotenv**: cài đặt file môi trường (file .env)
-```
-npm i dotenv
-```     
-```JS
-require('dotenv').config()
-const PORT = process.env.PORT
-```
+    ```
+    npm i dotenv
+    ```     
+    ```JS
+    require('dotenv').config()
+    const PORT = process.env.PORT
+    ```
 - **Nodemon**: tự động reload lại project khi code có sự thay đổi
-```
-npm i nodemon
-```
-```JSON
-// config package.json
-"scripts": {
-    "start": "nodemon app.js"
-}
-```
+    ```
+    npm i nodemon
+    ```
+    ```JSON
+    // config package.json
+    "scripts": {
+        "start": "nodemon app.js"
+    }
+    ```
 
 - **Helmet**: giúp bảo mật các ứng dụng Express bằng cách đặt tiêu đề phản hồi HTTP
-```
-npm i helmet
-```
-```JS
-const helmet = require('helmet')
-app.use(helmet())
-```
+    ```
+    npm i helmet
+    ```
+    ```JS
+    const helmet = require('helmet')
+    app.use(helmet())
+    ```
 
 - **morgan**: HTTP request logger middleware dành cho NodeJS
-```
-npm i morgan
-```
-```JS
-const morgan = require('morgan')
-app.use(morgan('common')) // tiny, dev, ...
-```
+    ```
+    npm i morgan
+    ```
+    ```JS
+    const morgan = require('morgan')
+    app.use(morgan('common')) // tiny, dev, ...
+    ```
 
 ### Config router tránh bị nhập sai đường dẫn
 - '/ab?cd': router có thể có chứa b hoặc không (router '/acd' và '/abcd' là giống nhau)
