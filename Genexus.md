@@ -16,10 +16,20 @@
 - Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa như thể đó là người dùng (đối với các rule check lỗi)
 - **Serial**: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
 	```
- 	Serial(attr1, attr2, step)
- 	// attr1: thuộc tính cần tăng tự động (Attribute của bảng level 2, level 3, ...)
- 	// attr2: thuộc tính cuối của level 1
+ 	Serial(attr1, attr2, step);
+ 	// attr1: Attribute cần tăng tự động (Attribute của bảng level 2, level 3, ...)
+ 	// attr2: Attribute cuối của level 1
  	// step: bước tăng
+ 	```
+ - **NoAccept**:
+	+ Ngăn chặn nhập giá trị cho Attribute hoặc Variable từ màn hình (chuyển đổi thành Read Only) khi áp dụng điều kiện (nếu có)
+	+ Nếu không thể ngăn chặn được đầu vào (ví dụ Business Component, iSeries, ...) thì giá trị input sẽ bị bỏ qua
+	```
+ 	NoAccept(att | &var) [ IF condition ][ ON triggering event];
+ 	// att: Attribute input
+ 	// &var: Variable input
+ 	// condition: điều kiện thực hiện Rule
+ 	// triggering event: kích hoạt triggering event (BeforeInsert, AfterInsert, ...)
  	```
 ### Rule triggering Event
 - Tất cả các Rule có sự kiện kích hoạt liên quan (có tiền tố ON đi kèm) sẽ được thực thi tại thời điểm tương ứng với sự kiện đó, đây là những sự kiện chỉ diễn ra trên Server thường liên quan đến CSDL
@@ -105,29 +115,47 @@
 ### Truy vấn dữ liệu các giữa các Transaction
 - Dữ liệu được hiểu thị độc lập với nhau 
 	```
-	for each Category
+	For Each Category
 		...
-	endfor
+	EndFor
 
-	for each Attraction
+	For Each Attraction
 		...
-	endfor
+	EndFor
 	```
 - Dữ liệu có mối quan hệ và hiểu thị liên quan với nhau
 	```
-	for each Category
-		for each Attraction
+	For Each Category
+		For Each Attraction
 			...
-		endfor
-	endfor
+		Endfor
+	Endfor
 	```
 - Để sắp xếp các dữ liệu được in ra, sử dụng order
 	```
-	for each Attraction order AttractionName ...   // sắp xếp AttractionName theo ASC
-	for each Attraction order (AttractionName) ... // sắp xếp AttractionName theo DESC
+	For Each Attraction Order AttractionName ...   // sắp xếp AttractionName theo ASC
+	For Each Attraction Order (AttractionName) ... // sắp xếp AttractionName theo DESC
 	```
 - Inner Join và Outer Join (Left Join)
-
+	+ Inner Join:
+		```
+  		For Each Attraction, Category
+  			Where Attraction.CategoryId = Category.CategoryId
+  			Where Attraction.CountryId = Category.CountryId
+  			...
+  		EndFor
+		```
+	+ Outer Join (Left Join):
+		```
+  		For Each Attraction
+  			For Each Category
+  				Where Category.CountryId = Attraction.CountryId
+  				...
+  			EndFor
+  			...
+  		EndFor
+  
+  		```
 ## 🔹 Giao tiếp giữa các đối tượng
 - Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
 
@@ -148,9 +176,9 @@
 	+ &collections.Sort(key): sắp xếp collection theo key
 - Truy vấn dữ liệu:
 	```
-	for &collectionItem in &collections
+	For &collectionItem in &collections
 		...
-	endfor
+	EndFor
 	```
 
 ## 🔹 Cập nhật Database
@@ -170,18 +198,17 @@
 	&collectionTable.attribute1 = 'value update'
 	...
 
-	if &collectionTable.Insert() and
-	   &collectionTable.Update()  
+	If &collectionTable.Insert() And &collectionTable.Update()  
 		Commit
-	endif
+	EndIf
 
 	// Delete
 	&collectionTable.Load(collectionTableId)
 	&collectionTable.Delete()
 
-	if &collectionTable.Success()
+	If &collectionTable.Success()
 		Commit
-	endif
+	EndIf
 	```
 
 - Khi cập nhật dữ liệu, dữ liệu vẫn phải tuân theo các Rule đã được quy định (chẳng hạn nếu trong Rule quy định Name không được để trống thì khi cập nhật dữ liệu sẽ không thể thêm được)
