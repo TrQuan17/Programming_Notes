@@ -1,12 +1,15 @@
 # **Genexus**
-## 🔹 Quá trình Build của Genexus
+
+## 🔷Quá trình Build của Genexus
+
  - Khi nhấn F5, thực hiện phân tích tác động cơ sở dữ liệu để kiểm tra xem có cần thay đổi cấu trúc CSDL hay không
  - Nếu CSDL cần đã điều chỉnh, một báo cáo phân tích tác động được hiển thị nêu chi tiết những thay đổi cần thực hiện và các câu lệnh SQL sẽ được thực thi nếu được tổ chức lại
  - Đến gia đoạn đặc tả, Genexus kiểm tra chính tả và cú pháp các đối tượng KB, cập nhật các module và phiên bản mẫu cũng như các tài nguyên cần thiết
  - Cuối giai đoạn Genexus tạo ra khung nhìn điều hướng danh sách rất hữu ít để kiểm tra bất kì lỗi nào trong đặc tả và cũng xem điều hướng đến các công thức và bảng, xác định các bảng cơ sở lọc thứ tự và các phần tử khác 
  - Sau quá trình kiểm tra hoàn tất, quá trình tạo ra source code bắt đầu, sau đó source code sẽ được biên dịch
  - Nếu nguyên mẫu được lưu trên Genexus Cloud sau khi biên dịch, ứng dụng sẽ được chuyển sang Cloud để được thực thi ở đó
-## 🔹 Transaction
+   
+## 🔷Transaction
 
 ### Base Table và Extended Table
 - **Base Table (Bảng cơ sở)**: là bảng bất kì được định vị để chỉnh sửa trong một khoảng thời gian cụ thể
@@ -31,6 +34,7 @@
  	// condition: điều kiện thực hiện Rule
  	// triggering event: kích hoạt triggering event (BeforeInsert, AfterInsert, ...)
  	```
+ 
 ### Rule triggering Event
 - Tất cả các Rule có sự kiện kích hoạt liên quan (có tiền tố ON đi kèm) sẽ được thực thi tại thời điểm tương ứng với sự kiện đó, đây là những sự kiện chỉ diễn ra trên Server thường liên quan đến CSDL
 - **On AfterLevel**
@@ -77,7 +81,7 @@
 	+ Tương tự như AfterComplete
 	+ Kết thúc khối lệnh sẽ có lệnh Return để quay + lại màn hình chính
 
-### Index trong database
+### Index trong Transaction
 - Có 3 loại Index:
 	+ **Primary index**: xác định khóa chính và nó được sử dụng để kiểm soát tính duy nhất của bản ghi. Nó cũng kiểm soát khi các bản ghi được tạo trong bảng cấp dưới, bản ghi tương ứng có tồn tại trong bảng cấp trên hay không. GeneXus tự động xác định tất cả các chỉ mục chính từ transaction id
 
@@ -99,7 +103,8 @@
 - Mối quan hệ yếu 1 - N thường được thể hiện bằng một giao dịch hai cấp duy nhất, với thực thể yếu là cấp độ thứ 2
 - Thể hiện mối quan hệ N - N: trong bảng 1 có thể nhập tất cả giá trị của bảng 2 (bảng 2 là thực thể yếu của bảng 1) và ngược lại
 
-## 🔹 Danh sách và truy cập dữ liệu theo code
+## 🔷Danh sách và truy cập dữ liệu theo code
+
 ### Formulas
 - **Global Formulas**
 	+ Được xác định ở cấp thuộc tính trong cấu trúc Transaction. Nó được chỉ ra rằng một thuộc tính nhất định luôn được tính toán một cách nhất định
@@ -156,7 +161,9 @@
   		EndFor
   
   		```
-## 🔹 Giao tiếp giữa các đối tượng
+  
+## 🔷Giao tiếp giữa các đối tượng
+
 - Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
 
 - **Quy tắc Pam**: tham số có thể được sử dụng để nhận một giá trị, để trả về một giá trị hay cả hai
@@ -166,22 +173,30 @@
 		- **INOUT**: thực hiện việc nhập xuất tham số cùng một lúc. Tham số đi kèm với một giá trị và có thể được thay đổi trong quá trình thực thi đối tượng. Khi hoàn tất, tham số sẽ chứa giá trị được trả về cho đối tượng đã gọi nó
 	+ Mặc định: Genexus sẽ gán toán tử INOUT cho tất cả các tham số, ngay cả khi điều này không được hiển thị
 
-## 🔹 Structured Data Type
-### Kiểu dữ liệu có cấu trúc
+## 🔷Structured Data Type
+
 - Phương thức của collection:
 	+ &collections = New(): khởi tạo collection mới
-	+ &collections.Add(): thêm phần tử mới
+	+ &collections.Add(): thêm phần tử mới vào cưới danh sách
 	+ &collections.Remove(index): xoá phần tử tại index trong collection, index bắt đầu từ 1
 	+ &collections.Clear(): xoá toàn bộ collection 
-	+ &collections.Sort(key): sắp xếp collection theo key
+	+ &collections.Sort(key): sắp xếp collection theo key (Sort theo nhiều key)
+
 - Truy vấn dữ liệu:
 	```
 	For &collectionItem in &collections
 		...
 	EndFor
+
+ 	For &index = 1 to &collections.Count
+		&collections.Item(&index) ...
+ 	EndFor
+	
+ 	&collections.Sort('key1, key2')
 	```
 
-## 🔹 Cập nhật Database
+## 🔷Cập nhật Database
+
 ### Cập nhật DB sử dụng Business Components
 
 	```
@@ -221,7 +236,27 @@
 - Sử dụng các lệnh như New, Delete,... để cập nhật dữ liệu, tuy nhiên cách này có nhiều hạn chế:
 	+ Không thể kiểm tra tính toàn vẹn của tham chiếu
 	+ Không thể kích hoạt được các Rule
+	```
+ 	// Create with new command
+ 	New
+ 	AttractionName = 'attraction'
+ 	AttractionCountryId = find(CountryId, CountryName = 'countryName')
+ 	AttractionCategoryId = find(CategoryId, CategoryName = 'categoryName')
+ 	EndNew
+
+ 	// Update with For Each
+ 	For Each Attraction
+ 		Where AttractionCountryId < 10
+ 			AttractionCountryId = 10
+ 	EndFor
+
+ 	// Delete with delete command
+ 	For Each Attraction
+ 		Where AttractionCountryId < 10
+ 			Delete
+ 	EndFor
+	```
 - Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
 - Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soạt được commit dữ liệu lên CSDL
-## 🔹 Tip
+## 🔷Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
