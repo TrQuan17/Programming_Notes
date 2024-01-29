@@ -106,20 +106,28 @@
 ## 🔷Danh sách và truy cập dữ liệu theo code
 
 ### Formulas
-- **Global Formulas**
-	+ Được xác định ở cấp thuộc tính trong cấu trúc Transaction. Nó được chỉ ra rằng một thuộc tính nhất định luôn được tính toán một cách nhất định
-	+ Khi cần truy xuất giá trị thuộc tính trong bất kì đối tượng nào, công thức này sẽ được đánh giá để có kết quả
-	+ Không thể sử dụng với Variable, chỉ có thể sử dụng với Attribute
-	=> Lý do thuộc tính công thức là thuộc tính ảo không được lưu trữ trong DB
+* Phân loại theo định nghĩa
+	- **Global Formulas**
+		+ Được xác định ở cấp thuộc tính trong cấu trúc Transaction. Nó được chỉ ra rằng một thuộc tính nhất định luôn được tính toán một cách nhất định
+		+ Khi cần truy xuất giá trị thuộc tính trong bất kì đối tượng nào, công thức này sẽ được đánh giá để có kết quả
+		+ Không thể sử dụng với Variable, chỉ có thể sử dụng với Attribute
+		=> Lý do thuộc tính công thức là thuộc tính ảo không được lưu trữ trong DB
+	
+	- **Local Formulas (Inline Formulas)**
+		+ Có thể được thiết lập để chỉ được đánh giá trong mã đối tượng nơi chúng được đặt 
+		+ Là công thức được nên dưới dạng hướng dẫn cụ thể trong một mã nhất định
+		+ Có thể sử dụng cả Variable và Attribute
 
-- **Local Formulas (Inline Formulas)**
-	+ Có thể được thiết lập để chỉ được đánh giá trong mã đối tượng nơi chúng được đặt 
-	+ Là công thức được nên dưới dạng hướng dẫn cụ thể trong một mã nhất định
-	+ Có thể sử dụng cả Variable và Attribute
+* Phân loại theo điều hướng
+	- **Aggregate Formulas** :
+		+ Cho phép xác định một số loại tính toán hoặc tìm kiếm, bao gồm nhiều bản ghi của một bảng (và được liên kết bằng Extended Table).
+  		+ Bao gồm: Sum, Count, Average, Max, Min, Find.
+	- **Horizontal Formulas** :
 
 - So sánh việc sử dụng Attribute Formula và Formula trong Rule:
-  	+ Attribute Formula: khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt
-
+  	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
+  	+ **Formular trong Rule** (Local): giá trị Attribute được gán cục bộ bởi quy tắc trong Rule, chính vì vậy nó không thể bị ép buộc kích hoạt Rule theo yêu cầu. Attribute vẫn được lưu trữ và giá trị của nó có thể chỉnh sửa thông qua biểu mẫu. Trong trường hợp Formula phức tạp thì nên sử dụng để tránh gây ảnh hưởng đến hiệu suất ứng dụng
+  	  
 ### Truy vấn dữ liệu các giữa các Transaction
 - Dữ liệu được hiểu thị độc lập với nhau 
 	```
