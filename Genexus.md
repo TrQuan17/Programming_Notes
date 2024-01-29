@@ -109,13 +109,16 @@
 - **Global Formulas**
 	+ Được xác định ở cấp thuộc tính trong cấu trúc Transaction. Nó được chỉ ra rằng một thuộc tính nhất định luôn được tính toán một cách nhất định
 	+ Khi cần truy xuất giá trị thuộc tính trong bất kì đối tượng nào, công thức này sẽ được đánh giá để có kết quả
-	+ Không thể sử dụng với biến, chỉ có thể sử dụng với attribute
-	=> Lý do thuộc tính công thức là thuộc tính ảo không được lưu trữ trong bảng
+	+ Không thể sử dụng với Variable, chỉ có thể sử dụng với Attribute
+	=> Lý do thuộc tính công thức là thuộc tính ảo không được lưu trữ trong DB
 
 - **Local Formulas (Inline Formulas)**
 	+ Có thể được thiết lập để chỉ được đánh giá trong mã đối tượng nơi chúng được đặt 
 	+ Là công thức được nên dưới dạng hướng dẫn cụ thể trong một mã nhất định
-	+ Có thể sử dụng cả biến và attribute
+	+ Có thể sử dụng cả Variable và Attribute
+
+- So sánh việc sử dụng Attribute Formula và Formula trong Rule:
+  	+ Attribute Formula: khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt
 
 ### Truy vấn dữ liệu các giữa các Transaction
 - Dữ liệu được hiểu thị độc lập với nhau 
@@ -261,3 +264,8 @@
 
 ## 🔷Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
+- Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
+	```
+ 	// Rule
+ 	FlightCapacity = count(FlightSeatLocation)
+ 	```
