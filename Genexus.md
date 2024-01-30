@@ -123,6 +123,8 @@
 		+ Cho phép xác định một số loại tính toán hoặc tìm kiếm, bao gồm nhiều bản ghi của một bảng (và được liên kết bằng Extended Table).
   		+ Bao gồm: Sum, Count, Average, Max, Min, Find.
 	- **Horizontal Formulas** :
+		+ Cho phép xác định các biểu thức (số học hoặc bất kỳ loại nào khác).
+  		+ Điều xác định một công thức có tính chiều ngang là thực tế là các Attribute liên quan thuộc về một Extended Table.
 
 - So sánh việc sử dụng Attribute Formula và Formula trong Rule:
   	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
