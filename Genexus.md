@@ -52,6 +52,7 @@
 - **On AfterComplete**: Thực hiện sau cả AfterLevel, khi dữ liệu đã được xác thực và thêm vào thành công (ngay sau Commit)
 
 ### Event
+- Không thể cập nhật Database: Không thể gán trực tiếp giá trị cho một Attribute nhưng có thể gọi một thủ tục để thực hiện cập nhật cần thiết
 - **Start**: 
 	+ Luôn là sự kiện diễn ra đầu tiên
 	+ Xác định một hành động sẽ được thực hiện khi chúng ta mở và bắt đầu làm việc với Transactions
@@ -69,7 +70,12 @@
 	+ Hành vi của nó phụ thuộc vào đối tượng (Web Panel, Panel), vào việc có Grid trong Layout hay không và liệu có Base table (Grid là &Variable hay Attribute của Transaction) được liên kết hay không.
 	+ Load N lần với N là số lần dữ liệu transaction (trong TH Attribute) và 1 lần (trong TH &Variable)
 
-- **Track Context**: cho phép lên lịch hành động cần thực hiện khi có thay đổi được thực hiện trong bối cảnh
+- **Track Context**: cho phép lên lịch hành động cần thực hiện khi có thay đổi được thực hiện trong bối cảnh thực thi Transaction
+	```
+ 	Event TrackContent(&AttractionId)
+ 		WCDetails.Object = AttractionsDetail.Create(&AttractionId)
+ 	EndEvent
+ 	```
 
 - **OnMessage**: sự kiện này liên quan đến thông báo trên web cho phép thực hiện các hành động trong thời gian thực
 
@@ -279,3 +285,4 @@
  	// Rule
  	FlightCapacity = count(FlightSeatLocation)
  	```
+- Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
