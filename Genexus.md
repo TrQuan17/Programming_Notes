@@ -109,8 +109,6 @@
 - Mối quan hệ yếu 1 - N thường được thể hiện bằng một giao dịch hai cấp duy nhất, với thực thể yếu là cấp độ thứ 2
 - Thể hiện mối quan hệ N - N: trong bảng 1 có thể nhập tất cả giá trị của bảng 2 (bảng 2 là thực thể yếu của bảng 1) và ngược lại
 
-## 🔷Danh sách và truy cập dữ liệu theo code
-
 ### Formulas
 * Phân loại theo định nghĩa
 	- **Global Formulas**
@@ -136,33 +134,18 @@
 - So sánh việc sử dụng Attribute Formula và Formula trong Rule:
   	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
   	+ **Formular trong Rule** (Local): giá trị Attribute được gán cục bộ bởi quy tắc trong Rule, chính vì vậy nó không thể bị ép buộc kích hoạt Rule theo yêu cầu. Attribute vẫn được lưu trữ và giá trị của nó có thể chỉnh sửa thông qua biểu mẫu. Trong trường hợp Formula phức tạp thì nên sử dụng để tránh gây ảnh hưởng đến hiệu suất ứng dụng
+
+## 🔷Danh sách và truy cập dữ liệu theo code
   	  
 ### Truy vấn dữ liệu các giữa các Transaction
-- Dữ liệu được hiểu thị độc lập với nhau 
-	```
-	For Each Category
-		...
-	EndFor
-
-	For Each Attraction
-		...
-	EndFor
-	```
-- Dữ liệu có mối quan hệ và hiểu thị liên quan với nhau
-	```
-	For Each Category
-		For Each Attraction
-			...
-		Endfor
-	Endfor
-	```
+- Sử dụng For Each Command truy xuất dữ liệu từ cơ sở dữ liệu. Khi được sử dụng với Procedure, ngoài việc đọc dữ liệu nó còn được sử dụng để cập nhật cơ sở dữ liệu
 - Để sắp xếp các dữ liệu được in ra, sử dụng order
 	```
 	For Each Attraction Order AttractionName ...   // sắp xếp AttractionName theo ASC
 	For Each Attraction Order (AttractionName) ... // sắp xếp AttractionName theo DESC
 	```
-- Inner Join và Outer Join (Left Join)
-	+ Inner Join:
+- Inner Join (Natural Join) và Outer Join (Left Join)
+	+ Inner Join (Natural Join):
 		```
   		For Each Attraction, Category
   			Where Attraction.CategoryId = Category.CategoryId
@@ -181,6 +164,16 @@
   		EndFor
   
   		```
+- Các trường hợp For Each lòng nhau (Nested For Each)
+	+ **Control Break**: các Base Table của mỗi vòng For là giống nhau
+	+ **Cartesian Product**: các Base Table của mỗi vòng For đều khác nhau và chúng không có mối quan hệ trực tiếp hoặc gián tiếp N - 1. Vì vậy, kết quả thu được là Tích Descartes của các bảng này: đối với mỗi bảng ghi của bảng For Each cơ sở chính, nó truy xuất tấp cả bản ghi của bảng For Each cơ sở lòng nhau
+ 	+ **Join**: các Base Table của mỗi vòng For đều khác nhau và có mỗi quan hệ trực tiếp hoặc gián tiếp 1 - N. Vì vậy, đối với mỗi bản ghi của bảng For Each cơ sở chính, GX tìm thấy N bản ghi có liên quan trực tiếp hoặc gián tiếp đến nó trong bảng For Each cơ sở lòng nhau
+
+### Subroutine
+- Là các chương trình con, chúng là các code block cho phép chúng ta module hoá code và có thể sử dụng bao nhiêu lần tuỳ thích trong cùng một đối tượng
+- Các đối tượng có thể sử dụng được ở Web Panels, Procedures, Transactions, ...
+- Không hỗ trợ gửi tham số, các biến được sử dụng để trao đổi dữ liệu. Nếu một Attribute có một giá trị thì khi gọi Subroutine nó sẽ thay đổi. Khi Return từ Subrountine và truy vấn giá trị, nó sẽ có giá trị được gán trong đó (vì các thuộc tính là toàn cục đối với đối tượng)
+- Nếu lệnh gọi được thực hiện từ bên trong lệnh For Each và Subroutine cũng có lệnh For Each thì chúng sẽ không được lồng nhau, nghĩa là sẽ không có suy luận hoặc bộ lọc nào được thực hiện
   
 ## 🔷Giao tiếp giữa các đối tượng
 
