@@ -123,7 +123,7 @@
 		+ Có thể được thiết lập để chỉ được đánh giá trong mã đối tượng nơi chúng được đặt 
 		+ Là công thức được nên dưới dạng hướng dẫn cụ thể trong một mã nhất định
 		+ Có thể sử dụng cả Variable và Attribute
-
+  
 * Phân loại theo điều hướng
 	- **Aggregate Formulas** :
 		+ Cho phép xác định một số loại tính toán hoặc tìm kiếm, bao gồm nhiều bản ghi của một bảng (và được liên kết bằng Extended Table).
@@ -131,6 +131,7 @@
 	- **Horizontal Formulas** :
 		+ Cho phép xác định các biểu thức (số học hoặc bất kỳ loại nào khác).
   		+ Điều xác định một công thức có tính chiều ngang là thực tế là các Attribute liên quan thuộc về một Extended Table.
+	- **Compound Formulas**: là sự kết hợp sử dụng giữa Aggregate Formula và Horizontal Formula
 
 - So sánh việc sử dụng Attribute Formula và Formula trong Rule:
   	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
@@ -286,3 +287,16 @@
  	FlightCapacity = count(FlightSeatLocation)
  	```
 - Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
+- Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này GX sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
+	```
+ 	// Should not be used
+ 	For Each Trip
+ 		Where TripId = Max(TripDate, TripDate < &Today, 0, TripId)
+ 	EndFor
+
+ 	// Should use
+ 	&TripIdWithMaxTripDate = Max(TripDate, TripDate < &Today, 0, TripId)
+ 	For Each Trip
+ 		Where TripId = &TripIdWithMaxTripDate
+ 	EndFor
+ 	```
