@@ -1,6 +1,6 @@
 # **NodeJS**
 
-## 🔹 Lý thuyết cơ sở
+## 🔷 Lý thuyết cơ sở
 
 ### NodeJS
 - **NodeJS** là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
@@ -15,7 +15,7 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
 
 - Khi gõ code JS lên màn hình shell, NodeJS sẽ thực hiện việc đọc thông tin (Read) và tự động lưu trữ trong bộ nhớ; tự động đánh giá cấu trúc dữ liệu và sự hợp lệ của các dòng lệnh (Eval); xử lý thực thi code sau đó in ra kết quả nếu có (Print) và hỗ trợ lặp lại các dòng lệnh trên để thực thi chương trình (Loop).
 
-## 🔹 REST API (REpresentational State Transfer)
+## 🔷 REST API (REpresentational State Transfer)
 
 ### HATEOAS (Hypermedia As The Engine Of Application State)
 - HATEOAS là một trong những chuẩn được khuyến nghị cho RESTful API. Thuật ngữ 'Hypermedia' có nghĩa là bất kỳ nội dung nào có chứa các liên kết (link) đến các media khác như image, movie và text.
@@ -42,14 +42,14 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
         }
     }
     ```
-## 🔹 Authentication và Json Web Token (JWT)
+## 🔷 Authentication và Json Web Token (JWT)
 
-* Một JWT gồm 3 phần cơ bản:
-    - **Header** chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
-    - **Payload** chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
-    - **Verify signature** được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
+- Một JWT gồm 3 phần cơ bản:
+    + **Header**: chứa kiểu dữ liệu , và thuật toán sử dụng để mã hóa ra chuỗi JWT
+    + **Payload**: chứa các thông tin mình muốn đặt trong chuỗi token như username, userId, …
+    + **Verify signature**: được tạo ra bằng cách mã hóa phần header, payload kèm theo một chuỗi secret (khóa bí mật)
 
-## 🔹 Tip
+## 🔷 Tip
 
 ### Một số thư viện cần thiết khi tạo dự án (dành cho dev)
 - **dotenv**: cài đặt file môi trường (file .env)
@@ -90,7 +90,7 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
     ```
 
 ### Config router tránh bị nhập sai đường dẫn
-- '/ab?cd': router có thể có chứa b hoặc không (router '/acd' và '/abcd' là giống nhau)
-- '/ab+cd': router có thể chứa nhiều chữ b (router '/abbbbcd' và '/abcd' là giống nhau)
-- '/ab\*cd': '/ab' + anything + 'cd' (router '/abtrquancd' và '/abcd' là giống nhau)
-- /a/: router sử dụng regex (router '/abc', '/bca', 'trquan' là giống nhau)
+- `/ab?cd`: router có thể có chứa b hoặc không (router `/acd` và `/abcd` là giống nhau)
+- `/ab+cd`: router có thể chứa nhiều chữ b (router `/abbbbcd` và `/abcd` là giống nhau)
+- `/ab\*cd`: `/ab` + anything + `cd` (router `/abtrquancd` và `/abcd` là giống nhau)
+- `/a/`: router sử dụng regex (router `/abc`, `/bca`, `trquan` là giống nhau)
