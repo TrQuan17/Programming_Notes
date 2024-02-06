@@ -1,7 +1,17 @@
 # **Genexus**
 
-## 🔷Quá trình Build của Genexus
+## 🔷Tổng quan Genexus
 
+### Khái niệm
+- **Genexus** là một nền tảng thông minh giúp đơn giản hoá việc phát triển phần mềm, tối đa việc tự động hoá cho quá trình phát triển, hay còn được gọi là Low Code. Thông qua các kĩ thuật trí tuệ nhân tạo, Genexus tự động tạo mã nguồn, giảm thiểu thời gian cần thiết cho việc phát triển, cải tiến và bảo trì ứng dụng
+- Genexus cung cấp các tính năng cơ bản sau:
+	+ Phát triển linh hoạt và gia tăng với việc tạo nhanh các nguyên mẫu chức năng
+	+ Đa nền tảng, cho phép xây dựng nhiều loại ứng dụng khác nhau như là hệ thống Cobol, RPG, đến các ứng dụng Web hiện đại trong Angular Framework, các ứng dụng cho các thiết bị di động như đồng hồ, điện thoại thông minh, ... cũng như các ứng dụng AI, Chatbots, mô hình hoá quy trình kinh doanh, ...
+	+ Tích hợp các hệ thống hiện có và cơ sở dữ liệu kế thừa
+ 	+ Làm việc theo nhóm, triển khai phiên bản, Testing, Deployment, DevOps
+  	+ Liên tục thích ứng với sự thay đổi công nghệ, giúp các tổ chức đổi mới nhanh chóng và hiệu quả
+
+### Quá trình build ứng dụng Genexus
  - Khi nhấn F5, thực hiện phân tích tác động cơ sở dữ liệu để kiểm tra xem có cần thay đổi cấu trúc CSDL hay không
  - Nếu CSDL cần đã điều chỉnh, một báo cáo phân tích tác động được hiển thị nêu chi tiết những thay đổi cần thực hiện và các câu lệnh SQL sẽ được thực thi nếu được tổ chức lại
  - Đến gia đoạn đặc tả, Genexus kiểm tra chính tả và cú pháp các đối tượng KB, cập nhật các module và phiên bản mẫu cũng như các tài nguyên cần thiết
@@ -174,7 +184,35 @@
 - Các đối tượng có thể sử dụng được ở Web Panels, Procedures, Transactions, ...
 - Không hỗ trợ gửi tham số, các biến được sử dụng để trao đổi dữ liệu. Nếu một Attribute có một giá trị thì khi gọi Subroutine nó sẽ thay đổi. Khi Return từ Subrountine và truy vấn giá trị, nó sẽ có giá trị được gán trong đó (vì các thuộc tính là toàn cục đối với đối tượng)
 - Nếu lệnh gọi được thực hiện từ bên trong lệnh For Each và Subroutine cũng có lệnh For Each thì chúng sẽ không được lồng nhau, nghĩa là sẽ không có suy luận hoặc bộ lọc nào được thực hiện
-  
+
+### Unique Clause
+- Cho phép chỉ ra Attribute hoặc tập hợp các Attribute có giá trị không được lặp lại trong đầu ra truy vấn
+	```
+ 	// Unique clause with For Each
+ 	For Each Attraction
+ 		Unique CategoryId
+ 	EndFor
+
+ 	// Unique clause with Data Provider
+ 	ReservationByDay from Reservation unique ReservationDate
+ 	{
+ 		ReservationByDayItem
+ 		{
+ 			ReservationDate
+ 			ReservationTotal
+ 		}
+ 	}
+ 	```
+
+- Các hạn chế khi sử dụng Unique Clause
+	+ Không thể sử dụng biểu thức trong danh sách các Attribute được khai báo trong Unique Clause
+		```
+  		// Cannot use
+  		Unique ReservationDate.Year()
+  		```
+  	+ Cả trong nội dung lệnh For Each và trong nhóm của Data Provider (trừ các công thức nội tuyến) chỉ có thể bao gồm các Attribute có giá trị duy nhất được khai báo trong Unique Clause và Attribute liên quan (cùng 1 record)
+   	+ Không thể sử dụng Unique Commnand trong Nested For Each. Cho đến nay, nó không thể sử dụng để thực hiện Control Break.
+
 ## 🔷Giao tiếp giữa các đối tượng
 
 - Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
