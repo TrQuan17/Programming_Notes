@@ -248,6 +248,14 @@
 
 ## 🔷Cập nhật Database
 
+### Business Component
+- **Business Component** không chỉ đại diện cho các bảng dữ liệu, mà còn chứa đựng cả hành vi (Methods) và quy tắc (Rules) liên quan đến dữ liệu đó. Các thành phần này giúp đơn giản hóa các thao tác liên quan đến dữ liệu (CRUD), đồng thời giúp quản lý các quy tắc kinh doanh ở mức độ đối tượng, giảm thiểu sự lặp lại và tăng cường khả nặng tái sử dụng trong các ứng dụng
+
+- Business Component thường được mô tả thông qua các thuộc tính sau:
+	+ Attribute: Các trường dữ liệu mà đối tượng cần để xác định trạng thái của nó
+	+ Methods: Các hành động mà đối tượng có thể thực hiện, ví dụ: Save, Delete, Load, ... 
+	+ Rules: Các quy tắc kinh doanh mà đối tượng cần tuân theo
+
 ### Cập nhật DB sử dụng Business Components
 
 	```
