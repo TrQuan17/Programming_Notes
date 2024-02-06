@@ -4,11 +4,9 @@
 
 ### NodeJS
 - **NodeJS** là một nền tảng (Platform) phát triển độc lập được xây dựng ở trên JS Runtime của Chrome mà chúng ta có thể xây dựng được các ứng dụng mạng một cách nhanh chóng và dễ dàng mở rộng.
-
+- Ứng dụng NodeJS chạy trong một quy trình duy nhất mà không tạo chuỗi mới cho mọi yêu cầu, nó cung cấp một tập hợp các nguyên hàm I/O bất đồng bộ trong thư viện tiêu chuẩn của nó để ngăn mã JavaScript chặn và nói chung, các thư viện trong Node.js được viết bằng cách sử dụng mô hình không chặn, khiến hành vi chặn trở thành ngoại lệ thay vì chuẩn mực.
 - Phần Core bên dưới của NodeJS được viết hầu hết bằng C++ nên cho tốc độ xử lý và hiệu năng khá cao.
-NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realtime thời gian thực.
-
-- NodeJS áp dụng cho các sản phẩm có lượng truy cập lớn, cần mở rộng nhanh, cần đổi mới công nghệ, hoặc tạo ra các dự án Startup nhanh nhất có thể.
+- NodeJS áp dụng cho các sản phẩm có lượng truy cập lớn, cần mở rộng nhanh, cần đổi mới công nghệ, có thể tạo ra được các ứng dụng có tốc độ xử lý nhanh, realtime thời gian thực..
 
 ### REPL (Real - Eval - Print - Loop)
 - Là một đặc tính của NodeJS cho phép lập trình viên viết code  và chạy trực tiếp trên màn hình shell/console/terminal để debug, kiểm tra code mà không cần tạo ra bất cứ file hay folder nào.
@@ -64,7 +62,7 @@ NodeJS tạo ra được các ứng dụng có tốc độ xử lý nhanh, realt
     ```
     npm i nodemon
     ```
-    ```JSON
+    ```JSONC
     // config package.json
     "scripts": {
         "start": "nodemon app.js"
