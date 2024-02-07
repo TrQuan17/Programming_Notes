@@ -213,6 +213,30 @@
   	+ Cả trong nội dung lệnh For Each và trong nhóm của Data Provider (trừ các công thức nội tuyến) chỉ có thể bao gồm các Attribute có giá trị duy nhất được khai báo trong Unique Clause và Attribute liên quan (cùng 1 record)
    	+ Không thể sử dụng Unique Commnand trong Nested For Each. Cho đến nay, nó không thể sử dụng để thực hiện Control Break.
 
+### Data Selector
+- **Data Selector** cho phép lưu trữ một tập hợp các Parameters, Conditions, Orders và Defined By để có thể gọi nó từ các truy vấn, tính toán khác nhau, ... và tái sử dụng cùng một cơ chế điều hướng nhiều lần
+	```
+ 	// Filter using Data Selector with For Each command
+ 	For Each Customer
+ 		USING CustomerDataSelector(&DateFrom, &DateTo)
+	EndFor
+
+ 	// Query using Data Selector with For Each command
+ 	For Each Country
+ 		Where CountryId IN CustomerDataSelector(&DateFrom, &DateTo)
+ 	EndFor
+
+ 	// Data Selector in Formula
+ 	For Each Invoice
+ 		&Qty = Count(InvoiceDate, USING CustomerDataSelector(&DateFrom, &DateTo))
+ 	EndFor
+ 	```
+ 
+- Việc xác định Data Selectors mang lại những lợi ích sau:
+	+ Lưu và tái sử dụng code: chỉ cần định nghĩa Data Selector một lần, sau đó có thể tái sử dụng nhiều nơi trong KB
+ 	+ Giảm thiểu công tác bảo trì: chỉ cần thay đổi định nghĩa Data Selector tại một nơi, và mọi thay đổi sẽ tự động được áp dụng cho mọi nơi nó được sử dụng trong KB
+	+ Hỗ trợ đào tạo người dùng GX mới: Data Selector cung cấp tính đóng gói code và dễ dàng học, định nghĩa và sử dụng
+ 
 ## 🔷Giao tiếp giữa các đối tượng
 
 - Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
