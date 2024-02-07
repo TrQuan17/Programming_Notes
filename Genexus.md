@@ -214,7 +214,7 @@
    	+ Không thể sử dụng Unique Commnand trong Nested For Each. Cho đến nay, nó không thể sử dụng để thực hiện Control Break.
 
 ### Data Selector
-- **Data Selector** cho phép lưu trữ một tập hợp các Parameters, Conditions, Orders và Defined By để có thể gọi nó từ các truy vấn, tính toán khác nhau, ... và tái sử dụng cùng một cơ chế điều hướng nhiều lần
+- **Data Selector** cho phép lưu trữ một tập hợp các Parameters, Conditions, Orders và Defined By để người dùng có thể gọi từ các truy vấn và tính toán khác nhau đồng thời tái sử dụng cùng một cơ chế điều hướng nhiều lần
 	```
  	// Filter using Data Selector with For Each command
  	For Each Customer
