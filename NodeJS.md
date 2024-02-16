@@ -9,14 +9,47 @@
 - NodeJS áp dụng cho các sản phẩm có lượng truy cập lớn, cần mở rộng nhanh, cần đổi mới công nghệ, có thể tạo ra được các ứng dụng có tốc độ xử lý nhanh, realtime thời gian thực..
 
 ### REPL (Real - Eval - Print - Loop)
-- Là một đặc tính của NodeJS cho phép lập trình viên viết code  và chạy trực tiếp trên màn hình shell/console/terminal để debug, kiểm tra code mà không cần tạo ra bất cứ file hay folder nào.
+- **REPL** là một đặc tính của NodeJS cho phép lập trình viên viết code  và chạy trực tiếp trên màn hình shell/console/terminal để debug, kiểm tra code mà không cần tạo ra bất cứ file hay folder nào.
 
 - Khi gõ code JS lên màn hình shell, NodeJS sẽ thực hiện việc đọc thông tin (Read) và tự động lưu trữ trong bộ nhớ; tự động đánh giá cấu trúc dữ liệu và sự hợp lệ của các dòng lệnh (Eval); xử lý thực thi code sau đó in ra kết quả nếu có (Print) và hỗ trợ lặp lại các dòng lệnh trên để thực thi chương trình (Loop).
+
+## 🔷 CORS (Cross-Origin Resource Sharing)
+- **CORS** là một cơ chế cho phép chia sẻ tài nguyên có nhiều nguồn gốc khác nhau. Định nghĩa của tương đồng là protocol, domain và port của liên kết truy cập là giống nhau
+
+- Tiêu chuẩn CORS xác định cách trình duyệt và server giao tiếp khi truy cập tài nguyên miền chéo. Ý tưởng cơ bản là sử dụng tiêu đề HTTP để cho phép trình duyệt giao tiếp với server để xác định xem yêu cầu có thể thành công hay không
+
+- Một số các cài đặt CORS sử dụng NodeJS
+    + Set vào response header
+        ```JS
+        const app = express()
+
+        app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*')
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+
+            next()
+        })
+        ```
+
+    + Sử dụng thư viện cors của npm
+        ```JS
+        const cors = require('cors')
+        const app = express()
+
+        app.use(cors({
+            origin: '*',
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+            optionsSuccessStatus: 204,
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }))
+        ```
 
 ## 🔷 REST API (REpresentational State Transfer)
 
 ### HATEOAS (Hypermedia As The Engine Of Application State)
-- HATEOAS là một trong những chuẩn được khuyến nghị cho RESTful API. Thuật ngữ 'Hypermedia' có nghĩa là bất kỳ nội dung nào có chứa các liên kết (link) đến các media khác như image, movie và text.
+- **HATEOAS** là một trong những chuẩn được khuyến nghị cho RESTful API. Thuật ngữ 'Hypermedia' có nghĩa là bất kỳ nội dung nào có chứa các liên kết (link) đến các media khác như image, movie và text.
 
 - Kiểu kiến trúc này cho phép bạn sử dụng các liên kết hypermedia trong nội dung response để client có thể tự động điều hướng đến tài nguyên phù hợp bằng cách duyệt qua các liên kết hypermedia. Nó tương tự như một người dùng web điều hướng qua các trang web bằng cách nhấp vào các link thích hợp để chuyển đến nội dung mong muốn.
 

@@ -136,13 +136,16 @@
 	- **Aggregate Formulas** :
 		+ Cho phép xác định một số loại tính toán hoặc tìm kiếm, bao gồm nhiều bản ghi của một bảng (và được liên kết bằng Extended Table).
   		+ Bao gồm: Sum, Count, Average, Max, Min, Find.
+
 	- **Horizontal Formulas** :
 		+ Cho phép xác định các biểu thức (số học hoặc bất kỳ loại nào khác).
   		+ Điều xác định một công thức có tính chiều ngang là thực tế là các Attribute liên quan thuộc về một Extended Table.
+
 	- **Compound Formulas**: là sự kết hợp sử dụng giữa Aggregate Formula và Horizontal Formula
 
 - So sánh việc sử dụng Attribute Formula và Formula trong Rule:
   	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
+
   	+ **Formular trong Rule** (Local): giá trị Attribute được gán cục bộ bởi quy tắc trong Rule, chính vì vậy nó không thể bị ép buộc kích hoạt Rule theo yêu cầu. Attribute vẫn được lưu trữ và giá trị của nó có thể chỉnh sửa thông qua biểu mẫu. Trong trường hợp Formula phức tạp thì nên sử dụng để tránh gây ảnh hưởng đến hiệu suất ứng dụng
 
 ## 🔷Danh sách và truy cập dữ liệu theo code
@@ -163,6 +166,7 @@
   			...
   		EndFor
 		```
+
 	+ Outer Join (Left Join):
 		```
   		For Each Attraction
@@ -176,7 +180,9 @@
   		```
 - Các trường hợp For Each lòng nhau (Nested For Each)
 	+ **Control Break**: các Base Table của mỗi vòng For là giống nhau
+
 	+ **Cartesian Product**: các Base Table của mỗi vòng For đều khác nhau và chúng không có mối quan hệ trực tiếp hoặc gián tiếp N - 1. Vì vậy, kết quả thu được là Tích Descartes của các bảng này: đối với mỗi bảng ghi của bảng For Each cơ sở chính, nó truy xuất tấp cả bản ghi của bảng For Each cơ sở lòng nhau
+
  	+ **Join**: các Base Table của mỗi vòng For đều khác nhau và có mỗi quan hệ trực tiếp hoặc gián tiếp 1 - N. Vì vậy, đối với mỗi bản ghi của bảng For Each cơ sở chính, GX tìm thấy N bản ghi có liên quan trực tiếp hoặc gián tiếp đến nó trong bảng For Each cơ sở lòng nhau
 
 ### Subroutine
@@ -246,6 +252,7 @@
 		- **IN**: chỉ ra rằng tham số này là tham số đầu vào, tham số đi kèm với một giá trị và giá trị đó không thể thay đổi
 		- **OUT**: chỉ các tham số đầu ra, chúng không mang lại bất cứ giá trị nào và sau khi đối tượng được gọi được thực thi, nó sẽ chứa giá trị kết quả sẽ được trả về đối tượng gọi
 		- **INOUT**: thực hiện việc nhập xuất tham số cùng một lúc. Tham số đi kèm với một giá trị và có thể được thay đổi trong quá trình thực thi đối tượng. Khi hoàn tất, tham số sẽ chứa giá trị được trả về cho đối tượng đã gọi nó
+
 	+ Mặc định: Genexus sẽ gán toán tử INOUT cho tất cả các tham số, ngay cả khi điều này không được hiển thị
 
 ## 🔷Structured Data Type
@@ -339,6 +346,7 @@
  			Delete
  	EndFor
 	```
+
 - Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
 - Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soạt được commit dữ liệu lên CSDL
 
@@ -349,6 +357,7 @@
  	// Rule
  	FlightCapacity = count(FlightSeatLocation)
  	```
+	
 - Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
 - Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này GX sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
 	```
