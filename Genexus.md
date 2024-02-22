@@ -326,6 +326,7 @@
 - Sử dụng các lệnh như New, Delete,... để cập nhật dữ liệu, tuy nhiên cách này có nhiều hạn chế:
 	+ Không thể kiểm tra tính toàn vẹn của tham chiếu
 	+ Không thể kích hoạt được các Rule
+ 	+ Chỉ được sử dụng ở Procedure
 	```
  	// Create with new command
  	New
@@ -347,7 +348,10 @@
  	EndFor
 	```
 
-- Ưu điểm là hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
+- Tuy nhiên nó cũng có những ưu điểm như sau:
+	+ Hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
+ 	+ Cú pháp ngắn gọn, dễ dàng sử dụng. Thay vì phải khai báo Business Component để cập nhật dữ liệu thì chúng ta có thể thực hiện hoàn toàn bằng các Command 
+     
 - Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
 
 ## 🔷Tip
