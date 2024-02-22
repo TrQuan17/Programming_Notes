@@ -351,9 +351,31 @@
 - Tuy nhiên nó cũng có những ưu điểm như sau:
 	+ Hiệu suất cao hơn, ví dụ khi sử dụng lệnh Delete với dữ liệu hàng triệu thì tốc độ xử lý nhanh hơn so với những các khác.
  	+ Cú pháp ngắn gọn, dễ dàng sử dụng. Thay vì phải khai báo Business Component để cập nhật dữ liệu thì chúng ta có thể thực hiện hoàn toàn bằng các Command 
-     
-- Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
 
+- Một số lưu ý khi sử dụng Procedure Command:
+	+ Với mọi Procedure Command, tất cả Attribute của bản ghi và các Attribute liên quan của Extended Table đều có thể cập nhật, ngoại trừ Primary Key
+	+ Khi sử dụng New Command, nếu Primary Key của bản ghi thêm mới vào trùng với Primary Key đã tồn tại trong CSDL, thì quá trình thêm mới sẽ không được thực hiện. Vì vậy có thể sử dụng New Command như để kiểm tra dữ liệu, bản ghi thêm mới chưa có trong CSDL (chỉ kiểm tra tồn tại đối với Primary Key) thì thêm mới bản ghi, ngược lại thì cập nhật bản ghi đã có.
+		```
+  		New
+  			AttractionId = 1
+  			AttractionName = 'Eiffel Tower'
+
+  		When Duplicate	
+  			For Each Attraction
+  				AttractionName = 'Eiffel Tower'
+  			EndFor
+  		EndNew
+  		```
+  	+ Khi cần cập nhật với một số lượng lớn bản ghi, việc giảm số lượng khứ hồi về hệ quản trị CSDL (Database Management System - DBMS) là một giải pháp. Việc chặn các hoạt động cập nhật dữ liệu yêu cầu phải lưu trữ chúng trong bộ nhớ và gửi chúng theo nhóm tới DBMS. Thay vì thao tác với DBMS trong mọi thao tác cập nhật CSDL, tương tác chỉ diễn ra sau mỗi N thao tác cập nhật, trong đó N là số chỉ định. Vì vậy Blocking Command là giải pháp cho vấn đề trên, nó sẽ giảm số lượng khứ hồi đến Server, một tập hợp các bản cập nhật CSDL chỉ được gửi tới DBMS sau N lần chỉ định
+		```
+  		For Each Attraction
+  			Blocking 100
+  				AttractionName = ...
+  		EndFor
+  		```
+  	  
+  	+ Mặc dù các Procedure Command không kiểm tra tính toàn vẹn, tuy nhiên trong CSDL sẽ có. Chẳng hạn nến thêm mới một bản ghi có trường là khoá ngoại đến bảng khác và giá trị của trường đó là không tồn tại trong bảng đó, mặc dù New Command đã có gắng thực hiện thêm mới nhưng CSDL không cho phép và Server sẽ đưa ra SQLExeception
+	+ Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
 ## 🔷Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
 - Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
