@@ -377,6 +377,12 @@
   	+ Mặc dù các Procedure Command không kiểm tra tính toàn vẹn, tuy nhiên trong CSDL sẽ có. Chẳng hạn nến thêm mới một bản ghi có trường là khoá ngoại đến bảng khác và giá trị của trường đó là không tồn tại trong bảng đó, mặc dù New Command đã có gắng thực hiện thêm mới nhưng CSDL không cho phép và Server sẽ đưa ra SQLExeception. Để tắt tính năng này của CSDL, trong Data Stores SQL Server Properties, đổi Declare referential integrity property thành No (mặc định là Yes)
   	+ Nếu Formula Attribute phụ thuộc vào Attribute đang được cập nhật, GX sẽ không tìm kiếm hoặc tính toán giá trị mới, vì vậy, quá trình này phải được thực hiện thủ công
 	+ Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
+
+### Tính toàn vẹn trong Transaction
+- **Logical Unit of Work (LUW)**:
+	+ Đơn vị công việc logic là tập hợp các thao tác đối với CSDL phải được thực thi tất cả hoặc không thực hiện bất kỳ thao tác nào trong số đó
+ 	+ Tập hợp các bản cập nhật xác định LUW đảm bảo tính toàn vẹn của CSDL ở mức logic 
+
 ## 🔷Tip
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
 - Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
