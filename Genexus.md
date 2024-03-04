@@ -383,7 +383,25 @@
 	+ Đơn vị công việc logic là tập hợp các thao tác đối với CSDL phải được thực thi tất cả hoặc không thực hiện bất kỳ thao tác nào trong số đó
  	+ Tập hợp các bản cập nhật xác định LUW đảm bảo tính toàn vẹn của CSDL ở mức logic 
 
+- Customizing LUWs:
+	+ Nếu từ một Transaction, một Procedure được gọi để gọi một Procedure khác, tất cả đều bị vô hiệu hoá Commit ngoại trừ Commit cuối cùng hoặc tất cả Commit đều vô hiệu hoá trừ Commit của Transaction, nó sẽ Commit các bản ghi của Transaction và của tất cả Procedure
+ 	+ Tuy nhiên nếu Transaction A gọi một Transaction B khác thì Commit của Transaction B sẽ không Commit các bản ghi do Transaction A đầu tiên xử lý vì đây là các hoạt động Commit độc lập
+ 
+## 🔷Thiết kế và mô hình hoá màn hình
+
+### Unanimo
+- **Unanimo**: là một hệ thống thiết kế (Design System) cho phép củng cố và tăng cường tính nhất quán trong việc thiết kế ứng dụng
+
+- Có các đặc điểm chính như sau:
+ 	+ **Đa trải nghiệm**: Web responsive, Native Mobile, Chatbots, Inbox-driven
+  	+**Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, GXflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
+  	+ **Standard Module**: được phát triển trong một GX Module và được phát hành dưới dạng là một Module
+  	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng 
+style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
+ 	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
+
 ## 🔷Tip
+
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
 - Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
 	```
