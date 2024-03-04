@@ -400,6 +400,12 @@
 style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
  	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
 
+- Unanimo bao gồm 4 phần chính:
+	+ Design System (Tokens - Styles)
+ 	+ Hình ảnh và các tài nguyên khác
+  	+ User Controls (Custom UI - Chameleon Library)
+  	+ Stencils
+
 ## 🔷Tip
 
 - Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
