@@ -4,7 +4,12 @@
 - [Tổng quan Genexus](#tổng-quan-genexus)
 - [Transaction](#transaction)
 - [Danh sách và truy cập dữ liệu theo code](#danh-sách-và-truy-cập-dữ-liệu-theo-code)
-  
+- [Giao tiếp giữa các đối tượng](#giao-tiếp-giữa-các-đối-tượng)
+- [Structured Data Type](#structured-data-type)
+- [Cập nhật Database](#cập-nhật-database)
+- [Thiết kế và mô hình hoá màn hình](#thiết-kế-và-mô-hình-hoá-màn-hình)
+- [Tip](#tip)
+
 ## 🔷Tổng quan Genexus
 
 ### Khái niệm
@@ -401,8 +406,7 @@
  	+ **Đa trải nghiệm**: Web responsive, Native Mobile, Chatbots, Inbox-driven
   	+**Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, GXflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
   	+ **Standard Module**: được phát triển trong một GX Module và được phát hành dưới dạng là một Module
-  	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng 
-style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
+  	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
  	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
 
 - Unanimo bao gồm 4 phần chính:
