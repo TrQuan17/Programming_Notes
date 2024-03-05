@@ -1,5 +1,10 @@
 # **Genexus**
 
+## 🔷 MỤC LỤC
+- [Tổng quan Genexus](#tổng-quan-genexus)
+- [Transaction](#transaction)
+- [Danh sách và truy cập dữ liệu theo code](#danh-sách-và-truy-cập-dữ-liệu-theo-code)
+  
 ## 🔷Tổng quan Genexus
 
 ### Khái niệm
