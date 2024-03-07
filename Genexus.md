@@ -193,7 +193,7 @@
 
 	+ **Cartesian Product**: các Base Table của mỗi vòng For đều khác nhau và chúng không có mối quan hệ trực tiếp hoặc gián tiếp N - 1. Vì vậy, kết quả thu được là Tích Descartes của các bảng này: đối với mỗi bảng ghi của bảng For Each cơ sở chính, nó truy xuất tấp cả bản ghi của bảng For Each cơ sở lòng nhau
 
- 	+ **Join**: các Base Table của mỗi vòng For đều khác nhau và có mỗi quan hệ trực tiếp hoặc gián tiếp 1 - N. Vì vậy, đối với mỗi bản ghi của bảng For Each cơ sở chính, GX tìm thấy N bản ghi có liên quan trực tiếp hoặc gián tiếp đến nó trong bảng For Each cơ sở lòng nhau
+ 	+ **Join**: các Base Table của mỗi vòng For đều khác nhau và có mỗi quan hệ trực tiếp hoặc gián tiếp 1 - N. Vì vậy, đối với mỗi bản ghi của bảng For Each cơ sở chính, Genexus tìm thấy N bản ghi có liên quan trực tiếp hoặc gián tiếp đến nó trong bảng For Each cơ sở lòng nhau
 
 ### Subroutine
 - Là các chương trình con, chúng là các code block cho phép chúng ta module hoá code và có thể sử dụng bao nhiêu lần tuỳ thích trong cùng một đối tượng
@@ -251,12 +251,13 @@
 - Việc xác định Data Selectors mang lại những lợi ích sau:
 	+ Lưu và tái sử dụng code: chỉ cần định nghĩa Data Selector một lần, sau đó có thể tái sử dụng nhiều nơi trong KB
  	+ Giảm thiểu công tác bảo trì: chỉ cần thay đổi định nghĩa Data Selector tại một nơi, và mọi thay đổi sẽ tự động được áp dụng cho mọi nơi nó được sử dụng trong KB
-	+ Hỗ trợ đào tạo người dùng GX mới: Data Selector cung cấp tính đóng gói code và dễ dàng học, định nghĩa và sử dụng
+	+ Hỗ trợ đào tạo người dùng Genexus mới: Data Selector cung cấp tính đóng gói code và dễ dàng học, định nghĩa và sử dụng
  
 ## 🔷Giao tiếp giữa các đối tượng
 
-- Biến có thể được sử dụng tự do trong lập trình như nó có thể được sử dụng làm điều kiện lọc cho các bộ lọc như đẳng thức lớn hơn, lớn hơn hoặc bằng, ... Ngoài ra còn có thể được sử dụng cho phép toán số học hoặc bất cứ điều gì cần thiết
-
+### Parm
+- **Parm**: khai báo danh sách các tham số mà đối tượng Genexus nhận được từ một hoặc nhiều đối tượng khác gọi nó.
+  
 - **Quy tắc Pam**: tham số có thể được sử dụng để nhận một giá trị, để trả về một giá trị hay cả hai
 	+ Được thực hiện bằng các toán tử in, out, inout:
 		- **IN**: chỉ ra rằng tham số này là tham số đầu vào, tham số đi kèm với một giá trị và giá trị đó không thể thay đổi
@@ -265,6 +266,36 @@
 
 	+ Mặc định: Genexus sẽ gán toán tử INOUT cho tất cả các tham số, ngay cả khi điều này không được hiển thị
 
+### Global Events
+- **Global Events**: cho phép xác định các sự kiện toàn cục cho tất cả các thành phần của ứng dụng. Một Web Page có thể được tạo thành từ một số Component, vì vậy ý tưởng của Global Events là để các Component và Web Panel có thể giao tiếp với nhau. Thông qua Global Events, tất cả các thành phần của màn hình có thể tương tác với nhau vì các sự kiện có thể định nghĩa và được gọi từ bất kì thành phần nào.
+  
+- Global Events được triển khai thông qua GlobalEvents External Object, được import tự động bởi Genexus, nó cho phép bạn tạo Global Events để đạt được sự tương tác linh hoạt hơn giữa các thành phần của Form, trong ứng dụng Web và thiết bị thông minh
+
+	```
+ 	// Home Web Panel
+ 	// Define ShowMsg in GlobalEvents with paramater &piMsg
+ 	Event GlobalEvents.ShowMsg(&piMsg)
+		&piMsgs.Add(&piMsg)
+		
+		for &piMsg in &piMsgs
+			msg(&piMsg)
+		endfor
+	Endevent
+ 	```
+	```
+ 	// Home Component is component of Home Web Panel
+ 	Event Start
+		GlobalEvents.ShowMsg('This is Home Component')
+	EndEvent
+ 	```
+	```
+ 	// Menu Component isn't component of Home Web Panel
+ 	Event Start
+ 		// Show Msg not working
+		GlobalEvents.ShowMsg('This is Menu Component')
+	EndEvent
+ 	```
+ 
 ## 🔷Structured Data Type
 
 - Phương thức của collection:
@@ -385,8 +416,8 @@
   		```
   	  
   	+ Mặc dù các Procedure Command không kiểm tra tính toàn vẹn, tuy nhiên trong CSDL sẽ có. Chẳng hạn nến thêm mới một bản ghi có trường là khoá ngoại đến bảng khác và giá trị của trường đó là không tồn tại trong bảng đó, mặc dù New Command đã có gắng thực hiện thêm mới nhưng CSDL không cho phép và Server sẽ đưa ra SQLExeception. Để tắt tính năng này của CSDL, trong Data Stores SQL Server Properties, đổi Declare referential integrity property thành No (mặc định là Yes)
-  	+ Nếu Formula Attribute phụ thuộc vào Attribute đang được cập nhật, GX sẽ không tìm kiếm hoặc tính toán giá trị mới, vì vậy, quá trình này phải được thực hiện thủ công
-	+ Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của GX là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
+  	+ Nếu Formula Attribute phụ thuộc vào Attribute đang được cập nhật, Genexus sẽ không tìm kiếm hoặc tính toán giá trị mới, vì vậy, quá trình này phải được thực hiện thủ công
+	+ Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của Genexus là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
 
 ### Tính toàn vẹn trong Transaction
 - **Logical Unit of Work (LUW)**:
@@ -404,8 +435,8 @@
 
 - Có các đặc điểm chính như sau:
  	+ **Đa trải nghiệm**: Web responsive, Native Mobile, Chatbots, Inbox-driven
-  	+**Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, GXflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
-  	+ **Standard Module**: được phát triển trong một GX Module và được phát hành dưới dạng là một Module
+  	+**Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, Genexusflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
+  	+ **Standard Module**: được phát triển trong một Genexus Module và được phát hành dưới dạng là một Module
   	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
  	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
 
@@ -425,7 +456,7 @@
  	```
 	
 - Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
-- Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này GX sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
+- Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này Genexus sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
 	```
  	// Should not be used
  	For Each Trip
