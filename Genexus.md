@@ -469,3 +469,5 @@
  		Where TripId = &TripIdWithMaxTripDate
  	EndFor
  	```
+- Để set giá trị Blank với Field với Data Type như DateTime, Numberic, ... có thể thay đổi Picture của Control Name của Field đó trên Web Panel với XX9 là hiển thị 0 khi Empty và XXZ là hiện thị Blank khi Empty
+- Để bật chức năng tự động Refresh Web Panel trong một khoảng thời gian có thể sử dụng thuộc tính Refresh TimeOut với Lapse là số giây trôi qua để thực hiện lần Refresh tiếp theo
