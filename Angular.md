@@ -26,7 +26,14 @@
 ## 🔹 Component
 
 ### Khái niệm
-- **Component**: là một khối code trong 
+- **Component** là các khổi xây dựng chính cho ứng dụng Angular. Mỗi component bao gồm:
+    + HTML Template khai báo nội dung sẽ được render trên trang web
+    + TypeScript class để xác định hành vi
+    + CSS Selector xác định cách component được sử dụng trong một template
+
+
+### Vòng đời của Component
+
 
 ## 🔹 Pipe
 ## 🔹 Một số lỗi thường gặp và cách khắc phục
