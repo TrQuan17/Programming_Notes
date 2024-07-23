@@ -3,6 +3,7 @@
 ## 🔷 MỤC LỤC
 - [Tổng quan Genexus](#tổng-quan-genexus)
 - [Transaction](#transaction)
+- [Data View](#data-view)
 - [Danh sách và truy cập dữ liệu theo code](#danh-sách-và-truy-cập-dữ-liệu-theo-code)
 - [Giao tiếp giữa các đối tượng](#giao-tiếp-giữa-các-đối-tượng)
 - [Structured Data Type](#structured-data-type)
@@ -157,6 +158,19 @@
   	+ **Attribute Formula** (Global): khi có bất kì đối tượng nào truy vấn giá trị Attribute thì Formula được kích hoạt và cập nhật giá trị một cách nhanh chóng. Tuy nhiên nếu việc tính toán liên quan đến nhiều bản ghi và mỗi lần phải thực hiện thường xuyên thì có thể gây ảnh hưởng đến hiệu suất ứng dụng
 
   	+ **Formular trong Rule** (Local): giá trị Attribute được gán cục bộ bởi quy tắc trong Rule, chính vì vậy nó không thể bị ép buộc kích hoạt Rule theo yêu cầu. Attribute vẫn được lưu trữ và giá trị của nó có thể chỉnh sửa thông qua biểu mẫu. Trong trường hợp Formula phức tạp thì nên sử dụng để tránh gây ảnh hưởng đến hiệu suất ứng dụng
+
+## 🔷Data View
+
+### Khái niệm
+
+- **Data View** mô tả các thuộc tính của tệp cơ sở dữ liệu bên ngoài (không được GX quản lý) để các đối tượng GX có thể truy cập vào tệp đó
+- Data View bao gồm 3 bộ chọn: **Structure**, **Indexes** và **Documentation**. Trong đó, hai bộ chọn đầu chứa thông tin cần được chỉ định để xác định chính xác mọi thứ cần thiết để giao tiếp với External table
+- **External table** là các bảng không có trong mô hình dữ liệu. Chúng có thể thuộc một model hoặc version khác hoặc có thể không được GX tạo ra
+
+### Componsition
+
+- Cho phép sửa đổi cấu trúc của Data View, ánh xạ với tên thuộc tính internal và external. Khi làm việc với GX, chỉ nhìn thấy Internal name vì nó không tham chiếu đến External name
+- Nếu một Internal table được liên kết với một Data View, cấu trúc nó có thể rỗng, nghĩa là không có thuộc tính nào được xác định. Trong trường hợp này, giả định rằng cấu trúc của Data View tương đương với bảng được liên kết và các index cũng bằng nhau. Điều này được gọi là **Liên kết động (Dynamic Association)**
 
 ## 🔷Danh sách và truy cập dữ liệu theo code
   	  
