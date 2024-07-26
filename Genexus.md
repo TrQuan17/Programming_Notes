@@ -159,19 +159,6 @@
 
   	+ **Formular trong Rule** (Local): giá trị Attribute được gán cục bộ bởi quy tắc trong Rule, chính vì vậy nó không thể bị ép buộc kích hoạt Rule theo yêu cầu. Attribute vẫn được lưu trữ và giá trị của nó có thể chỉnh sửa thông qua biểu mẫu. Trong trường hợp Formula phức tạp thì nên sử dụng để tránh gây ảnh hưởng đến hiệu suất ứng dụng
 
-## 🔷Data View
-
-### Khái niệm
-
-- **Data View** mô tả các thuộc tính của tệp cơ sở dữ liệu bên ngoài (không được GX quản lý) để các đối tượng GX có thể truy cập vào tệp đó
-- Data View bao gồm 3 bộ chọn: **Structure**, **Indexes** và **Documentation**. Trong đó, hai bộ chọn đầu chứa thông tin cần được chỉ định để xác định chính xác mọi thứ cần thiết để giao tiếp với External table
-- **External table** là các bảng không có trong mô hình dữ liệu. Chúng có thể thuộc một model hoặc version khác hoặc có thể không được GX tạo ra
-
-### Componsition
-
-- Cho phép sửa đổi cấu trúc của Data View, ánh xạ với tên thuộc tính internal và external. Khi làm việc với GX, chỉ nhìn thấy Internal name vì nó không tham chiếu đến External name
-- Nếu một Internal table được liên kết với một Data View, cấu trúc nó có thể rỗng, nghĩa là không có thuộc tính nào được xác định. Trong trường hợp này, giả định rằng cấu trúc của Data View tương đương với bảng được liên kết và các index cũng bằng nhau. Điều này được gọi là **Liên kết động (Dynamic Association)**
-
 ## 🔷Danh sách và truy cập dữ liệu theo code
   	  
 ### Truy vấn dữ liệu các giữa các Transaction
@@ -462,15 +449,25 @@
 
 ## 🔷Tip
 
-- Xóa object không dùng (transaction, attribute, variable, domain, ... ): Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
-- Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
+- **Xóa object không dùng (transaction, attribute, variable, domain, ... )**
+
+	Chọn tất cả rồi nhấn Delete để xóa những thứ không cần thiết, những object có liên quan hoặc được sử dụng sẽ không thể xóa
+
+- **Sử dụng Formula Attribute như một Attribute thông thường và tồn tại vật lý**
+
+	Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
 	```
  	// Rule
  	FlightCapacity = count(FlightSeatLocation)
  	```
-	
-- Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
-- Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này Genexus sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
+
+- **Một số lưu ý khi khởi tạo Procedure**
+
+	Với Call Protocol property của Procedure là Command Line, thì Parm không được chứa Variable input theo dạng Collection
+
+- **Lưu ý khi sử dụng Aggregate Formula**
+
+	Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này Genexus sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
 	```
  	// Should not be used
  	For Each Trip
@@ -483,5 +480,15 @@
  		Where TripId = &TripIdWithMaxTripDate
  	EndFor
  	```
-- Để set giá trị Blank với Field với Data Type như DateTime, Numberic, ... có thể thay đổi Picture của Control Name của Field đó trên Web Panel với XX9 là hiển thị 0 khi Empty và XXZ là hiện thị Blank khi Empty
-- Để bật chức năng tự động Refresh Web Panel trong một khoảng thời gian có thể sử dụng thuộc tính Refresh TimeOut với Lapse là số giây trôi qua để thực hiện lần Refresh tiếp theo
+
+- **Hiển thị Blank với giá trị Empty của Data Type DateTime, Numberic, ...**
+
+	Để set giá trị Blank với Field với Data Type như DateTime, Numberic, ... có thể thay đổi Picture của Control Name của Field đó trên Web Panel với XX9 là hiển thị 0 khi Empty và XXZ là hiện thị Blank khi Empty
+
+- **Auto refresh trang web**
+
+	Để bật chức năng tự động Refresh Web Panel trong một khoảng thời gian có thể sử dụng thuộc tính Refresh TimeOut với Lapse là số giây trôi qua để thực hiện lần Refresh tiếp theo
+
+- **Cách query View trong Database**
+
+	Tạo một Transaction với các field giống với View trong Database. Trước khi thực hiện Build, mở Default (Java) Property (có thể tuỳ theo ngôn ngữ được setting lúc khởi tạo KB), trong option Reorganize server tables chọn No để tránh trường hợp tạo ra Table trong DB đè lên View. GX sẽ tự động mapping Transaction với View trong DB, lúc này có thể thực hiện query bình thường
