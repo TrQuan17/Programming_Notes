@@ -1,15 +1,15 @@
 # **Genexus**
 
 ## 🔷 MỤC LỤC
-- [Tổng quan Genexus](#tổng-quan-genexus)
-- [Transaction](#transaction)
-- [Data View](#data-view)
-- [Danh sách và truy cập dữ liệu theo code](#danh-sách-và-truy-cập-dữ-liệu-theo-code)
-- [Giao tiếp giữa các đối tượng](#giao-tiếp-giữa-các-đối-tượng)
-- [Structured Data Type](#structured-data-type)
-- [Cập nhật Database](#cập-nhật-database)
-- [Thiết kế và mô hình hoá màn hình](#thiết-kế-và-mô-hình-hoá-màn-hình)
-- [Tip](#tip)
+- **[Tổng quan Genexus](#tổng-quan-genexus)**
+- **[Transaction](#transaction)**
+- **[Data View](#data-view)**
+- **[Danh sách và truy cập dữ liệu theo code](#danh-sách-và-truy-cập-dữ-liệu-theo-code)**
+- **[Giao tiếp giữa các đối tượng](#giao-tiếp-giữa-các-đối-tượng)**
+- **[Structured Data Type](#structured-data-type)**
+- **[Cập nhật Database](#cập-nhật-database)**
+- **[Thiết kế và mô hình hoá màn hình](#thiết-kế-và-mô-hình-hoá-màn-hình)**
+- **[Tip](#tip)**
 
 ## 🔷Tổng quan Genexus
 
