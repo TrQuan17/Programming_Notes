@@ -37,3 +37,25 @@
     + **Giới hạn kích thước tài liệu** MongoDB áp dụng giới hạn kích thước tài liệu tối đa là 16MB. Các tài liệu lớn hơn có thể cần được xử lý khác nhau hoặc chia thành các tài liệu nhỏ hơn để phù hợp với ràng buộc này
 
     + **Mức tài liệu lồng nhau** Trong MongoDB các tài liệu có thể lồng nhau nhưng bị giới hạn ở mức tối đa là 100. Hạn chế này có thể ảnh hưởng nhỏ hoặc lớn đến việc tổ chức cấu trúc dữ liệu của dự án 
+
+### BSON trong MongoDB
+
+- Với việc sử dụng JSON để biểu diễn các cấu trúc dữ liệu trong Document Data Model của MongoDB, việc xây dựng các ứng dụng bằng công nghệ ngăn xếp (stacks) như MEAN (được xây dựng dựa trên **M**ongoDB, **E**xpress, **A**ngular và **N**odeJS) và MERN (được xây dựng dựa trên **M**ongoDB, **E**xpress, **R**eactJS và **N**odeJS) sẽ dễ dàng hơn vì các nhà phát triển có thể sử dụng một ngôn ngữ lập trình duy nhất (**JavaScripts**) từ đầu đến cuối. Tuy nhiên, có một số vấn đề khiến JSON không lý tưởng để sử dụng bên trong cơ sở dữ liệu:
+    + JSON chỉ hỗ trợ một số lượng hạn chế các kiểu dữ liệu cơ bản. Đặc biệt là JSON không hỗ trợ dữ liệu datetime và binary
+    + Các đối tượng và thuộc tính JSON không có độ dài cố định khiến việc duyệt chậm hơn
+    + JSON không cung cấp Metadata và Type information, khiến việc truy xuất dữ liệu mất nhiều thời gian hơn
+
+> Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng tài liệu JSON, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BJSON (Binary JSON)**
+
+- BJSON**
+
+- Ví dụ về BJSON: 
+    ```json
+        {"hello": "world"} 
+
+        \x16\x00\x00\x00           // total document size
+        \x02                       // 0x02 = type String
+        hello\x00                  // field name
+        \x06\x00\x00\x00world\x00  // field value
+        \x00                       // 0x00 = type EOO ('end of object')
+    ```
