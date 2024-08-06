@@ -1,8 +1,8 @@
 # **MongoDB**
 
 ## 🔷 Mục lục
-- [Tổng quan MongoDB**](#-tổng-quan-mongodb)
-- [Tip](#tip)
+- **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
+- **[Tip](#tip)**
 
 ## 🔷 Tổng quan MongoDB
 
@@ -47,7 +47,7 @@
 
 > Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng tài liệu JSON, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BJSON (Binary JSON)**
 
-- BJSON**
+- **BJSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BJSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
 
 - Ví dụ về BJSON: 
     ```json
