@@ -52,7 +52,8 @@
 - Ví dụ về BJSON: 
     ```json
         {"hello": "world"} 
-
+    ```
+    ```js
         \x16\x00\x00\x00           // total document size
         \x02                       // 0x02 = type String
         hello\x00                  // field name
@@ -61,6 +62,35 @@
     ```
 
 ## 🔷 Tương tác với cơ sở dư liệu
+
+### Truy vấn dữ liệu
+
+- **db.collection.find(query, projection, options)** Trả về con trỏ đến các document khớp với tiêu chí query. Mặc dù khi sử dụng find sẽ trả về document hoặc mảng các document nhưng thực tế thì phương thức này đang trả về con trỏ đến các document. Mặc định của MongoDB, **find()** không cung cấp tất cả các document, nó chỉ cung cấp 20 document đầu tiên. Tuy nhiên, có thể sử dụng phương thức **ToArray()** hoặc **forEach()** để có thể truy cập tất cả document
+    ```js
+    db.products.find({price: { $gte: 100000 }}) // return document[] with price >= 100000
+    ```
+    
+    Với phương thức **forEach()** cho phép lại lại con trỏ và truy cập document
+    ```js
+    db.products.find().forEach(element => {
+        printjson(element.name) // show value of name key in document[]
+    })
+    ```
+    Với phương thức **forEach()**, nó thực sự sẽ chỉ tìm và nạp các document tiếp theo cho mỗi chu kì vòng lặp, do đó tất nhiên không sư dụng quá nhiều băng thông và không tải quá nhiều vào bộ nhớ
+
+    Một số phương thức cho phép sửa đổi hành vi của con trỏ như **sort()**, **limit()**, **skip()**, ...
+    ```js
+    db.products.find().sort({ name: 1}) // return document[] sorted in ASC order by name key
+
+    db.products.find().limt(5) // return document[] with max length = 5
+
+    db.products.find().skip() // return document[] skip the first 5 documents
+    ```
+
+- **db.collection.find(query, projection, options)** Trả về một document duy nhất khớp với tiêu chí query được chỉ định trên collection hoặc view. Nếu có nhiều document thoả mãn điều kiện, phương thức này chỉ trả về document đầu tiên theo thứ tự tự nhiên của các document lưu trữ trong bộ nhớ.
+    ```js
+    db.products.findOne({ name: 'Keyboard' })   // return document first in memory with name: Keyboard
+    ```
 
 ### Thêm mới dữ liệu
 
@@ -80,7 +110,8 @@
         "price": 500000,
     }
     ```
-- Với **insertOne()** khi truyền một mảng document, mongoDB sẽ thêm mới một document với data là mảng các document truyền vào
+
+    Với **insertOne()** khi truyền một mảng document, mongoDB sẽ thêm mới một document với data là mảng các document truyền vào
     ```js
         db.products.insertOne([
             {
@@ -124,7 +155,7 @@
         ])
     ```
 
-- Với **insertMany()**, số lượng thao tác trong mỗi nhóm không được vượt quá giá trị **maxWriteBatchSize**(mặc định là 100,000). Giới hạn này ngăn ngừa các vấn đề với thông báo lỗi quá khổ. Nếu một nhóm vượt quá giới hạn này, trình điều khiển máy khách sẽ chia thành các nhóm nhỏ hoạc bằng giá trị giới hạn. Ví dụ với maxWriteBatchSize là 100,000, nếu queue bao gồm 200,000 operations, trình điều khiển sẽ tạo ra 2 nhóm với mỗi nhóm bao gồm 100,000 operations
+    Với **insertMany()**, số lượng thao tác trong mỗi nhóm không được vượt quá giá trị **maxWriteBatchSize**(mặc định là 100,000). Giới hạn này ngăn ngừa các vấn đề với thông báo lỗi quá khổ. Nếu một nhóm vượt quá giới hạn này, trình điều khiển máy khách sẽ chia thành các nhóm nhỏ hoạc bằng giá trị giới hạn. Ví dụ với maxWriteBatchSize là 100,000, nếu queue bao gồm 200,000 operations, trình điều khiển sẽ tạo ra 2 nhóm với mỗi nhóm bao gồm 100,000 operations
 
 ### Cập nhật dữ liệu
 
@@ -145,3 +176,5 @@
         $set: { discout: true }
     })
     ```
+
+- Sự khác nhau giữa **replaceOne()** và **updateOne()**: **db.collection.replaceOne(filter, update, options)** được sử dụng để thay thế một document duy nhất trong collection thoả mãn filter. Điều này có nghĩa là document hiện tại sẽ bị xoá và được thay thế bằng một document mới. Tuy nhiên, với **updateOne()**, document sẽ không được thay thế hoàn toàn mà thay vào đó, chỉ các trường được chỉ định sẽ được cập nhật
