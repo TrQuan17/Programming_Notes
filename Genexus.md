@@ -436,7 +436,7 @@
 
 - Có các đặc điểm chính như sau:
  	+ **Đa trải nghiệm**: Web responsive, Native Mobile, Chatbots, Inbox-driven
-  	+**Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, Genexusflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
+  	+ **Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, Genexusflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
   	+ **Standard Module**: được phát triển trong một Genexus Module và được phát hành dưới dạng là một Module
   	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
  	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
@@ -483,7 +483,31 @@
 
 - **Hiển thị Blank với giá trị Empty của Data Type DateTime, Numberic, ...**
 
-	Để set giá trị Blank với Field với Data Type như DateTime, Numberic, ... có thể thay đổi Picture của Control Name của Field đó trên Web Panel với XX9 là hiển thị 0 khi Empty và XXZ là hiện thị Blank khi Empty
+	Với mỗi atttribute hoặc biến (kiểu dữ liệu nguyên thuỷ) đều có thuộc tính Picture để mô tả hiển thị dữ liệu của attribute hoặc biến đó trên màn hình. Riêng về dữ liệu có dạng số (numeric hoặc date/datetime), với chữ số `9` biểu diễn cho hiển thị `0` khi giá trị là rỗng, với chữ cái là `Z` biểu diễn cho hiển thị `blank` khi giá trị rỗng, với dấu `#` không hiển thị số `0` ở bên trái hoặc bên phải (số `0` không có ý nghĩa - 0009.120), với dấu `?` hiển thị `blank` thay cho số `0`` ở bên trái hoặc bên phải(số `0` không có ý nghĩa - 0009.120) và duy trì sự căn chỉnh của số
+	```js
+	// display Price with picture ZZ,ZZZ,ZZ9.99
+
+	Price 12,124,245.32		
+	Price 0.00				
+
+	// display Price with picture ####9.###
+
+	Price 21351.1
+	Price 251.121
+	Price 0
+
+	// display Price with picture ????9.???
+	
+	Price 24590.254
+	Price    12.24
+	Price 	  0
+	```
+	
+	Trong mục **Property** của attribute/biến, có thể chỉnh ở phần Picture. Ngoài ra, ta có thể set picture với control name bằng thuộc tính **picture**
+	```js
+	price.picture = 'ZZ,ZZZ,ZZ9.99'	// set picture with control name of price
+	```
+	
 
 - **Auto refresh trang web**
 
