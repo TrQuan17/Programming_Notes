@@ -92,6 +92,13 @@
     db.products.findOne({ name: 'Keyboard' })   // return document first in memory with name: Keyboard
     ```
 
+- **Projection** Trong quá trình truy vấn dữ liệu với phương thức **find()**, mặc định sẽ truy vấn tất cả các field trong document. Để giới hạn số lượng các field mà MongoDB gửi tới ứng dụng truy vấn, có thể chỉ rõ những field cần thiết để cho phép trả về. Quá trình này gọi là **Projection**
+    ```js
+    db.products.find({}, {name: 1})     // return document with field name and _id
+    db.products.find({}, {name: 0})     // return document without field name and _id
+    ```
+
+
 ### Thêm mới dữ liệu
 
 - **db.collection.insertOne()** Chèn một document duy nhất vào collection.
