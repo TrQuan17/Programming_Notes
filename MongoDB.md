@@ -97,7 +97,88 @@
     db.products.find({}, {name: 1})     // return document with field name and _id
     db.products.find({}, {name: 0})     // return document without field name and _id
     ```
+### Tài liệu nhúng (Embedded Document)
+- **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
+    ```js
+    {
+        _id: ObjectId('66b31747f5e99a509c228fb7'),
+        name: 'LG MP400-B',
+        price: 2390000,
+        technical: { 
+            screen_size: 24,
+            resolution: 'FHD 1080p', 
+            aspect_ratio: '16:9' 
+        }
+    }
+    ```
 
+- Những ưu điểm khi sử dụng **Embedded Document**:
+    + **Nhất quán dữ liệu** Tất cả dữ liệu liên quan đều nằm trong một document nên việc cập nhật docmument đảm bảo tính nhất quán dữ liệu
+    + **Hiệu suất truy vấn** Việc truy vấn tất cả dữ liệu liên quan trong một truy vấn duy nhất nhanh hơn và hiệu quả hơn vì nó tránh được nhu cầu sử dụng nhiều truy vấn và 
+    + **Vị trí lưu trữ** Việc lưu trữ các dữ liệu liên quan với nhau có thể cải thiện hiệu suất, đặc biệt là khi dữ liệu thường được truy cập cùng nhau
+
+- Tuy nhiên, **Embedded Document** cũng tồn tại một số nhược điểm như sau:
+    + **Kích thước document** MongoDB có giới hạn kích thước document là 16MB. Việc nhúng quá nhiều document có thể dẫn đến quá tải giới hạn này
+    + **Sự trùng lặp** Dữ liệu Embedded document trên nhiều document có thể giống nhau dẫn đến tăng nhu cầu lưu trữ dữ liệu không cần thiết
+        ```js
+        // both products are under the Hoco brand and contain information from this brand.
+        // => Duplicate data
+        {
+            _id: ObjectId('66b31747f5e99a509c228fb8'),
+            name: 'HDMI Hoco Cabel',
+            price: 75000,
+            brand: {                                    
+                name: 'Hoco Technology',
+                industry: 'Technology',
+                founded: '2024',
+                headquarters: {
+                    city: 'Tokyo',
+                    country: 'Japan'
+                },
+                website: 'www.hoco.com',
+                products: [
+                    'Charging Cable',
+                    'Wireless Charger',
+                    'Headphones'
+                ]
+            }
+        },
+        {
+            _id: ObjectId('66b31abff5e99a509c228fb9'),
+            name: 'TypeC Hoco Cabel',
+            price: 32000,
+            brand: {
+                name: 'Hoco Technology',
+                industry: 'Technology',
+                founded: '2024',
+                headquarters: {
+                    city: 'Tokyo',
+                    country: 'Japan'
+                },
+                website: 'www.hoco.com',
+                products: [
+                    'Charging Cable',
+                    'Wireless Charger',
+                    'Headphones'
+                ]
+            }
+        }
+        ```
+    
+    + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu
+
+- Các trường hợp có thể sử dụng **Embedded Document**:
+    + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
+    + Quan hệ **One-Many**: Trong trường hợp này **Embedded Document** cũng có thể được sử dụng nhưng với phía "Many" không quá lớn và thường xuyên được truy cập bằng document gốc
+    ```js
+    {
+        name: 'Quan',
+        address: {
+            province: 'Quang Tri',
+            country: 'Viet Nam'
+        }
+    }
+    ```
 
 ### Thêm mới dữ liệu
 
