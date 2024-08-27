@@ -1,7 +1,9 @@
 # **MongoDB**
 
 ## 🔷 Mục lục
-- **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
+- **[Tổng quan MongoDB](#tổng-quan-mongodb)**
+- **[Tương tác với cơ sở dữ liệu](#tương-tác-với-cơ-sở-dữ-liệu)**
+- **[Lược đồ (Schemas)](#lược-đồ-schemas)**
 - **[Tip](#tip)**
 
 ## 🔷 Tổng quan MongoDB
@@ -61,7 +63,7 @@
         \x00                       // 0x00 = type EOO ('end of object')
     ```
 
-## 🔷 Tương tác với cơ sở dư liệu
+## 🔷 Tương tác với cơ sở dữ liệu
 
 ### Truy vấn dữ liệu
 
@@ -266,3 +268,15 @@
     ```
 
 - Sự khác nhau giữa **replaceOne()** và **updateOne()**: **db.collection.replaceOne(filter, update, options)** được sử dụng để thay thế một document duy nhất trong collection thoả mãn filter. Điều này có nghĩa là document hiện tại sẽ bị xoá và được thay thế bằng một document mới. Tuy nhiên, với **updateOne()**, document sẽ không được thay thế hoàn toàn mà thay vào đó, chỉ các trường được chỉ định sẽ được cập nhật
+
+## 🔷 Lược đồ (Schemas)
+
+### Tổng quan
+
+- **Schema** là đối tượng **JSON** xác định cấu trúc và nội dung dữ liệu cụ thể của ứng dụng, mô tả các trường mà document có, loại giá trị mà các trường đó chứa và các điều kiện phải đáp ứng để thay đổi giá trị là hợp lệ. Mặc định, MongoDB thực thi không sử dụng **Schema**, các document có thể có cấu trúc khác nhau trong cùng một collection, tuy nhiên điều đó không có nghĩa là không thể sử dụng **Schema**.
+
+- Trong MongoDB, **Schema** được định nghĩa ở cấp độ collection, nó không chỉ bao gồm lược đồ JSON tiêu chuẩn, ngoài ra còn hỗ trợ cho các loại BJSON tích hợp của MongoDB, cho phép mô tả một cách đầy đủ các kiểu dữ liệu trong MongoDB
+
+- **Schema** sẽ được thực thi khi có bất kì dữ liệu nào được ghi vào MongoDB. Điều này bao gồm thêm mới, cập nhật và xoá từ dịch vụ API, hàm (Function) hoặc đồng bộ hoá thiết bị (Device Sync)
+
+## 🔷 Tip
