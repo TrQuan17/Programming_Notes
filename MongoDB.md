@@ -1,10 +1,10 @@
 # **MongoDB**
 
 ## 🔷 Mục lục
-- **[Tổng quan MongoDB](#tổng-quan-mongodb)**
-- **[Tương tác với cơ sở dữ liệu](#tương-tác-với-cơ-sở-dữ-liệu)**
-- **[Lược đồ (Schemas)](#lược-đồ-schemas)**
-- **[Tip](#tip)**
+- **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
+- **[Tương tác với cơ sở dữ liệu](#-tương-tác-với-cơ-sở-dữ-liệu)**
+- **[Lược đồ (Schemas)](#-lược-đồ-schemas)**
+- **[Tip](#-tip)**
 
 ## 🔷 Tổng quan MongoDB
 
@@ -47,11 +47,11 @@
     + Các đối tượng và thuộc tính JSON không có độ dài cố định khiến việc duyệt chậm hơn
     + JSON không cung cấp Metadata và Type information, khiến việc truy xuất dữ liệu mất nhiều thời gian hơn
 
-> Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng tài liệu JSON, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BJSON (Binary JSON)**
+> Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng tài liệu JSON, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BSON (Binary JSON)**
 
-- **BJSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BJSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
+- **BSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
 
-- Ví dụ về BJSON: 
+- Ví dụ về BSON: 
     ```json
         {"hello": "world"} 
     ```
@@ -271,12 +271,40 @@
 
 ## 🔷 Lược đồ (Schemas)
 
-### Tổng quan
-
 - **Schema** là đối tượng **JSON** xác định cấu trúc và nội dung dữ liệu cụ thể của ứng dụng, mô tả các trường mà document có, loại giá trị mà các trường đó chứa và các điều kiện phải đáp ứng để thay đổi giá trị là hợp lệ. Mặc định, MongoDB thực thi không sử dụng **Schema**, các document có thể có cấu trúc khác nhau trong cùng một collection, tuy nhiên điều đó không có nghĩa là không thể sử dụng **Schema**.
 
-- Trong MongoDB, **Schema** được định nghĩa ở cấp độ collection, nó không chỉ bao gồm lược đồ JSON tiêu chuẩn, ngoài ra còn hỗ trợ cho các loại BJSON tích hợp của MongoDB, cho phép mô tả một cách đầy đủ các kiểu dữ liệu trong MongoDB
+- Trong MongoDB, **Schema** được định nghĩa ở cấp độ collection, nó không chỉ bao gồm lược đồ JSON tiêu chuẩn, ngoài ra còn hỗ trợ cho các loại BSON tích hợp của MongoDB, cho phép mô tả một cách đầy đủ các kiểu dữ liệu trong MongoDB
 
 - **Schema** sẽ được thực thi khi có bất kì dữ liệu nào được ghi vào MongoDB. Điều này bao gồm thêm mới, cập nhật và xoá từ dịch vụ API, hàm (Function) hoặc đồng bộ hoá thiết bị (Device Sync)
+
+- Cú pháp cơ bản của một Schema như sau
+    ```json
+    {
+        "bsonType": "object",
+        "title": "<type name>",
+        "required": ["<required field names>"],
+        "properties": {
+            "<field name>": "Schema"
+        }
+    }
+    ```
+    ```json
+    {
+        // basic schema for product about products
+        "title": "product",
+        "required": [
+            "_id",
+            "name",
+            "price"
+        ],
+        "properties": {
+            "_id"   : { "bsonType": "objectId" },
+            "name"  : { "bsonType": "string"},
+            "price" : { "bsonType": "number"}
+        }
+    }
+    ```
+
+## 🔷 Quan hệ (Relations)
 
 ## 🔷 Tip
