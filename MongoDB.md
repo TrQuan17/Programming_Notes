@@ -4,6 +4,7 @@
 - **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
 - **[Tương tác với cơ sở dữ liệu](#-tương-tác-với-cơ-sở-dữ-liệu)**
 - **[Lược đồ (Schemas)](#-lược-đồ-schemas)**
+- **[Quan hệ (Relations)](#-quan-hệ-relations)**
 - **[Tip](#-tip)**
 
 ## 🔷 Tổng quan MongoDB
@@ -167,7 +168,7 @@
         }
         ```
     
-    + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu
+    + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu. Ngoài ra, nếu nhiều dữ liệu có chung thông tin tài liệu nhúng (như ví dụ ở trên) thì khi cập nhật, phải cập nhật tất cả dữ liệu có liên quan, điều này khó kiểm soát được tính thống nhất dữ liệu
 
 - Các trường hợp có thể sử dụng **Embedded Document**:
     + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
@@ -271,7 +272,7 @@
 
 ## 🔷 Lược đồ (Schemas)
 
-- **Schema** là đối tượng **JSON** xác định cấu trúc và nội dung dữ liệu cụ thể của ứng dụng, mô tả các trường mà document có, loại giá trị mà các trường đó chứa và các điều kiện phải đáp ứng để thay đổi giá trị là hợp lệ. Mặc định, MongoDB thực thi không sử dụng **Schema**, các document có thể có cấu trúc khác nhau trong cùng một collection, tuy nhiên điều đó không có nghĩa là không thể sử dụng **Schema**.
+- **Schema** là đối tượng **JSON** xác định cấu trúc và nội dung dữ liệu cụ thể của ứng dụng, mô tả các trường mà document có, loại giá trị mà các trường đó chứa và các điều kiện phải đáp ứng để thay đổi giá trị là hợp lệ. Mặc định, MongoDB thực thi không sử dụng **Schema**, các document có thể có cấu trúc khác nhau trong cùng một collection, tuy nhiên điều đó không có nghĩa là không thể sử dụng **Schema**
 
 - Trong MongoDB, **Schema** được định nghĩa ở cấp độ collection, nó không chỉ bao gồm lược đồ JSON tiêu chuẩn, ngoài ra còn hỗ trợ cho các loại BSON tích hợp của MongoDB, cho phép mô tả một cách đầy đủ các kiểu dữ liệu trong MongoDB
 
@@ -288,7 +289,7 @@
         }
     }
     ```
-    ```json
+    ```json5
     {
         // basic schema for product about products
         "title": "product",
@@ -306,5 +307,90 @@
     ```
 
 ## 🔷 Quan hệ (Relations)
+
+### Mô hình One - One Relationships với Embedded Document
+- Trong MongoDB, mô hình **One - One** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này được liên kết chính xác với một document trong collection khác
+
+- Embedded Document được sử dụng tối ưu nhất để mô tả mối quan hệ **One - One** giữa dữ liệu được kết nối. Embedded Document được kết nối vào một document duy nhất có thể giảm số lượng thao tác truy vấn cần thiết để lấy dữ liệu
+    ```js
+    {
+        username: 'QuanTT',
+        setting: {
+            themeColor: '#000000',
+            language: 'VietNam',
+            backgroundURL: 'www.background.com?image=1'
+        }
+    }
+    ```
+
+### Mô hình One - Many Relationships với References Document
+- Trong MongoDB, mô hình **One - Many** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này có thể liên kết với nhiều document trong collection khác
+
+- References Document được sử dụng tối ưu nhất để mô tả mối quan hệ **One - Many** giữa dữ liệu được kết nối
+    ```js
+    // OS
+    {
+        _id: ObjectId('66cfe183ab74488678228fb6')
+        name: 'Microsoft Windows',
+        developed: 'Microsoft',
+        packageManager: 'Windows Installer(.msi .msp)',
+        platforms: 'X86-64',
+        InitialRelease: '20/11/1985'
+    }
+    ```
+    ```js
+    // products
+    {
+        name: 'Lenovo LOQ 15IAX9 83FQ0005VN',
+        detail: {
+            CPU: 'Intel Core i5-12450HX',
+            RAM: '2x 8GB DDR5-4800Mhz',
+            Memory: '512GB SSD M.2 2242 PCIe 4.0x4 NVMe',
+            Screen: '15.6inch FHD (1920x1080)'
+        },
+        OS: ObjectId('66cfe183ab74488678228fb6')
+    }
+    ```
+
+### Mô hình Many - Many Relationships với References Document
+- Trong MongoDB, mô hình **Many - Many** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này có thể liên kết với nhiều document trong collection khác, và ngược lại
+
+- References Document được sử dụng tối ưu nhất để mô tả mối quan hệ **Many - Many** giữa dữ liệu được kết nối
+    ```js
+    // courses
+    [
+        {
+            _id: ObjectId('66cfe115ab74488678228fb5'),
+            name: 'Software Engineering',
+            students: [
+                ObjectId('66b2feb5f5e99a509c228fb6'),
+                ObjectId('66b31747f5e99a509c228fb7')
+            ]
+        },
+        {
+            _id: ObjectId('66b2fbfcf5e99a509c228fb5'),
+            name: 'Artificial Intelligence'
+        }   
+    ]
+    ```
+    ```js
+    // students
+    [
+        {
+            _id: ObjectId('66b2feb5f5e99a509c228fb6'),
+            name: 'Quan',
+            courses: [
+                ObjectId('66cfe115ab74488678228fb5'),
+                ObjectId('66b2fbfcf5e99a509c228fb5')
+            ]
+        }, 
+        {
+            _id: ObjectId('66b31747f5e99a509c228fb7'),
+            name: 'Bi'
+        }
+    ]
+    ```
+
+### Hợp nhất các quan hệ tham chiếu (Merging Reference Re)
 
 ## 🔷 Tip
