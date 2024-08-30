@@ -391,6 +391,40 @@
     ]
     ```
 
-### Hợp nhất các quan hệ tham chiếu (Merging Reference Re)
+### Hợp nhất các quan hệ tham chiếu (Merging Reference Relations)
+- **Left Outer Join**
+    + `$lookup` Thực hiện **Left Outer Join** vào một collection khác trong cùng cơ sở dữ liệu để lọc các document từ collection joined để xử lý
+    
+    + `$lookup` thêm một trường là mảng mới vào mỗi document đầu vào. Mảng này chứa các document khớp từ collection joined 
 
+    + Cú pháp thực hiện
+        ```js
+        {
+            $lookup:
+            {
+                from: '<collection to join>',
+                localField: '<field from the input documents>',
+                foreignField: '<field from the documents of the from collection>',
+                as: '<output array field>'
+            }
+        }
+        ```
+        - `from`: chỉ định collection trong cùng một cơ sở dữ liệu để thực hiện liên kết
+
+        - `localField`: chỉ định trường từ các document đầu vào. `$lookup` thực hiện so khớp `localField` với `foreignField` từ document trong from collection. Nếu document đầu vào không chứa `localField`, thì `$lookup` sẽ xem trường đó có giá trị `null` cho mục đích so khớp
+
+        - `foreignField`: chỉ định field từ các document trong from collection. `$lookup` thực hiện so khớp `foreignField` với `localField` của document đầu vào. Nếu một document trong from collection không chứa foreignField, thì `$lookup` xem trường đó có giá trị là `null` cho mục đích so khớp
+
+        - `as`: chỉ định tên của trường mảng mới để thêm vào document đầu vào. Trường mảng mới chứa các document khớp từ from collection. Nếu tên được chỉ định đã tồn tại trong document đầu vào, trường hiện tại sẽ bị **ghi đè**
+
+    + Hoạt động của `$lookup` tương tự với câu lệnh SQL như sau
+        ```SQL
+        SELECT *, (
+            SELECT ARRAY(*)
+            FROM Collection_to_join
+            WHERE ForeignField = Collection_input.localField
+        ) AS Output_array_field
+        FROM Collection_input;
+        ```
+        
 ## 🔷 Tip
