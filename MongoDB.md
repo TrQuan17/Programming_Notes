@@ -299,11 +299,17 @@
             "price"
         ],
         "properties": {
-            "_id"   : { "bsonType": "objectId" },
-            "name"  : { "bsonType": "string"},
+            "_id" : { "bsonType": "objectId"},
+            "name" : { "bsonType": "string"},
             "price" : { "bsonType": "number"}
         }
     }
+    ```
+- Để thực hiện nhúng Schema cho collection, ta sử dụng kết hợp **db.createCollection(name, options)** để tạo các collection mới với các tuỳ chọn cụ thể và toán tử **$jsonSchema** sẽ so khớp các document tương ứng **JSON Schema** đã chỉ định
+    ```js
+    db.createCollection('products', {
+        
+    })
     ```
 
 ## 🔷 Quan hệ (Relations)
