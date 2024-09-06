@@ -308,7 +308,52 @@
 - Để thực hiện nhúng Schema cho collection, ta sử dụng kết hợp **db.createCollection(name, options)** để tạo các collection mới với các tuỳ chọn cụ thể và toán tử **$jsonSchema** sẽ so khớp các document tương ứng **JSON Schema** đã chỉ định
     ```js
     db.createCollection('products', {
-        
+        validator: {
+            $jsonSchema: {
+                bsonType: 'object',
+                required: ['name', 'price', 'brand'],
+                properties: {
+                    name: {
+                        bsonType: 'string',
+                        description: 'must be a string and is required!'
+                    },
+                    price: {
+                        bsonType: 'number',
+                        description: 'must be a number and is required!'
+                    },
+                    brand: {
+                        bsonType: 'objectId',
+                        description: 'must be an ObjectId and is exist in the Brand document!'
+                    }
+                }
+            }
+        }
+    })
+    ```
+- Cập nhật Schema với **db.runCommand(command, [options])**
+    ```js
+    db.runCommand({ 
+        collMod: 'products',
+        validator: {
+            $jsonSchema: {
+                bsonType: 'object',
+                required: ['name', 'price'],
+                properties: {
+                    name: {
+                        bsonType: 'string',
+                        description: 'must be a string and is required!'
+                    },
+                    price: {
+                        bsonType: 'number',
+                        description: 'must be a number and is required!'
+                    },
+                    brand: {
+                        bsonType: 'objectId',
+                        description: 'is exist in the Brand document!'
+                    }
+                }
+            }
+        }
     })
     ```
 
