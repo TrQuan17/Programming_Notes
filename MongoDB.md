@@ -100,6 +100,7 @@
     db.products.find({}, {name: 1})     // return document with field name and _id
     db.products.find({}, {name: 0})     // return document without field name and _id
     ```
+
 ### Tài liệu nhúng (Embedded Document)
 - **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
     ```js
@@ -173,19 +174,19 @@
 - Các trường hợp có thể sử dụng **Embedded Document**:
     + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
     + Quan hệ **One-Many**: Trong trường hợp này **Embedded Document** cũng có thể được sử dụng nhưng với phía "Many" không quá lớn và thường xuyên được truy cập bằng document gốc
-    ```js
-    {
-        name: 'Quan',
-        address: {
-            province: 'Quang Tri',
-            country: 'Viet Nam'
+        ```js
+        {
+            name: 'Quan',
+            address: {
+                province: 'Quang Tri',
+                country: 'Viet Nam'
+            }
         }
-    }
-    ```
+        ```
 
 ### Thêm mới dữ liệu
 
-- **db.collection.insertOne()** Chèn một document duy nhất vào collection.
+- **db.collection.insertOne()** Chèn một document duy nhất vào collection. Với mỗi document được thêm mới, MongoDB sẽ tự động thêm trường **_id** với giá trị là duy nhất trong database.
     ```js
     db.products.insertOne({
         name: 'Keyboard',
@@ -202,37 +203,37 @@
     }
     ```
 
-    Với **insertOne()** khi truyền một mảng document, mongoDB sẽ thêm mới một document với data là mảng các document truyền vào
-    ```js
-        db.products.insertOne([
-            {
-                name: 'Keyboard',
-                price: 500000
+    + Với **insertOne()** khi truyền một mảng document, mongoDB sẽ thêm mới một document với data là mảng các document truyền vào
+        ```js
+            db.products.insertOne([
+                {
+                    name: 'Keyboard',
+                    price: 500000
+                },
+                {
+                    name: 'HDMI Cabel',
+                    price: 125000
+                }
+            ])
+        ```
+        ```json
+        {
+            "0": {
+                "name": "Keyboard",
+                "price": 500000
             },
-            {
-                name: 'HDMI Cabel',
-                price: 125000
+            "1": {
+                "name": "HDMI Cabel",
+                "price": 125000
+            },
+            "_id": {
+                "$oid": "66b3260978839d9bce228fb9"
             }
-        ])
-    ```
-    ```json
-    {
-        "0": {
-            "name": "Keyboard",
-            "price": 500000
-        },
-        "1": {
-            "name": "HDMI Cabel",
-            "price": 125000
-        },
-        "_id": {
-            "$oid": "66b3260978839d9bce228fb9"
         }
-    }
 
-    ```
+        ```
 
-- **db.collection.insertMany()** Chèn một hoặc nhiều document vào collection. Theo mặc định, document được chèn theo thứ tự được cung cấp. Tuy nhiên, document có thể được **mongod** sắp xếp lại để tăng hiệu suất. Chính vì vậy, các ứng dụng không nên phụ thuộc vào thứ tự chèn nếu sử dụng **insertMany()**. Khi thực hiện **insertMany()** với option là **ordered: true**, nếu việc chèn không thành công, server sẽ không tiếp tục chèn bản ghi, ngược lại, với **ordered: false**, nếu việc chèn không thành công, server vẫn sẽ tiếp tục chèn bản ghi tiếp theo
+- **db.collection.insertMany()** Chèn một hoặc nhiều document vào collection. Theo mặc định, document được chèn theo thứ tự được cung cấp. Tuy nhiên, document có thể được **mongod** sắp xếp lại để tăng hiệu suất. Chính vì vậy, các ứng dụng không nên phụ thuộc vào thứ tự chèn nếu sử dụng **insertMany()**
     ```js
         db.products.insertMany([
             {
@@ -246,7 +247,9 @@
         ])
     ```
 
-    Với **insertMany()**, số lượng thao tác trong mỗi nhóm không được vượt quá giá trị **maxWriteBatchSize**(mặc định là 100,000). Giới hạn này ngăn ngừa các vấn đề với thông báo lỗi quá khổ. Nếu một nhóm vượt quá giới hạn này, trình điều khiển máy khách sẽ chia thành các nhóm nhỏ hoạc bằng giá trị giới hạn. Ví dụ với maxWriteBatchSize là 100,000, nếu queue bao gồm 200,000 operations, trình điều khiển sẽ tạo ra 2 nhóm với mỗi nhóm bao gồm 100,000 operations
+    + **Thêm mới có thứ tự** Khi thực hiện **insertMany()** với option là **ordered: true**, nếu việc chèn không thành công, server sẽ không tiếp tục chèn bản ghi, ngược lại, với **ordered: false**, nếu việc chèn không thành công, server vẫn sẽ tiếp tục chèn bản ghi tiếp theo
+
+    + Với **insertMany()**, số lượng thao tác trong mỗi nhóm không được vượt quá giá trị **maxWriteBatchSize**(mặc định là 100,000). Giới hạn này ngăn ngừa các vấn đề với thông báo lỗi quá khổ. Nếu một nhóm vượt quá giới hạn này, trình điều khiển client sẽ chia thành các nhóm nhỏ hơn hoặc bằng giá trị giới hạn. Ví dụ với maxWriteBatchSize là 100,000, nếu queue bao gồm 180,000 operations, trình điều khiển sẽ tạo ra 2 nhóm bao gồm 100,000 operations và 80,000 operations
 
 ### Cập nhật dữ liệu
 
@@ -269,6 +272,37 @@
     ```
 
 - Sự khác nhau giữa **replaceOne()** và **updateOne()**: **db.collection.replaceOne(filter, update, options)** được sử dụng để thay thế một document duy nhất trong collection thoả mãn filter. Điều này có nghĩa là document hiện tại sẽ bị xoá và được thay thế bằng một document mới. Tuy nhiên, với **updateOne()**, document sẽ không được thay thế hoàn toàn mà thay vào đó, chỉ các trường được chỉ định sẽ được cập nhật
+
+### Xoá dữ liệu
+
+### Toàn vẹn dữ liệu (Atomicity)
+- **Tính nguyên tử (Atomicity) - tính toàn vẹn dữ liệu** trong MongoDB đảm bảo rằng các hoạt động CRUD trên document là thành công toàn bộ hoặc thất bại toàn bộ. Nghĩa là, nếu chỉ với một field của document xảy ra lỗi trong quá trình truy vấn dữ liệu thì toàn bộ field của document đó cũng sẽ rollback
+
+- Atomicity ở cấp độ mỗi document, nghĩa là document có cấp cao nhất vì vậy nó bao gồm tất cả field trong document kể cả các Embedded Document, các mảng, ... 
+
+- Khi một thao tác thực hiện thêm mới hoặc sửa đổi nhiều document (insertMany, updateMany) thì việc đó với mỗi document là Atomicity nhưng toàn bộ thao tác không phải Atomacity
+    ```js
+    db.insertMany([
+        {
+            // document insert success
+            name: 'Xinmmeng X98 Keyboard',
+            price: 1050000
+        }, 
+        {
+            // document insert fail with price field error
+            name: 'Hoco H35 Air',
+            price: 'aaaaa'          
+        },
+        {
+            // document insert success
+            name: 'NB F80 Arm',
+            price: 355000
+        }
+    ], {
+        // insert without order
+        ordered: false
+    })
+    ```
 
 ## 🔷 Lược đồ (Schemas)
 
@@ -305,6 +339,7 @@
         }
     }
     ```
+
 - Để thực hiện nhúng Schema cho collection, ta sử dụng kết hợp **db.createCollection(name, options)** để tạo các collection mới với các tuỳ chọn cụ thể và toán tử **$jsonSchema** sẽ so khớp các document tương ứng **JSON Schema** đã chỉ định
     ```js
     db.createCollection('products', {
@@ -330,6 +365,7 @@
         }
     })
     ```
+
 - Cập nhật Schema với **db.runCommand(command, [options])**
     ```js
     db.runCommand({ 
@@ -437,7 +473,10 @@
         }, 
         {
             _id: ObjectId('66b31747f5e99a509c228fb7'),
-            name: 'Bi'
+            name: 'Bi',
+            courses: [
+                ObjectId('66cfe115ab74488678228fb5')
+            ]
         }
     ]
     ```
@@ -467,6 +506,47 @@
         - `foreignField`: chỉ định field từ các document trong from collection. `$lookup` thực hiện so khớp `foreignField` với `localField` của document đầu vào. Nếu một document trong from collection không chứa foreignField, thì `$lookup` xem trường đó có giá trị là `null` cho mục đích so khớp
 
         - `as`: chỉ định tên của trường mảng mới để thêm vào document đầu vào. Trường mảng mới chứa các document khớp từ from collection. Nếu tên được chỉ định đã tồn tại trong document đầu vào, trường hiện tại sẽ bị **ghi đè**
+
+        ```js
+        db.products.aggregate({
+            $lookup: {
+                from: 'brands',
+                localField: 'brand',
+                foreignField: '_id',
+                as: 'brandRefer'
+            }
+        })
+        ```
+        ```js
+        // products data output
+        [
+            {
+                _id_: ObjectId('66dc2337c6bc1310cec73bfa'),
+                name: 'Type C Cable',
+                brand: ObjectId('66dc1690c6bc1310cec73bf9'),        // localField
+                price: 125500,
+                brandRefer: [
+                    {
+                        // data from in brands collection
+                        _id: ObjectId('66dc1690c6bc1310cec73bf9'),  // foreignField
+                        name: 'Hoco Technology',
+                        industry: 'Technology',
+                        founded: '2024',
+                        headquarters: {
+                            city: 'Tokyo',
+                            country: 'Japan'
+                        },
+                        website: 'www.hoco.com',
+                        products: [
+                            'Charging Cable',
+                            'Wireless Charger',
+                            'Headphones'
+                        ]
+                    }
+                ]
+            }
+        ]
+        ```
 
     + Hoạt động của `$lookup` tương tự với câu lệnh SQL như sau
         ```SQL
