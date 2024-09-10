@@ -2,6 +2,7 @@
 
 ## 🔷 Mục lục
 - **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
+- **[Một số toán tử cơ bản](#-một-số-toán-tử-cơ-bản)**
 - **[Tương tác với cơ sở dữ liệu](#-tương-tác-với-cơ-sở-dữ-liệu)**
 - **[Lược đồ (Schemas)](#-lược-đồ-schemas)**
 - **[Quan hệ (Relations)](#-quan-hệ-relations)**
@@ -63,6 +64,65 @@
         \x06\x00\x00\x00world\x00  // field value
         \x00                       // 0x00 = type EOO ('end of object')
     ```
+## 🔷 Một số toán tử cơ bản
+
+### Toán tử truy vấn và tham chiếu
+
+- **Toán tử so sánh**
+    ```js
+    {field: {$operator : value}}
+
+    // Example
+    db.products.find({price: {$gte: 24000}})
+    ```
+
+    + `$eq` - `$ne` So sánh bằng và không bằng
+    + `$gt` - `$gte` So sánh lớn hơn và lớn hơn bằng
+    + `$lt` - `$le` So sánh nhỏ hơn và nhỏ hơn bằng
+    + `$in` - `$nin` Tồn tại và không tồn tại các giá trị trong mảng chỉ định, với 2 toán tử này, cú pháp thực hiện như sau
+        ```js
+            {field: {$operator : [value1, value2...]}}
+
+            // Example
+            db.products.find({
+                type: {$in: ['Cable', 'Screen', 'Keyboard']}
+            })
+        ```
+
+- **Toán tử Logic**
+    ```js
+    {$operator: [expression1, expression2, ...]}
+
+    // Example
+    db.products.find({
+        $or: [
+            {price: {$le: 12000}},
+            {price: {$gte: 360000}}
+        ]
+    })
+    ```
+
+    + `$and` Nối mệnh đề truy vấn bằng logic **AND**, trả về document khớp với các mệnh đề
+    + `$or` Nối các mệnh đề truy vấn bằng logic **OR**, trả về document khớp ít nhất một trong các mệnh đề
+    + `$nor` Nối các mẹnh đề truy vấn bằng logic **NOR**, trả về document không khớp với các mệnh đề truy vấn
+    + `$not` Đảo ngược logic của biểu thức truy vấn và trả về document không khớp với biểu thức truy vấn, cú pháp thực hiện như sau
+        ```js
+        {field: {$not: {expression}}}
+
+        // Example
+        db.products.find({
+            price: {$not: {$gte: 30000}}
+        })
+        ```
+
+- **Toán tử phần tử**
+    + `$exists` Trả về những document chứa hoặc không chứa field được chỉ định
+    ```
+    db.products.find({
+        brand: {$exists: true}
+    })
+    ```
+
 
 ## 🔷 Tương tác với cơ sở dữ liệu
 
