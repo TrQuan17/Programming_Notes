@@ -54,6 +54,7 @@
 - **BSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
 
 - Ví dụ về BSON: 
+
     ```json
         {"hello": "world"} 
     ```
@@ -69,6 +70,7 @@
 ### Toán tử truy vấn và tham chiếu
 
 - **Toán tử so sánh**
+
     ```js
     {field: {$operator : value}}
 
@@ -80,6 +82,7 @@
     + `$gt` - `$gte` So sánh lớn hơn và lớn hơn bằng
     + `$lt` - `$le` So sánh nhỏ hơn và nhỏ hơn bằng
     + `$in` - `$nin` Tồn tại và không tồn tại các giá trị trong mảng chỉ định, với 2 toán tử này, cú pháp thực hiện như sau
+
         ```js
             {field: {$operator : [value1, value2...]}}
 
@@ -90,6 +93,7 @@
         ```
 
 - **Toán tử Logic**
+
     ```js
     {$operator: [expression1, expression2, ...]}
 
@@ -106,6 +110,7 @@
     + `$or` Nối các mệnh đề truy vấn bằng logic **OR**, trả về document khớp ít nhất một trong các mệnh đề
     + `$nor` Nối các mẹnh đề truy vấn bằng logic **NOR**, trả về document không khớp với các mệnh đề truy vấn
     + `$not` Đảo ngược logic của biểu thức truy vấn và trả về document không khớp với biểu thức truy vấn, cú pháp thực hiện như sau
+
         ```js
         {field: {$not: {expression}}}
 
@@ -117,23 +122,33 @@
 
 - **Toán tử phần tử**
     + `$exists` Trả về những document chứa hoặc không chứa field được chỉ định
-    ```
-    db.products.find({
-        brand: {$exists: true}
-    })
-    ```
 
+        ```js
+        db.products.find({
+            brand: {$exists: true}
+        })
+        ```
+
+    + `$type` Trả về document nếu field có type được chỉ định
+
+        ```js
+        db.products.find({
+            price: {$type: 'double'}
+        })
+        ```
 
 ## 🔷 Tương tác với cơ sở dữ liệu
 
 ### Truy vấn dữ liệu
 
 - **db.collection.find(query, projection, options)** Trả về con trỏ đến các document khớp với tiêu chí query. Mặc dù khi sử dụng find sẽ trả về document hoặc mảng các document nhưng thực tế thì phương thức này đang trả về con trỏ đến các document. Mặc định của MongoDB, **find()** không cung cấp tất cả các document, nó chỉ cung cấp 20 document đầu tiên. Tuy nhiên, có thể sử dụng phương thức **ToArray()** hoặc **forEach()** để có thể truy cập tất cả document
+
     ```js
     db.products.find({price: { $gte: 100000 }}) // return document[] with price >= 100000
     ```
     
     Với phương thức **forEach()** cho phép lại lại con trỏ và truy cập document
+
     ```js
     db.products.find().forEach(element => {
         printjson(element.name) // show value of name key in document[]
@@ -142,6 +157,7 @@
     Với phương thức **forEach()**, nó thực sự sẽ chỉ tìm và nạp các document tiếp theo cho mỗi chu kì vòng lặp, do đó tất nhiên không sư dụng quá nhiều băng thông và không tải quá nhiều vào bộ nhớ
 
     Một số phương thức cho phép sửa đổi hành vi của con trỏ như **sort()**, **limit()**, **skip()**, ...
+
     ```js
     db.products.find().sort({ name: 1}) // return document[] sorted in ASC order by name key
 
@@ -151,11 +167,13 @@
     ```
 
 - **db.collection.find(query, projection, options)** Trả về một document duy nhất khớp với tiêu chí query được chỉ định trên collection hoặc view. Nếu có nhiều document thoả mãn điều kiện, phương thức này chỉ trả về document đầu tiên theo thứ tự tự nhiên của các document lưu trữ trong bộ nhớ.
+
     ```js
     db.products.findOne({ name: 'Keyboard' })   // return document first in memory with name: Keyboard
     ```
 
 - **Projection** Trong quá trình truy vấn dữ liệu với phương thức **find()** hoặc **findOne()**, mặc định sẽ truy vấn tất cả các field trong document. Để giới hạn số lượng các field mà MongoDB gửi tới ứng dụng truy vấn, có thể chỉ rõ những field cần thiết để cho phép trả về. Quá trình này gọi là **Projection**
+
     ```js
     db.products.find({}, {name: 1})     // return document with field name and _id
     db.products.find({}, {name: 0})     // return document without field name and _id
@@ -163,6 +181,7 @@
 
 ### Tài liệu nhúng (Embedded Document)
 - **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
+
     ```js
     {
         _id: ObjectId('66b31747f5e99a509c228fb7'),
@@ -184,6 +203,7 @@
 - Tuy nhiên, **Embedded Document** cũng tồn tại một số nhược điểm như sau:
     + **Kích thước document** MongoDB có giới hạn kích thước document là 16MB. Việc nhúng quá nhiều document có thể dẫn đến quá tải giới hạn này
     + **Sự trùng lặp** Dữ liệu Embedded document trên nhiều document có thể giống nhau dẫn đến tăng nhu cầu lưu trữ dữ liệu không cần thiết
+
         ```js
         // both products are under the Hoco brand and contain information from this brand.
         // => Duplicate data
@@ -234,6 +254,7 @@
 - Các trường hợp có thể sử dụng **Embedded Document**:
     + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
     + Quan hệ **One-Many**: Trong trường hợp này **Embedded Document** cũng có thể được sử dụng nhưng với phía "Many" không quá lớn và thường xuyên được truy cập bằng document gốc
+
         ```js
         {
             name: 'Quan',
