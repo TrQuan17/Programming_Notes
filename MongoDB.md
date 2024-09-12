@@ -69,7 +69,7 @@
 
 ### Toán tử truy vấn và tham chiếu
 
-- **Toán tử so sánh**
+- **Toán tử so sánh (Comparison Operator)**
 
     ```js
     {field: {$operator : value}}
@@ -92,7 +92,7 @@
             })
         ```
 
-- **Toán tử Logic**
+- **Toán tử Logic (Logical Operator)**
 
     ```js
     {$operator: [expression1, expression2, ...]}
@@ -115,15 +115,17 @@
         {field: {$not: {expression}}}
 
         // Example
+        // Return product document with price not >= 30000 (price < 30000)
         db.products.find({
             price: {$not: {$gte: 30000}}
         })
         ```
 
-- **Toán tử phần tử**
+- **Toán tử phần tử (Element Operator)**
     + `$exists` Trả về những document chứa hoặc không chứa field được chỉ định
 
         ```js
+        // Return product document with brand field exist
         db.products.find({
             brand: {$exists: true}
         })
@@ -132,8 +134,29 @@
     + `$type` Trả về document nếu field có type được chỉ định
 
         ```js
+        // Return product document with price data type is double
         db.products.find({
             price: {$type: 'double'}
+        })
+        ```
+
+- **Toán tử đánh giá (Evaluation Operator)**
+    + `$regex` Trả về document có giá trị khớp với biểu thức chính quy (regex) được chỉ định
+
+        ```js
+        // Return product document with name contain 'cable' case-insentive
+        db.products.find({
+            name: {$regex: /cable/i}
+        })
+        ```
+
+- **Toán tử truy vấn mảng (Array Query Operator)**
+    + `$size` Trả về document nếu field mảng có kích thước được chỉ định
+
+        ```js
+        // Return brand document with branchs[] size = 3
+        db.brands.find({
+            branchs: {$size: 3}
         })
         ```
 
