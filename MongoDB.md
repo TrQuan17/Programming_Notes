@@ -81,16 +81,6 @@
     + `$eq` - `$ne` So sánh bằng và không bằng
     + `$gt` - `$gte` So sánh lớn hơn và lớn hơn bằng
     + `$lt` - `$le` So sánh nhỏ hơn và nhỏ hơn bằng
-    + `$in` - `$nin` Tồn tại và không tồn tại các giá trị trong mảng chỉ định, với 2 toán tử này, cú pháp thực hiện như sau
-
-        ```js
-            {field: {$operator : [value1, value2...]}}
-
-            // Example
-            db.products.find({
-                type: {$in: ['Cable', 'Screen', 'Keyboard']}
-            })
-        ```
 
 - **Toán tử Logic (Logical Operator)**
 
@@ -98,6 +88,7 @@
     {$operator: [expression1, expression2, ...]}
 
     // Example
+    // Return product documents with price <= 12000 or price >= 360000
     db.products.find({
         $or: [
             {price: {$le: 12000}},
@@ -115,7 +106,7 @@
         {field: {$not: {expression}}}
 
         // Example
-        // Return product document with price not >= 30000 (price < 30000)
+        // Return product documents with price not >= 30000 (price < 30000)
         db.products.find({
             price: {$not: {$gte: 30000}}
         })
@@ -125,7 +116,7 @@
     + `$exists` Trả về những document chứa hoặc không chứa field được chỉ định
 
         ```js
-        // Return product document with brand field exist
+        // Return product documents with brand field exist
         db.products.find({
             brand: {$exists: true}
         })
@@ -134,7 +125,7 @@
     + `$type` Trả về document nếu field có type được chỉ định
 
         ```js
-        // Return product document with price data type is double
+        // Return product documents with price data type is double
         db.products.find({
             price: {$type: 'double'}
         })
@@ -144,7 +135,7 @@
     + `$regex` Trả về document có giá trị khớp với biểu thức chính quy (regex) được chỉ định
 
         ```js
-        // Return product document with name contain 'cable' case-insentive
+        // Return product documents with name contain 'cable' case-insentive
         db.products.find({
             name: {$regex: /cable/i}
         })
@@ -154,9 +145,30 @@
     + `$size` Trả về document nếu field mảng có kích thước được chỉ định
 
         ```js
-        // Return brand document with branchs[] size = 3
+        // Return brand documents with branchs[] size = 3
         db.brands.find({
             branchs: {$size: 3}
+        })
+        ```
+
+    + `$all` Trả về document chứa tất cả phần tử được chỉ định trong truy vấn
+
+        ```js
+        // Return brand documents with branchs contain 'DN' and 'HN' element
+        db.brands.find({
+            branchs: {$all: ['DN', 'HN']}
+        })
+        ```
+
+    + `$in` - `$nin` Tồn tại và không tồn tại các giá trị trong mảng chỉ định
+
+        ```js
+        {field: {$operator : [value1, value2...]}}
+
+        // Example
+        // Return brand documents with branchs[] contain 'DN' or 'HN' element
+        db.brands.find({
+            branchs: {$in: ['DN', 'HN']}
         })
         ```
 
@@ -167,29 +179,57 @@
 - **db.collection.find(query, projection, options)** Trả về con trỏ đến các document khớp với tiêu chí query. Mặc dù khi sử dụng find sẽ trả về document hoặc mảng các document nhưng thực tế thì phương thức này đang trả về con trỏ đến các document. Mặc định của MongoDB, **find()** không cung cấp tất cả các document, nó chỉ cung cấp 20 document đầu tiên. Tuy nhiên, có thể sử dụng phương thức **ToArray()** hoặc **forEach()** để có thể truy cập tất cả document
 
     ```js
-    db.products.find({price: { $gte: 100000 }}) // return document[] with price >= 100000
-    ```
-    
-    Với phương thức **forEach()** cho phép lại lại con trỏ và truy cập document
-
-    ```js
-    db.products.find().forEach(element => {
-        printjson(element.name) // show value of name key in document[]
-    })
-    ```
-    Với phương thức **forEach()**, nó thực sự sẽ chỉ tìm và nạp các document tiếp theo cho mỗi chu kì vòng lặp, do đó tất nhiên không sư dụng quá nhiều băng thông và không tải quá nhiều vào bộ nhớ
-
-    Một số phương thức cho phép sửa đổi hành vi của con trỏ như **sort()**, **limit()**, **skip()**, ...
-
-    ```js
-    db.products.find().sort({ name: 1}) // return document[] sorted in ASC order by name key
-
-    db.products.find().limt(5) // return document[] with max length = 5
-
-    db.products.find().skip() // return document[] skip the first 5 documents
+    // Return product documents with price = 100000
+    db.products.find({
+        price: 100000 
+    }) 
     ```
 
-- **db.collection.find(query, projection, options)** Trả về một document duy nhất khớp với tiêu chí query được chỉ định trên collection hoặc view. Nếu có nhiều document thoả mãn điều kiện, phương thức này chỉ trả về document đầu tiên theo thứ tự tự nhiên của các document lưu trữ trong bộ nhớ.
+    + Truy cập document bằng phương thức **next()**
+        - Trả về document tiếp theo trong con trỏ
+
+            ```js
+            const products = db.products.find()
+
+            while(products.hasNext()) {
+                printjson(products.next())
+            }
+            ```
+
+    + Truy cập document bằng phương thức **forEach()**
+        - Cho phép lại lại con trỏ và truy cập vào từng document
+
+            ```js
+            db.products.find().forEach(element => {
+                printjson(element.name) // show value of name key in document[]
+            })
+            ```
+
+        - Phương thức **forEach()** thực sự sẽ chỉ tìm và nạp các document tiếp theo cho mỗi chu kì vòng lặp, do đó tất nhiên không sử dụng quá nhiều băng thông và không tải quá nhiều vào bộ nhớ
+
+    + Một số phương thức cho phép sửa đổi hành vi của con trỏ
+        - **sort(sort)** Chỉ định thứ tự mà truy vấn trả về các document khớp. Tham số của method chứa cặp giá trị **field** và **value** với **value** chỉ gồm 2 giá trị **-1 (ASC)** và **1 (DESC)**
+
+            ```js
+            // Return product documents sorted in ASC order by name key
+            db.products.find().sort({ name: 1})
+            ```
+
+        - **limit(number)**
+
+            ```js
+            // Return product documents with max length = 5
+            db.products.find().limt(5)
+            ```
+        
+        - **skip(number)**
+        
+            ```js
+            // Return product documents skip the first 5 documents
+            db.products.find().skip(5) 
+            ```
+
+- **db.collection.findOne(query, projection, options)** Trả về một document duy nhất khớp với tiêu chí query được chỉ định trên collection hoặc view. Nếu có nhiều document thoả mãn điều kiện, phương thức này chỉ trả về document đầu tiên theo thứ tự tự nhiên của các document lưu trữ trong bộ nhớ.
 
     ```js
     db.products.findOne({ name: 'Keyboard' })   // return document first in memory with name: Keyboard
@@ -228,7 +268,7 @@
     + **Sự trùng lặp** Dữ liệu Embedded document trên nhiều document có thể giống nhau dẫn đến tăng nhu cầu lưu trữ dữ liệu không cần thiết
 
         ```js
-        // both products are under the Hoco brand and contain information from this brand.
+        // Both products are have the Hoco brand and contain information from this brand
         // => Duplicate data
         {
             _id: ObjectId('66b31747f5e99a509c228fb8'),
