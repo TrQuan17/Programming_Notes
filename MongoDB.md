@@ -238,9 +238,66 @@
 - **Projection** Trong quá trình truy vấn dữ liệu với phương thức **find()** hoặc **findOne()**, mặc định sẽ truy vấn tất cả các field trong document. Để giới hạn số lượng các field mà MongoDB gửi tới ứng dụng truy vấn, có thể chỉ rõ những field cần thiết để cho phép trả về. Quá trình này gọi là **Projection**
 
     ```js
-    db.products.find({}, {name: 1})     // return document with field name and _id
-    db.products.find({}, {name: 0})     // return document without field name and _id
+    // Return product documents with field _id amd name 
+    db.products.find({}, {name: 1})
+
+    // Return product documents without field name    
+    db.products.find({}, {name: 0})
+
+    // Return account documents with _id and country field of address embedded document 
+    db.accounts.find({}, {
+        'address.country': 1
+    })
     ```
+
+    + **Projection với mảng bẳng toán tử `$`**: Toán tử vị trí `$` giới hạn nội dung của một mảng để trả về phần tử đầu tiên khớp với điều kiện truy vấn. 
+     
+        ```js 
+        // Return brand documents with _id and branchs[] field with branchs[0] data
+        // and branchs[0].city = 'DN'
+        db.brands.find({
+            'branchs.city': {$in: ['DN']}
+        }, {
+            'branchs.$': 1
+        })
+        ```
+
+        ```js
+        {
+            "_id": ObjectId('66dc1690c6bc1310cec73bf9'),
+            branchs: [
+                city: 'DN',
+                detail: 'Hoa Minh'
+            ]
+        }
+        ```
+        + Tuy nhiên, khi không được truyền điều kiện truy vấn thì khi câu lệnh được thực thi, MongoDB sẽ xảy ra lỗi
+
+        ```js
+        db.brands.find({}, {
+            'branchs.$': 1
+        })
+        ```
+        ```
+        MongoServerError[Location51246]: 
+        Executor error during find command :: caused by :: positional operator '.$' couldn't find a matching element in the array
+        ```
+
+    + **Projection với mảng bằng toán tử `$slice`**: Chỉ định số lượng phần tử sẽ trả về của trường mảng trong kết quả truy vấn
+        
+        ```js
+        {arrayField: {$slice: '<number>'}}        
+        ```
+
+        - `number` chỉ định số lượng phần tử trả về của trường mảng, với `number` là số dương thì trả về `number` phần tử đầu tiên, với `number` là số âm trả về `number` phần tử cuối cùng và với `number` lớn hơn phần tử của mảng thì trả về tất cả phần tử của mảng
+
+        ```js
+        {arrayField: {$slice: ['number to skip', 'number to return']}}
+        ```
+
+        - `number to skip` chỉ định số lượng phần tử bỏ qua từ đầu mảng, nếu giá trị `number to skip` lớn hơn kích thước của mảng thì truy vấn sẽ trả về một mảng rỗng. Nếu là một giá trị âm sẽ bỏ qua `number to skip` phần tử lùi lại từ cuối mảng. Nếu giá trị tuyệt đố số âm của `number to skip` lớn hơn kích thước mảng, thì vị trí bắt đầu là vị trí đầu tiên của mảng
+
+        - `number to return` chỉ định số lượng phần tử để trả về các phần tử tiếp theo (`number to return` phải là một số lớn hơn 0)
 
 ### Tài liệu nhúng (Embedded Document)
 - **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
