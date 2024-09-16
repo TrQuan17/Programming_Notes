@@ -189,60 +189,72 @@
 
 ### Toán tử cập nhật
 
-- `$inc` Tăng hoặc giảm giá trị của trường theo giá trị (có thể âm hoặc dương) đã chỉ định
+- **Toán tử cập nhật trường**
 
-    ```js
-    // Update X98 Keyboard product with price increased by 12,000
-    db.products.updateOne({
-        name: 'X98 Keyboard'
-    }, {
-        $inc: {price: 12000}
-    })
-    ```
+    + `$inc` Tăng hoặc giảm giá trị của trường theo giá trị (có thể âm hoặc dương) đã chỉ định
 
-- `$min` - `$max` Chỉ cập nhật trường nếu giá trị nhỏ hơn / lớn hơn giá trị trường hiện tại. Giá trị cập nhật chính là giá trị toán tử chỉ định
+        ```js
+        // Update X98 Keyboard product with price increased by 12,000
+        db.products.updateOne({
+            name: 'X98 Keyboard'
+        }, {
+            $inc: {price: 12000}
+        })
+        ```
 
-    ```js
-    // Update X98 Keyboard product with max price 1,060,000
-    // If price is less than max value
-    db.products.updateOne({
-        name: 'X98 Keyboard'
-    }, {
-        $max: {price: 1060000}
-    })
-    ```
-- `$mul` Nhân giá trị của trường theo giá trị đã chỉ định
+    + `$min` - `$max` Chỉ cập nhật trường nếu giá trị nhỏ hơn / lớn hơn giá trị trường hiện tại. Giá trị cập nhật chính là giá trị toán tử chỉ định
 
-    ```js
-    // Update X98 Keyboard product with price increased by 20%
-    db.products.updateOne({
-        name: 'X98 Keyboard'
-    }, {
-        $mul: {price: 1.2}
-    })
-    ```
+        ```js
+        // Update X98 Keyboard product with max price 1,060,000
+        // If price is less than max value
+        db.products.updateOne({
+            name: 'X98 Keyboard'
+        }, {
+            $max: {price: 1060000}
+        })
+        ```
+    + `$mul` Nhân giá trị của trường theo giá trị đã chỉ định
 
-- `$unset` Xoá trường được chỉ định
-    
-    ```js
-    // Update X98 Keyboard product with brand field deleted
-    db.products.updateOne({
-        name: 'X98 Keyboard'
-    }, {
-        $unset: {brand: '<anything>'}
-    })
-    ```
+        ```js
+        // Update X98 Keyboard product with price increased by 20%
+        db.products.updateOne({
+            name: 'X98 Keyboard'
+        }, {
+            $mul: {price: 1.2}
+        })
+        ```
 
-- `$rename` Cập nhật tên trường được chỉ định
+    + `$unset` Xoá trường được chỉ định
+        
+        ```js
+        // Update X98 Keyboard product with brand field deleted
+        db.products.updateOne({
+            name: 'X98 Keyboard'
+        }, {
+            $unset: {brand: '<anything>'}
+        })
+        ```
 
-    ```js
-    // Update X98 Keyboard product with reduce field rename to discount field
-    db.products.updateOne({
-        name: 'X98 Keyboard'
-    }, {
-        $rename: {reduce: 'discount'}
-    })
-    ```
+    + `$rename` Cập nhật tên trường được chỉ định
+
+        ```js
+        // Update X98 Keyboard product with reduce field rename to discount field
+        db.products.updateOne({
+            name: 'X98 Keyboard'
+        }, {
+            $rename: {reduce: 'discount'}
+        })
+        ```
+- **Toán tử cập nhật mảng**
+    + `$push` Thêm mới một phần tử vào phần tử cuối của trường mảng. Ngoài ra, toán tử `$push` có hỗ trợ thêm các modifier operator để thay đổi hành vi thực hiện bao gồm
+        - `$each` Thêm nhiều giá trị vào trường mảng
+        - `$slice` Giới hạn số lượng phần tử mảng
+        - `$sort` Sắp xếp các phần tử của mảng
+        - `$position` Chỉ định vị trí trong mảng để chèn các phần tử mới
+
+    + `$pull` Xoá khỏi mảng hiện có tất cả các trường hợp của một giá trị hoặc các giá trị khớp với điều kiện đã chỉ định
+
+    + `$addToSet` thêm một giá trị chưa tồn tại vào trường mảng. Nếu giá trị đó đã tồn tại, toán tử này sẽ không được thực thi. Vì vậy, với các giá trị được thêm mới thông qua `$addToSet` là giá trị độc nhất trong mảng. Ngoài ra, có thể sử dụng toán tử `$each` để thêm mới nhiều phần tử vào trường mảng
 
 ## 🔷 Tương tác với cơ sở dữ liệu
 
