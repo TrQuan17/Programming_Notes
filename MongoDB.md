@@ -154,9 +154,23 @@
     + `$all` Trả về document chứa tất cả phần tử được chỉ định trong truy vấn
 
         ```js
-        // Return brand documents with branchs contain 'DN' and 'HN' element
+        // Return brand documents with branchs[] 
+        // Contain city is 'DN' and 'HN' 
         db.brands.find({
-            branchs: {$all: ['DN', 'HN']}
+            'branchs.city': {$all: ['DN', 'HN']}
+        })
+        ```
+
+    + `$elemMatch` Trả về các document có chứa trường mảng với ít nhất một phần tử khớp với tất cả các tiêu chí truy vấn đã chỉ định
+
+        ```js
+        // Return brand documents with branchs[] element 
+        // Contain city is 'DN' or 'HN' and detail field exist
+        db.brands.find({
+            branchs: {$elemMatch: {
+                city: {$in: ['DN', 'HN']},
+                detail: {$exists: true}
+            }}
         })
         ```
 
@@ -166,11 +180,69 @@
         {field: {$operator : [value1, value2...]}}
 
         // Example
-        // Return brand documents with branchs[] contain 'DN' or 'HN' element
+        // Return brand documents with branchs[] 
+        // Contain city is 'DN' or 'HN'
         db.brands.find({
-            branchs: {$in: ['DN', 'HN']}
+            'branchs.city': {$in: ['DN', 'HN']}
         })
         ```
+
+### Toán tử cập nhật
+
+- `$inc` Tăng hoặc giảm giá trị của trường theo giá trị (có thể âm hoặc dương) đã chỉ định
+
+    ```js
+    // Update X98 Keyboard product with price increased by 12,000
+    db.products.updateOne({
+        name: 'X98 Keyboard'
+    }, {
+        $inc: {price: 12000}
+    })
+    ```
+
+- `$min` - `$max` Chỉ cập nhật trường nếu giá trị nhỏ hơn / lớn hơn giá trị trường hiện tại. Giá trị cập nhật chính là giá trị toán tử chỉ định
+
+    ```js
+    // Update X98 Keyboard product with max price 1,060,000
+    // If price is less than max value
+    db.products.updateOne({
+        name: 'X98 Keyboard'
+    }, {
+        $max: {price: 1060000}
+    })
+    ```
+- `$mul` Nhân giá trị của trường theo giá trị đã chỉ định
+
+    ```js
+    // Update X98 Keyboard product with price increased by 20%
+    db.products.updateOne({
+        name: 'X98 Keyboard'
+    }, {
+        $mul: {price: 1.2}
+    })
+    ```
+
+- `$unset` Xoá trường được chỉ định
+    
+    ```js
+    // Update X98 Keyboard product with brand field deleted
+    db.products.updateOne({
+        name: 'X98 Keyboard'
+    }, {
+        $unset: {brand: '<anything>'}
+    })
+    ```
+
+- `$rename` Cập nhật tên trường được chỉ định
+
+    ```js
+    // Update X98 Keyboard product with reduce field rename to discount field
+    db.products.updateOne({
+        name: 'X98 Keyboard'
+    }, {
+        $rename: {reduce: 'discount'}
+    })
+    ```
 
 ## 🔷 Tương tác với cơ sở dữ liệu
 
@@ -760,3 +832,21 @@
         ```
         
 ## 🔷 Tip
+
+- **Thêm mới hoặc cập nhật chỉ với một lệnh duy nhất**
+    
+    Trong một số quy trình nhất định, việc thực hiện cập nhật hoặc thêm mới tuỳ thuộc vào dữ liệu có tồn tài trong DB hay không. Trong những trường hợp, để hợp lý hoá logic trên có một tuỳ chọn **upsert**. Tuỳ chọn này có sẵn trong các phương pháp **updateOne**, **updateMany**, **replaceOne**
+
+    ```js
+    // Update Sonic G941 Headphones product if DB exist
+    // Else insert Sonic G941 Headphones product
+    // With name Sonic G941 Headphones, type Over-ear, price 675,000
+    db.products.updateOne({
+        name: 'Sonic G941 Headphones'
+    }, {
+        $set: {type: 'Over-ear'},
+        $max: {price: 675000}
+    }, {
+        upsert: true    // default upsert: false
+    })
+    ```  
