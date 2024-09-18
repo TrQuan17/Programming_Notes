@@ -907,6 +907,7 @@
     ```
 
 ### Time-To-Live (TTL) Index
+
 - **Time-To-Live Index** là single-field index đặc biệt mà MongoDB có thể sử dụng để tự động xoá document khỏi collection sau một khoảng thời gian nhất định hoặc tại một thời điểm cụ thể. **TTL Index** phù hợp cho một số loại thông tin như thông tin nhật kí, thông tin log, thông tin session của trang web, ...
 
     ```js
@@ -925,6 +926,50 @@
 
     + Nếu giá trị `expireAfterSeconds` của collection thấp hơn giá trị `expireAfterSeconds` của TTL Index thì collection sẽ thực hiện xoá các document trước, do đó TTL không có tác dụng
 
+### Multikey Indexes
+
+- **Multikey Indexes (Compound Multikey Indexes)** thu thập và sắp xếp dữ liệu từ các giá trị của mảng, nó giúp cải thiện hiệu suất cho các truy vấn trên các trường mảng. MongoDB có thể tạo các index trên các mảng chứa giá trị nguyên thuỷ và embedded document
+
+    ```js
+    // brand document
+    {
+        _id: ObjectId('66e7aef1f80f4efb68d07e76'),
+        name: 'Hoco',
+        branchs: [
+            {
+                city: 'HN',
+                detail: '16 Dong Da',
+                year: 2021
+            },
+            {
+                city: 'DN',
+                detail: 'Hoa Minh',
+                year: 2024
+            },
+            {
+                city: 'HCM',
+                detail: 'Quan 7',
+                year: 2021
+            }
+        ],
+        products: ['Changer', 'Cable', 'Hub']
+    }
+    ```
+
+    ```js
+    db.brands.createIndex({ products: 1 })        // products_1 is multikey index
+    db.brands.createIndex({ 'branchs.city': 1 })  // branchs.city_1 is multikey index
+    ```
+
+    - Đối với Multikey Indexes, mỗi document chỉ được lập index có thể có nhiều nhất một trường có giá trị là một mảng
+
+        ```js
+        db.brands.createIndex({ products: 1, 'branchs.city': 1 })
+
+        // Error
+        // MongoServerError[CannotIndexParallelArrays]: 
+        // Collection shop.brands :: caused by :: cannot index parallel arrays [branchs] [products]
+        ```
 
 ## 🔷 Tip
 
