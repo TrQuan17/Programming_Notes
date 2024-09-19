@@ -971,6 +971,25 @@
         // Collection shop.brands :: caused by :: cannot index parallel arrays [branchs] [products]
         ```
 
+### Text Indexes
+
+- **Text indexes** hỗ trợ truy vấn tìm kiếm văn bản trên trên các trường chứa nội dung chuỗi. **Text Indexes** cải thiện hiệu suất khi tìm kiếm các từ hoặc cụm từ cụ thể trong nội dung chuỗi. Mỗi collection chỉ có thể có một text index, nhưng index đó có thể bao gồm nhiều trường
+
+    ```js
+    // Create text index with name and type field
+    db.products.createIndex({
+        name: 'text', type: 'text'
+    })
+    ```
+
+- **Text indexes** hỗ trợ các hoạt động truy vấn với `$text` và **Text indexes** cũng là điều kiện tiên quyết để có thể sử dụng được `$text`
+
+    ```js
+    db.products.find({
+        $text: {}
+    })
+    ```
+
 ## 🔷 Tip
 
 - **Thêm mới hoặc cập nhật chỉ với một lệnh duy nhất**
