@@ -985,8 +985,19 @@
 - **Text indexes** hỗ trợ các hoạt động truy vấn với `$text` và **Text indexes** cũng là điều kiện tiên quyết để có thể sử dụng được `$text`
 
     ```js
+    // Return product document with name or type contain logitech or mouse
     db.products.find({
-        $text: {}
+        $text: {$search: 'logitech mouse'}
+    })
+
+    // Search with phrase logitech mouse
+    db.products.find({
+        $text: {$search: '"logitech mouse"'}
+    })
+
+    // Search with logitech and without mouse
+    db.products.find({
+        $text: {$search: '"logitech -mouse"'}
     })
     ```
 
