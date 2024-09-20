@@ -449,6 +449,7 @@
         - `number to return` chỉ định số lượng phần tử để trả về các phần tử tiếp theo (`number to return` phải là một số lớn hơn 0)
 
 ### Tài liệu nhúng (Embedded Document)
+
 - **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
 
     ```js
@@ -1000,6 +1001,86 @@
         $text: {$search: '"logitech -mouse"'}
     })
     ```
+
+## 🔷 Làm việc với dữ liệu không gian địa lý (Geospatial Data)
+
+### Tổng quan GeoJSON
+
+- **GeoJSON** là một định dạng dựa trên JSON được thiết kế để thể hiện các đối tượng địa lý với các thuộc tính phi không gian của chúng. 
+
+- **GeoJSON** hỗ trợ các kiểu hình học bao gồm **Point** (địa chỉ và vị trí),  
+**LineString** (đường phố, đường cao tốc và ranh giới), **Polygon** (quốc gia, vùng đất) và collection nhiều phần của các kiểu đó.
+
+    ```js
+    // Point GeoJSON
+    {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+            coordinates: [
+                108.22690714836239,
+                16.061204191628278
+            ],
+            type: 'Point'
+        }
+    }
+
+    // LineString GeoJSON
+    {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+            coordinates: [
+                [
+                    108.22506156144277,
+                    16.061162214166274
+                ],
+                [
+                    108.22637203736156,
+                    16.061193697264017
+                ]
+            ],
+            type: 'LineString'
+        }
+    }
+
+    // Polygon GeoJSON
+    {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+            coordinates: [
+                [
+                    [
+                        108.22508340270889,
+                        16.06218016512605
+                    ],
+                    [
+                        108.22512708523942,
+                        16.061372101388613
+                    ],
+                    [
+                        108.22654676748556,
+                        16.06181286383412
+                    ],
+                    [
+                        108.22594613268814,
+                        16.06276784578317
+                    ],
+                    [
+                        108.22508340270889,
+                        16.06218016512605
+                    ]
+                ]
+            ],
+            type: 'Polygon'
+        }
+    }
+    ```
+
+### Geo Queries trong MongoDB
+
+- Thêm mới dữ liệu về không gian địa lý trong
 
 ## 🔷 Tip
 
