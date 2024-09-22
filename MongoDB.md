@@ -448,93 +448,6 @@
 
         - `number to return` chỉ định số lượng phần tử để trả về các phần tử tiếp theo (`number to return` phải là một số lớn hơn 0)
 
-### Tài liệu nhúng (Embedded Document)
-
-- **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
-
-    ```js
-    {
-        _id: ObjectId('66b31747f5e99a509c228fb7'),
-        name: 'LG MP400-B',
-        price: 2390000,
-        technical: { 
-            screen_size: 24,
-            resolution: 'FHD 1080p', 
-            aspect_ratio: '16:9' 
-        }
-    }
-    ```
-
-- Những ưu điểm khi sử dụng **Embedded Document**:
-    + **Nhất quán dữ liệu** Tất cả dữ liệu liên quan đều nằm trong một document nên việc cập nhật docmument đảm bảo tính nhất quán dữ liệu
-    + **Hiệu suất truy vấn** Việc truy vấn tất cả dữ liệu liên quan trong một truy vấn duy nhất nhanh hơn và hiệu quả hơn vì nó tránh được nhu cầu sử dụng nhiều truy vấn và 
-    + **Vị trí lưu trữ** Việc lưu trữ các dữ liệu liên quan với nhau có thể cải thiện hiệu suất, đặc biệt là khi dữ liệu thường được truy cập cùng nhau
-
-- Tuy nhiên, **Embedded Document** cũng tồn tại một số nhược điểm như sau:
-    + **Kích thước document** MongoDB có giới hạn kích thước document là 16MB. Việc nhúng quá nhiều document có thể dẫn đến quá tải giới hạn này
-    + **Sự trùng lặp** Dữ liệu Embedded document trên nhiều document có thể giống nhau dẫn đến tăng nhu cầu lưu trữ dữ liệu không cần thiết
-
-        ```js
-        // Both products are have the Hoco brand and contain information from this brand
-        // => Duplicate data
-        {
-            _id: ObjectId('66b31747f5e99a509c228fb8'),
-            name: 'HDMI Hoco Cabel',
-            price: 75000,
-            brand: {                                    
-                name: 'Hoco Technology',
-                industry: 'Technology',
-                founded: '2024',
-                headquarters: {
-                    city: 'Tokyo',
-                    country: 'Japan'
-                },
-                website: 'www.hoco.com',
-                products: [
-                    'Charging Cable',
-                    'Wireless Charger',
-                    'Headphones'
-                ]
-            }
-        },
-        {
-            _id: ObjectId('66b31abff5e99a509c228fb9'),
-            name: 'TypeC Hoco Cabel',
-            price: 32000,
-            brand: {
-                name: 'Hoco Technology',
-                industry: 'Technology',
-                founded: '2024',
-                headquarters: {
-                    city: 'Tokyo',
-                    country: 'Japan'
-                },
-                website: 'www.hoco.com',
-                products: [
-                    'Charging Cable',
-                    'Wireless Charger',
-                    'Headphones'
-                ]
-            }
-        }
-        ```
-    
-    + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu. Ngoài ra, nếu nhiều dữ liệu có chung thông tin tài liệu nhúng (như ví dụ ở trên) thì khi cập nhật, phải cập nhật tất cả dữ liệu có liên quan, điều này khó kiểm soát được tính thống nhất dữ liệu
-
-- Các trường hợp có thể sử dụng **Embedded Document**:
-    + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
-    + Quan hệ **One-Many**: Trong trường hợp này **Embedded Document** cũng có thể được sử dụng nhưng với phía "Many" không quá lớn và thường xuyên được truy cập bằng document gốc
-
-        ```js
-        {
-            name: 'Quan',
-            address: {
-                province: 'Quang Tri',
-                country: 'Viet Nam'
-            }
-        }
-        ```
-
 ### Thêm mới dữ liệu
 
 - **db.collection.insertOne()** Chèn một document duy nhất vào collection. Với mỗi document được thêm mới, MongoDB sẽ tự động thêm trường **_id** với giá trị là duy nhất trong database.
@@ -1002,11 +915,98 @@
     })
     ```
 
-## 🔷 Làm việc với dữ liệu không gian địa lý (Geospatial Data)
+## 🔷 Làm việc với một số dữ liệu đặc biệt
 
-### Tổng quan GeoJSON
+### Tài liệu nhúng (Embedded Document)
 
-- **GeoJSON** là một định dạng dựa trên JSON được thiết kế để thể hiện các đối tượng địa lý với các thuộc tính phi không gian của chúng. 
+- **Embedded Document** là document được lồng trong một document khác và được lưu trữ như một field của document đó
+
+    ```js
+    {
+        _id: ObjectId('66b31747f5e99a509c228fb7'),
+        name: 'LG MP400-B',
+        price: 2390000,
+        technical: { 
+            screen_size: 24,
+            resolution: 'FHD 1080p', 
+            aspect_ratio: '16:9' 
+        }
+    }
+    ```
+
+- Những ưu điểm khi sử dụng **Embedded Document**:
+    + **Nhất quán dữ liệu** Tất cả dữ liệu liên quan đều nằm trong một document nên việc cập nhật docmument đảm bảo tính nhất quán dữ liệu
+    + **Hiệu suất truy vấn** Việc truy vấn tất cả dữ liệu liên quan trong một truy vấn duy nhất nhanh hơn và hiệu quả hơn vì nó tránh được nhu cầu sử dụng nhiều truy vấn và 
+    + **Vị trí lưu trữ** Việc lưu trữ các dữ liệu liên quan với nhau có thể cải thiện hiệu suất, đặc biệt là khi dữ liệu thường được truy cập cùng nhau
+
+- Tuy nhiên, **Embedded Document** cũng tồn tại một số nhược điểm như sau:
+    + **Kích thước document** MongoDB có giới hạn kích thước document là 16MB. Việc nhúng quá nhiều document có thể dẫn đến quá tải giới hạn này
+    + **Sự trùng lặp** Dữ liệu Embedded document trên nhiều document có thể giống nhau dẫn đến tăng nhu cầu lưu trữ dữ liệu không cần thiết
+
+        ```js
+        // Both products are have the Hoco brand and contain information from this brand
+        // => Duplicate data
+        {
+            _id: ObjectId('66b31747f5e99a509c228fb8'),
+            name: 'HDMI Hoco Cabel',
+            price: 75000,
+            brand: {                                    
+                name: 'Hoco Technology',
+                industry: 'Technology',
+                founded: '2024',
+                headquarters: {
+                    city: 'Tokyo',
+                    country: 'Japan'
+                },
+                website: 'www.hoco.com',
+                products: [
+                    'Charging Cable',
+                    'Wireless Charger',
+                    'Headphones'
+                ]
+            }
+        },
+        {
+            _id: ObjectId('66b31abff5e99a509c228fb9'),
+            name: 'TypeC Hoco Cabel',
+            price: 32000,
+            brand: {
+                name: 'Hoco Technology',
+                industry: 'Technology',
+                founded: '2024',
+                headquarters: {
+                    city: 'Tokyo',
+                    country: 'Japan'
+                },
+                website: 'www.hoco.com',
+                products: [
+                    'Charging Cable',
+                    'Wireless Charger',
+                    'Headphones'
+                ]
+            }
+        }
+        ```
+    
+    + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu. Ngoài ra, nếu nhiều dữ liệu có chung thông tin tài liệu nhúng (như ví dụ ở trên) thì khi cập nhật, phải cập nhật tất cả dữ liệu có liên quan, điều này khó kiểm soát được tính thống nhất dữ liệu
+
+- Các trường hợp có thể sử dụng **Embedded Document**:
+    + Quan hệ **One - One**: Khi một document liên quan trực tiếp đến một document khác (ví dụ như hồ sơ người dùng và các thiết lập của người dùng đó với hệ thống)
+    + Quan hệ **One-Many**: Trong trường hợp này **Embedded Document** cũng có thể được sử dụng nhưng với phía "Many" không quá lớn và thường xuyên được truy cập bằng document gốc
+
+        ```js
+        {
+            name: 'Quan',
+            address: {
+                province: 'Quang Tri',
+                country: 'Viet Nam'
+            }
+        }
+        ```
+
+### Dữ liệu không gian địa lý (Geospatial Data - Geospatial Document)
+
+- **GeoJSON** là một định dạng dựa trên JSON được thiết kế để thể hiện các đối tượng địa lý với các thuộc tính phi không gian của chúng. Các toạ độ là một mảng trong đó phần tử đầu tiên là kinh độ và phần tử thứ hai là vĩ độ
 
 - **GeoJSON** hỗ trợ các kiểu hình học bao gồm **Point** (địa chỉ và vị trí),  
 **LineString** (đường phố, đường cao tốc và ranh giới), **Polygon** (quốc gia, vùng đất) và collection nhiều phần của các kiểu đó.
@@ -1052,6 +1052,7 @@
             coordinates: [
                 [
                     [
+                        // Start point
                         108.22508340270889,
                         16.06218016512605
                     ],
@@ -1068,6 +1069,7 @@
                         16.06276784578317
                     ],
                     [
+                        // End point = start point
                         108.22508340270889,
                         16.06218016512605
                     ]
@@ -1078,9 +1080,104 @@
     }
     ```
 
-### Geo Queries trong MongoDB
+* **Geo Queries**
 
-- Thêm mới dữ liệu về không gian địa lý trong
+    - Thêm mới địa điểm vào trong DB
+
+        ```js
+        db.travels.insertOne({
+            name: 'Dragon Bridge',
+            location: {
+                // Required ------------------- //
+                coordinates: [
+                    108.22690714836239,
+                    16.061204191628278
+                ],
+                type: 'LineString'
+                // ---------------------------- //
+            }
+        })
+        ```
+
+    - Khởi tạo **Geospatial Indexes**
+
+        ```js
+        // Create Geospatial Indexes with location field
+        db.travels.createIndex({location: '2dsphere'})
+        ```
+
+    - Theo dõi khoảng cách giữa các địa điểm thông qua toán tử `$near`. Toán tử `$near` chỉ định một điểm mà truy vấn không gian địa lý trả về các document từ gần nhất đến xa nhất với điểm chỉ định đó. Để có thể sử dụng toán tử `$near` cần phải tạo Geospatial Indexes 
+
+        ```js
+        // Return travel documents with location close to the specified point
+        // And max distance is 100m and min distance is 10m
+        db.travels.find({
+            location: { $near: {
+                $geometry: {
+                    coordinates: [
+                        108.2231048261848,
+                        16.06015109621802
+                    ],
+                    type: 'Point'
+                },
+                $maxDistance: 450,
+                $minDistance: 10
+            }}
+        })
+        ```
+
+    - Tìm kiếm địa điểm bên trong khu vục nhất định thông qua toán tử `$geoWithin`. Toán tử `$geoWithin` chọn các document có dữ liệu không gian địa lý tồn tại hoàn toàn trong một hình dạng được chỉ định
+
+        ```js
+        // Return travel documents with location in specified area
+        db.travels.find({
+            location: { $geoWithin: {
+                $geometry: {
+                    coordinates: [[
+                        [
+                            108.22515312551542,
+                            16.061925392767847
+                        ],
+                        [
+                            108.22471114746241,
+                            16.059082991445223
+                        ],
+                        [
+                            108.22940287555207,
+                            16.05958939251417
+                        ],
+                        [
+                            108.22862094345913,
+                            16.062872850511795
+                        ],
+                        [
+                            108.22515312551542,
+                            16.061925392767847
+                        ]
+                    ]],
+                    type: 'Polygon'
+                }
+            }}
+        })
+        ```
+
+    - Tìm kiếm khu vực cụ thể mà vị trí chỉ định nằm bên trong thông qua toán tử `$geoIntersects`. Toán tử `$geoIntersects` chọn các document có dữ liệu không gian địa lý giao nhau với một đối tượng GeoJSON được chỉ định, có thể hiểu là nơi giao nhau của dữ liệu và đối tượng được chỉ định không trống
+
+        ```js
+        // Return travel documemts with location contain specified point
+        db.travels.find({
+            location: { $geoIntersects: {
+                    $geometry: {
+                        coordinates: [
+                            108.2231048261848,
+                            16.06015109621802
+                        ],
+                        type: 'Point'
+                    }
+                }
+            }
+        })
+        ```
 
 ## 🔷 Tip
 
