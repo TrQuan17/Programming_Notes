@@ -1179,6 +1179,19 @@
         })
         ```
 
+## 🔷 Aggregation Framework
+
+### Tổng quan Aggregation Framework
+
+- **Aggregation Framework** là truy vấn nâng cao của MongoDB, cho phép thực hiện tính toán, xử lý và kết hợp từ nhiều document để truy vấn thông tin cần thiết
+
+- **Aggregation Pipeline** bao gồm một hoặc nhiều giải đoạn xử lý dữ liệu:
+    + Mỗi giai đoạn thực hiện một thao tác trên các document đầu vào
+    + Các document được xuất ra từ một giai đoạn sẽ được chuyển đến giai đoạn tiếp theo
+    + Một đường **Aggregation Pipeline** có thể trả về kết quả cho các nhóm document. Chẳng hạn như trả về giá trị tổng, trung bình, tối đa hoặc tối thiểu
+
+
+
 ## 🔷 Tip
 
 - **Thêm mới hoặc cập nhật chỉ với một lệnh duy nhất**
