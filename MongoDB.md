@@ -1190,7 +1190,61 @@
     + Các document được xuất ra từ một giai đoạn sẽ được chuyển đến giai đoạn tiếp theo
     + Một đường **Aggregation Pipeline** có thể trả về kết quả cho các nhóm document. Chẳng hạn như trả về giá trị tổng, trung bình, tối đa hoặc tối thiểu
 
+- **db.collection.aggregate(pipeline, options)** tính toán giá trị tổng hợp cho dữ liệu trong một collection hoặc view. Nó trả về con trỏ cho các document được tạo ra ở giai đoạn cuối cùng của quy trình tổng hợp. Nếu pipeline bao gồm các toán tử `$out` hoặc `$merge`, truy vấn sẽ trả về một con trỏ rỗng
 
+    ```js
+    // Return aggregate documents group by type and type count
+    db.products.aggregate([
+        // Aggregation pipeline
+        { $match: { price: {$gte: 12500} } },
+
+        // Aggregation pipeline
+        { $group: { _id: '$type', totals: {$sum: 1} } },
+
+        // Aggregation pipeline
+        { $sort: {totals: 1} }
+    ])
+    ```
+
+    ```js
+    // Data return
+    {
+        _id: 'keyboard',
+        totals: 1
+    }
+    {
+        _id: 'Cable',
+        totals: 2
+    }
+    ```
+
+### Làm việc với mảng trong Aggregation
+
+- `$push` trả về một mảng chứa tất cả các giá trị thu được từ việc áp dụng một biểu thức vào documnent
+
+    ```js
+    // Return aggregate documents group by type and name array
+    db.products.aggregate([{
+        $group: { _id: '$type', products: { $push: '$name' }}
+    }])
+    ```
+    ```js
+    // Return data
+    {
+        _id: 'Cable',
+        products: [
+            'HDMI Cable',
+            'TypeC Hoco Cable'
+        ]
+    }
+    {
+        _id: 'Keyboard',
+        products: [
+            'X98 Keyboard'
+        ]
+    }
+    ```
+-
 
 ## 🔷 Tip
 
