@@ -768,12 +768,11 @@
     + `$push` Thêm mới một phần tử vào phần tử cuối của trường mảng. 
         
         ```js
-        // Update brand document with exist branchs[] element have city is HCM
-        // Set the first elememt matching with founding is 2024
+        // Update Hoco brand with branchs add element
         db.brands.updateOne({
-            'branchs.city': 'HCM'
+           name: 'Hoco' 
         }, {
-            $set: {'branchs.$.founding': 2024}
+            $push: { branchs: { city: 'HCM', detail: 'Quan 7' } }
         })
         ```
 
@@ -1244,7 +1243,9 @@
         ]
     }
     ```
--
+- `$addToSet` tương tự như `$push` nhưng chỉ trả về một mảng chứa tất cả các giá trị duy nhất
+
+- `$filter` Chọn một tập hợp con của một mảng để trả về dựa trên điều kiện đã chỉ định. Trả về một mảng chỉ chứa các phần tử khớp với điều kiện. Các phần tử được trả về theo thứ tự ban đầu
 
 ## 🔷 Tip
 
