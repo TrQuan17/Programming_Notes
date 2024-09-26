@@ -1217,12 +1217,32 @@
     }
     ```
 
+### Một số toán tử cơ bản khi làm việc với Aggregation
+
+- `$group` Giai đoạn này phân chia document thành các nhóm theo **Group Key**. Đầu ra là một document cho mỗi Group Key duy nhất. Group Key thường là một trường, hoặc có thể là một nhóm các trường, hoặc cũng có thể là kết quả của một biểu thức. Sử dụng **_id** trong `$group` để đặt Group Key
+
+    ```js
+    // Return product aggregate documents with group by type and first name data in group
+    db.products.aggregate([
+        { $group: {_id: '$type', name: {$first: '$name'}} }
+    ])
+    ```
+
+- **Projection** với `$project` Chuyển các document có các trường được yêu cầu đến giai đoạn tiếp theo trong pipeline. Các trường được chỉ định có thể là các trường hiện có từ các tài liệu đầu vào hoặc các trường mới được tính toán
+
+    ```js
+    // Return product aggregate documents with name and type field, without _id field
+    db.products.aggregate([
+        {$project: {_id: 0, name: 1, type: 1}}
+    ])
+    ```
+
 ### Làm việc với mảng trong Aggregation
 
 - `$push` trả về một mảng chứa tất cả các giá trị thu được từ việc áp dụng một biểu thức vào documnent
 
     ```js
-    // Return aggregate documents group by type and name array
+    // Return product aggregate documents group by type and name array
     db.products.aggregate([{
         $group: { _id: '$type', products: { $push: '$name' }}
     }])
@@ -1243,9 +1263,42 @@
         ]
     }
     ```
-- `$addToSet` tương tự như `$push` nhưng chỉ trả về một mảng chứa tất cả các giá trị duy nhất
 
 - `$filter` Chọn một tập hợp con của một mảng để trả về dựa trên điều kiện đã chỉ định. Trả về một mảng chỉ chứa các phần tử khớp với điều kiện. Các phần tử được trả về theo thứ tự ban đầu
+
+    ```js
+    // Return product aggregate documents with length array match condition
+    db.products.aggregate([
+        {
+            $match: {type: 'Cable', length: {$exists: true}}
+        },
+        {
+            $project: {
+                _id: 0,
+                name: 1,
+                type: 1,
+                length: {
+                    $filter: { input: '$length', as: 'len', cond: {
+                        $gte: ['$$len', 5]
+                    } }
+                }
+            }
+        }
+    ])
+    ```
+    ```js
+    // Return data
+    {
+        name: 'HDMI Cable',
+        type: 'Cable',
+        length: []
+    }
+    {
+        name: 'TypeC Hoco Cable',
+        type: 'Cable',
+        length: [ 5 ]
+    }
+    ```
 
 ## 🔷 Tip
 
