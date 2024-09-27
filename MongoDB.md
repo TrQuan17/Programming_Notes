@@ -1,6 +1,7 @@
 # **MongoDB**
 
 ## 🔷 Mục lục
+
 - **[Tổng quan MongoDB](#-tổng-quan-mongodb)**
 - **[Lược đồ (Schemas)](#-lược-đồ-schemas)**
 - **[Quan hệ (Relations)](#-quan-hệ-relations)**
@@ -54,11 +55,12 @@
 
 - **BSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
 
-- Ví dụ về BSON: 
+- Ví dụ về BSON:
 
     ```json
         {"hello": "world"} 
     ```
+
     ```js
         \x16\x00\x00\x00           // total document size
         \x02                       // 0x02 = type String
@@ -76,7 +78,8 @@
 - **Schema** sẽ được thực thi khi có bất kì dữ liệu nào được ghi vào MongoDB. Điều này bao gồm thêm mới, cập nhật và xoá từ dịch vụ API, hàm (Function) hoặc đồng bộ hoá thiết bị (Device Sync)
 
 - Cú pháp cơ bản của một Schema như sau
-    ```json
+
+    ```json5
     {
         "bsonType": "object",
         "title": "<type name>",
@@ -86,6 +89,7 @@
         }
     }
     ```
+
     ```json5
     {
         // basic schema for product about products
@@ -104,6 +108,7 @@
     ```
 
 - Để thực hiện nhúng Schema cho collection, ta sử dụng kết hợp **db.createCollection(name, options)** để tạo các collection mới với các tuỳ chọn cụ thể và toán tử **$jsonSchema** sẽ so khớp các document tương ứng **JSON Schema** đã chỉ định
+
     ```js
     db.createCollection('products', {
         validator: {
@@ -130,6 +135,7 @@
     ```
 
 - Cập nhật Schema với **db.runCommand(command, [options])**
+
     ```js
     db.runCommand({ 
         collMod: 'products',
@@ -159,9 +165,11 @@
 ## 🔷 Quan hệ (Relations)
 
 ### Mô hình One - One Relationships với Embedded Document
+
 - Trong MongoDB, mô hình **One - One** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này được liên kết chính xác với một document trong collection khác
 
 - Embedded Document được sử dụng tối ưu nhất để mô tả mối quan hệ **One - One** giữa dữ liệu được kết nối. Embedded Document được kết nối vào một document duy nhất có thể giảm số lượng thao tác truy vấn cần thiết để lấy dữ liệu
+
     ```js
     {
         username: 'QuanTT',
@@ -174,9 +182,11 @@
     ```
 
 ### Mô hình One - Many Relationships với References Document
+
 - Trong MongoDB, mô hình **One - Many** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này có thể liên kết với nhiều document trong collection khác
 
 - References Document được sử dụng tối ưu nhất để mô tả mối quan hệ **One - Many** giữa dữ liệu được kết nối
+
     ```js
     // OS
     {
@@ -188,6 +198,7 @@
         InitialRelease: '20/11/1985'
     }
     ```
+
     ```js
     // products
     {
@@ -203,9 +214,11 @@
     ```
 
 ### Mô hình Many - Many Relationships với References Document
+
 - Trong MongoDB, mô hình **Many - Many** là một mô hình dữ liệu mô tả mối liên hệ giữa hai collection mà trong đó một document trong collection này có thể liên kết với nhiều document trong collection khác, và ngược lại
 
 - References Document được sử dụng tối ưu nhất để mô tả mối quan hệ **Many - Many** giữa dữ liệu được kết nối
+
     ```js
     // courses
     [
@@ -223,6 +236,7 @@
         }   
     ]
     ```
+
     ```js
     // students
     [
@@ -245,12 +259,14 @@
     ```
 
 ### Hợp nhất các quan hệ tham chiếu (Merging Reference Relations)
+
 - **Left Outer Join**
     + `$lookup` Thực hiện **Left Outer Join** vào một collection khác trong cùng cơ sở dữ liệu để lọc các document từ collection joined để xử lý
-    
+
     + `$lookup` thêm một trường là mảng mới vào mỗi document đầu vào. Mảng này chứa các document khớp từ collection joined 
 
     + Cú pháp thực hiện
+
         ```js
         {
             $lookup:
@@ -262,6 +278,7 @@
             }
         }
         ```
+
         - `from`: chỉ định collection trong cùng một cơ sở dữ liệu để thực hiện liên kết
 
         - `localField`: chỉ định trường từ các document đầu vào. `$lookup` thực hiện so khớp `localField` với `foreignField` từ document trong from collection. Nếu document đầu vào không chứa `localField`, thì `$lookup` sẽ xem trường đó có giá trị `null` cho mục đích so khớp
@@ -280,6 +297,7 @@
             }
         })
         ```
+
         ```js
         // products data output
         [
@@ -312,6 +330,7 @@
         ```
 
     + Hoạt động của `$lookup` tương tự với câu lệnh SQL như sau
+
         ```SQL
         SELECT *, (
             SELECT ARRAY(*)
@@ -370,9 +389,9 @@
             // Return product documents with max length = 5
             db.products.find().limt(5)
             ```
-        
+
         - **skip(number)**
-        
+
             ```js
             // Return product documents skip the first 5 documents
             db.products.find().skip(5) 
@@ -400,8 +419,8 @@
     ```
 
     + **Projection với mảng bẳng toán tử `$`**: Toán tử vị trí `$` giới hạn nội dung của một mảng để trả về phần tử đầu tiên khớp với điều kiện truy vấn. 
-     
-        ```js 
+
+        ```js
         // Return brand documents with _id and branchs[] field with branchs[0] data
         // and branchs[0].city = 'DN'
         db.brands.find({
@@ -420,6 +439,7 @@
             ]
         }
         ```
+
         + Tuy nhiên, khi không được truyền điều kiện truy vấn thì khi câu lệnh được thực thi, MongoDB sẽ xảy ra lỗi
 
         ```js
@@ -427,13 +447,14 @@
             'branchs.$': 1
         })
         ```
+
         ```
         MongoServerError[Location51246]: 
         Executor error during find command :: caused by :: positional operator '.$' couldn't find a matching element in the array
         ```
 
     + **Projection với mảng bằng toán tử `$slice`**: Chỉ định số lượng phần tử sẽ trả về của trường mảng trong kết quả truy vấn
-        
+
         ```js
         {arrayField: {$slice: '<number>'}}        
         ```
@@ -451,12 +472,14 @@
 ### Thêm mới dữ liệu
 
 - **db.collection.insertOne()** Chèn một document duy nhất vào collection. Với mỗi document được thêm mới, MongoDB sẽ tự động thêm trường **_id** với giá trị là duy nhất trong database.
+
     ```js
     db.products.insertOne({
         name: 'Keyboard',
         price: 500000
     })
     ```
+
     ```json
     {
         "_id": {
@@ -468,6 +491,7 @@
     ```
 
     + Với **insertOne()** khi truyền một mảng document, mongoDB sẽ thêm mới một document với data là mảng các document truyền vào
+
         ```js
             db.products.insertOne([
                 {
@@ -480,6 +504,7 @@
                 }
             ])
         ```
+
         ```json
         {
             "0": {
@@ -498,6 +523,7 @@
         ```
 
 - **db.collection.insertMany()** Chèn một hoặc nhiều document vào collection. Theo mặc định, document được chèn theo thứ tự được cung cấp. Tuy nhiên, document có thể được **mongod** sắp xếp lại để tăng hiệu suất. Chính vì vậy, các ứng dụng không nên phụ thuộc vào thứ tự chèn nếu sử dụng **insertMany()**
+
     ```js
         db.products.insertMany([
             {
@@ -556,11 +582,13 @@
     ```
 
 ### Toàn vẹn dữ liệu (Atomicity)
+
 - **Tính nguyên tử (Atomicity) - tính toàn vẹn dữ liệu** trong MongoDB đảm bảo rằng các hoạt động CRUD trên document là thành công toàn bộ hoặc thất bại toàn bộ. Nghĩa là, nếu chỉ với một field của document xảy ra lỗi trong quá trình truy vấn dữ liệu thì toàn bộ field của document đó cũng sẽ rollback
 
 - Atomicity ở cấp độ mỗi document, nghĩa là document có cấp cao nhất vì vậy nó bao gồm tất cả field trong document kể cả các Embedded Document, các mảng, ... 
 
 - Khi một thao tác thực hiện thêm mới hoặc sửa đổi nhiều document (insertMany, updateMany) thì việc đó với mỗi document là Atomicity nhưng toàn bộ thao tác không phải Atomacity
+
     ```js
     db.insertMany([
         {
@@ -732,6 +760,7 @@
             $max: {price: 1060000}
         })
         ```
+
     + `$mul` Nhân giá trị của trường theo giá trị đã chỉ định
 
         ```js
@@ -744,7 +773,7 @@
         ```
 
     + `$unset` Xoá trường được chỉ định
-        
+
         ```js
         // Update X98 Keyboard product with brand field deleted
         db.products.updateOne({
@@ -764,9 +793,10 @@
             $rename: {reduce: 'discount'}
         })
         ```
+
 - **Toán tử cập nhật mảng**
     + `$push` Thêm mới một phần tử vào phần tử cuối của trường mảng. 
-        
+
         ```js
         // Update Hoco brand with branchs add element
         db.brands.updateOne({
@@ -800,10 +830,10 @@
 
 ### Config Indexes
 
-- **Default Indexes** Trong MongoDB, trường `_id` đã được khởi tạo Indexs sẵn. Vì vậy khi thực hiện truy vấn dữ liệu với điều kiện sử dụng là `_id` thì tốc độ truy vấn thường rất nhanh 
+- **Default Indexes** Trong MongoDB, trường `_id` đã được khởi tạo Indexs sẵn. Vì vậy khi thực hiện truy vấn dữ liệu với điều kiện sử dụng là `_id` thì tốc độ truy vấn thường rất nhanh
 
 - Để có thể khởi tạo Indexes trên collection, sử dụng phương thức **db.collection.createIndex()**
-    
+
     ```js
     // Create price index of product collection with ASC order 
     db.products.createIndex({ price: 1 })   // Create index name is price_1
@@ -986,7 +1016,7 @@
             }
         }
         ```
-    
+
     + **Cập nhật phức tạp** Với những cấu trúc lòng nhau sâu, việc cập nhật có thể trở nên phức tạp và có thể yêu cầu thao tác rộng trên dữ liệu. Ngoài ra, nếu nhiều dữ liệu có chung thông tin tài liệu nhúng (như ví dụ ở trên) thì khi cập nhật, phải cập nhật tất cả dữ liệu có liên quan, điều này khó kiểm soát được tính thống nhất dữ liệu
 
 - Các trường hợp có thể sử dụng **Embedded Document**:
@@ -1247,6 +1277,7 @@
         $group: { _id: '$type', products: { $push: '$name' }}
     }])
     ```
+
     ```js
     // Return data
     {
@@ -1286,6 +1317,7 @@
         }
     ])
     ```
+
     ```js
     // Return data
     {
@@ -1303,7 +1335,7 @@
 ## 🔷 Tip
 
 - **Thêm mới hoặc cập nhật chỉ với một lệnh duy nhất**
-    
+
     Trong một số quy trình nhất định, việc thực hiện cập nhật hoặc thêm mới tuỳ thuộc vào dữ liệu có tồn tài trong DB hay không. Trong những trường hợp, để hợp lý hoá logic trên có một tuỳ chọn **upsert**. Tuỳ chọn này có sẵn trong các phương pháp **updateOne**, **updateMany**, **replaceOne**
 
     ```js
