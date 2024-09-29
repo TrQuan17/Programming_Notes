@@ -7,7 +7,11 @@
 - **[Quan hệ (Relations)](#-quan-hệ-relations)**
 - **[Tương tác với cơ sở dữ liệu](#-tương-tác-với-cơ-sở-dữ-liệu)**
 - **[Một số toán tử cơ bản](#-một-số-toán-tử-cơ-bản)**
-
+- **[Làm việc với Indexes](#-làm-việc-với-indexes)**
+- **[Làm việc với một số dữ liệu đặc biệt](#-làm-việc-với-một-số-dữ-liệu-đặc-biệt)**
+- **[Aggregation Framework](#-aggregation-framework)**
+- **[Bảo mật cơ sở dữ liệu](#-bảo-mật-cơ-sở-dữ-liệu)**
+- **[Hiệu suất và khả năng chịu lỗi](#-hiệu-suất-và-khả-năng-chịu-lỗi)**
 - **[Tip](#-tip)**
 
 ## 🔷 Tổng quan MongoDB
@@ -68,6 +72,12 @@
         \x06\x00\x00\x00world\x00  // field value
         \x00                       // 0x00 = type EOO ('end of object')
     ```
+
+### Collections 
+
+- **Collections** MongoDB lưu trữ các document trong các collections, nó tương tự như một bảng trong hệ cơ sở dữ liệu quan hệ (SQL)
+
+- **Capped Collections** là các collection có kích thước cố định thêm mới và truy xuất document dựa trên thứ tự thêm mới. **Capped Collections** hoạt động như một **Circular buffer** - khi một collection lấp đầy không gian phân bổ, nó sẽ tạo chỗ cho các document mới bằng cách ghi đè lên các document cũ nhất trong collection
 
 ## 🔷 Lược đồ (Schemas)
 
@@ -1122,7 +1132,7 @@
                     108.22690714836239,
                     16.061204191628278
                 ],
-                type: 'LineString'
+                type: 'Point'
                 // ---------------------------- //
             }
         })
@@ -1331,6 +1341,67 @@
         length: [ 5 ]
     }
     ```
+
+## 🔷 Bảo mật cơ sở dữ liệu
+
+### Xác thực (Authentication) và Phân quyền (Authorization)
+
+- **Xác thực (Authentication)** xác minh danh tính của người dùng
+
+- **Phân quyền (Authorization)** xác định quyền truy cập của người dùng đã được xác minh đối với hoạt động và tài nguyên
+
+- **Xác thực** và **Phân quyền** có liên quan chặt chẽ với nhau. Khi kiểm soát truy cập (phân quyền) được bật, MongoDB yêu cầu tất cả người dùng tự xác thực để xác định quyền truy cập của họ
+
+- **Role-Based Access Control (RBAC)** để quản lý quyền truy cập vào hệ thống MongoDB. Nguuời dùng được cấp một hoặc nhiều vai trò xác định quyền truy cập của người dùng và tài nguyên và hoạt động của cơ sở dữ liệu. Ngoài các vai trò được chỉ định, người dùng không có quyền truy cập vào hệ thống
+
+### User trong Xác thực và Phân quyền
+
+- Để xác thực client, bắt buộc phải thêm User tương ứng vào MongoDB. Sử dụng phương pháp **db.createUser()** để thêm mới một User cho cơ sở dữ liệu. Nếu User đã tồn tại trong cơ sở dữ liệu thì **db.createUser()** sẽ trả về lỗi **duplicate user error**. User đầu tiên được tạo phải có quyền thêm mới User khác
+
+    ```js
+    // Switch Shop DB
+    use shop
+    ```
+
+    ```js
+    // Create User in Shop DB
+    db.createUser({
+        user: 'QuanTT',
+        pwd: '12345678',
+        roles: ['readWrite']
+    })
+    ```
+
+    ```js
+    // Login user in shop
+    mongsh -u QuanTT -p '12345678' --authenticationDatabase shop
+    ```
+
+- Một số **Build-in Roles** (một số vai trò được tích hợp sẵn trong MongoDB)
+    + Database User: read, readWrite
+    + Database Admin: dbAdmin, userAdmin, dbOwner
+    + All Database: readAnyDatabase, readWriteAnyDatabase, userAminAnyDatabse, dbAdminAnyDatabase
+    + Cluster Admin: clusterManager, clusterMonitor, hostManager, clusterAdmin
+    + Backup/Restore: backup, restore
+    + Superuser: dbOwner, userAdmin, userAdminAnyDatabase, root
+
+## 🔷 Hiệu suất và khả năng chịu lỗi
+
+### Yếu tố ảnh hưởng đến hiệu suất
+
+- Các yếu tố đến từ **Developer**
+    + Hoạt động và truy vấn
+    + Indexes
+    + Lược đồ dư liệu
+
+- Các yêu tố đến từ **System**
+    + Phần cứng và mạng
+    + Sharding
+    + Replica Sets
+
+### Khả năng chịu lỗi (Fault Tolerance)
+
+- **Khả năng chịu lỗi (Fault Tolerance)** có nghĩa là nếu một hoặc nhiều thành phần trong hệ thống gặp lỗi, sẽ có một thành phần dự phòng sẵn sàng từ động tiếp quản, đảm bảo hệ thống có thể duy trì tính khả dụng liên tục, giúp người dùng truy cập ổn định mà không bị gián đoạn
 
 ## 🔷 Tip
 
