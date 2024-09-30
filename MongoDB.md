@@ -36,17 +36,17 @@
     + **Nhân rộng và phân phối khối lượng công việc** Bằng cách tạo bản sao dữ liệu và phân bổ công việc trên các phần khác nhau, MongoDB đảm bảo thông tin luôn khả dụng và hệ thống hoạt động thực sự nhanh. Điều này xảy ra vì các tác vụ được chia sẻ giữa nhiều nơi thay vì chỉ một nơi, giúp mọi thứ nhanh hơn và đáng tin cậy hơn
 
 - Tuy nhiên, MongoDB còn có một số nhược điểm đáng cân nhắc:
-    + **Phạm vi Transactions hạn chế** Trong MongoDB, các Transaction hoạt động với từng phần dữ liệu (được gọi là tài liệu), nhưng chúng không bao phủ đầy đủ các tình huống mà bạn cần thực hiện nhiều việc cùng lúc trên nhiều dữ liệu. Điều này có thể gây khó khăn cho các ứng dụng thực sự cần mọi thứ diễn ra hoàn hảo cùng nhau
+    + **Phạm vi Transactions hạn chế** Trong MongoDB, các Transaction hoạt động với từng phần dữ liệu (được gọi là document), nhưng chúng không bao phủ đầy đủ các tình huống mà bạn cần thực hiện nhiều việc cùng lúc trên nhiều dữ liệu. Điều này có thể gây khó khăn cho các ứng dụng thực sự cần mọi thứ diễn ra hoàn hảo cùng nhau
 
-    + **Thiếu sự tuân thủ ACID đầy đủ** Mặc dù MongoDB cung cấp tính nguyên tử (**A**tomicity), tính nhất quán (**C**onsistency), tính cô lập (**I**solation) và tính bền vững (**D**urability) ở cấp độ tài liệu, nhưng nó không cung cấp sự tuân thử **ACID** đầy đủ trên nhiều tài liệu hoặc collection. Hạn chế này có thể gây khó khăn cho các ứng dụng yêu cầu đảm bảo Transaction nghiêm ngặt và phức tạp
+    + **Thiếu sự tuân thủ ACID đầy đủ** Mặc dù MongoDB cung cấp tính nguyên tử (**A**tomicity), tính nhất quán (**C**onsistency), tính cô lập (**I**solation) và tính bền vững (**D**urability) ở cấp độ document, nhưng nó không cung cấp sự tuân thử **ACID** đầy đủ trên nhiều document hoặc collection. Hạn chế này có thể gây khó khăn cho các ứng dụng yêu cầu đảm bảo Transaction nghiêm ngặt và phức tạp
 
     + **Khả năng liên kết hạn chế** Không giống như cơ sở dữ liệu truyền thống, MongoDB không hỗ trợ liên kết theo cách tương tự. Mạc dù có thể thực hiện thủ công các hoạt động giống như liên kết bằng Code, nhưng nó có thể làm chậm quá trình thực thi và ảnh hưởng đến hiện suất
 
     + **Dư thừa dữ liệu và sử dụng bộ nhớ** MongoDB lưu trữ bao gồm cặp key-value, gây ra một số dư thừa dữ liệu do hạn chế của các liên kết trong MongoDB. Sự dư thừa này có thể dẫn đến việc sử dụng bộ nhớ tăng lên so với mức cần thiết
 
-    + **Giới hạn kích thước tài liệu** MongoDB áp dụng giới hạn kích thước tài liệu tối đa là 16MB. Các tài liệu lớn hơn có thể cần được xử lý khác nhau hoặc chia thành các tài liệu nhỏ hơn để phù hợp với ràng buộc này
+    + **Giới hạn kích thước document** MongoDB áp dụng giới hạn kích thước document tối đa là 16MB. Các document lớn hơn có thể cần được xử lý khác nhau hoặc chia thành các document nhỏ hơn để phù hợp với ràng buộc này
 
-    + **Mức tài liệu lồng nhau** Trong MongoDB các tài liệu có thể lồng nhau nhưng bị giới hạn ở mức tối đa là 100. Hạn chế này có thể ảnh hưởng nhỏ hoặc lớn đến việc tổ chức cấu trúc dữ liệu của dự án 
+    + **Mức document lồng nhau** Trong MongoDB các document có thể lồng nhau nhưng bị giới hạn ở mức tối đa là 100. Hạn chế này có thể ảnh hưởng nhỏ hoặc lớn đến việc tổ chức cấu trúc dữ liệu của dự án 
 
 ### BSON trong MongoDB
 
@@ -55,7 +55,7 @@
     + Các đối tượng và thuộc tính JSON không có độ dài cố định khiến việc duyệt chậm hơn
     + JSON không cung cấp Metadata và Type information, khiến việc truy xuất dữ liệu mất nhiều thời gian hơn
 
-> Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng tài liệu JSON, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BSON (Binary JSON)**
+> Một biểu diễn nhị phân để lưu trữ dữ liệu dưới dạng JSON document, được tối ưu hoá về tốc độ, bộ nhớ và hiệu quả. Về mặt phương pháp, nó không khác gì các định dạng trao đổi nhị phân khác như Protocol Buffers hoặc Thrift. Đó chính là **BSON (Binary JSON)**
 
 - **BSON** hỗ trợ nhiều kiểu dữ liệu hơn như ngày, giờ và dữ liệu nhị phân. Với khả năng cung cấp siêu dữ liệu bổ sung như thông tin về length, type, ... và cấu trúc nhị phân, **BSON** cho phép duyệt và truy xuất dữ liệu nhanh hơn
 
@@ -77,7 +77,49 @@
 
 - **Collections** MongoDB lưu trữ các document trong các collections, nó tương tự như một bảng trong hệ cơ sở dữ liệu quan hệ (SQL)
 
+- Để khởi tạo Collection, có hai cách cơ bản như sau:
+
+    + Nếu một Collection không tồn tại, MongoDB sẽ tạo Collection khi thực hiện lưu trữ dữ liệu hoặc tạo Indexes cho Collection đó lần đầu tiên
+
+        ```js
+        // Create product collection if it is not exist
+        db.products.insertOne({
+            name: 'Xinmeng X98 Pro',
+            type: 'Keyboard',
+            price: 1060000,
+            brand: 'Xinmeng'
+        })
+        ```
+
+    + Sử dụng phương pháp **db.createCollection()** để khởi tạo Collection với nhiều tuỳ chỉnh khác nhau, chẳng hạn như thiết lập kích thước tối đa hoặc các quy tắc xác thực document. Phương pháp này thường dùng để tạo **Capped Collections (Collection có giới hạn)**, **Clustered Collection** hoặc một Collection sử dụng Schema Validation
+
+        ```js
+        // Create history time series collection
+        db.createCollection(
+            'histories',
+            {
+                timeseries: {
+                    timeField: 'timestamp',
+                    metaField: 'data'
+                },
+                expireAfterSeconds: 3600
+            }
+        )
+        ```
+
 - **Capped Collections** là các collection có kích thước cố định thêm mới và truy xuất document dựa trên thứ tự thêm mới. **Capped Collections** hoạt động như một **Circular buffer** - khi một collection lấp đầy không gian phân bổ, nó sẽ tạo chỗ cho các document mới bằng cách ghi đè lên các document cũ nhất trong collection
+
+    ```js
+    // Create log capped collection 
+    db.createColletion(
+        'logs',
+        {
+            capped: true,
+            size: 1000000,   // byte
+            max: 100
+        }
+    )
+    ```
 
 ## 🔷 Lược đồ (Schemas)
 
@@ -870,7 +912,7 @@
     })
     ```
 
-- **Hết hạn dữ liệu** **TTL Index** sẽ hết hạn tài liệu sau khi số giây được chỉ định trôi qua kể từ giá trị trường được lập index. Ngưỡng hết hạn là giá trị trường được lập chỉ mục cộng với số giây được chỉ định
+- **Hết hạn dữ liệu** **TTL Index** sẽ hết hạn document sau khi số giây được chỉ định trôi qua kể từ giá trị trường được lập index. Ngưỡng hết hạn là giá trị trường được lập chỉ mục cộng với số giây được chỉ định
 
 - Một số lưu ý khi sử dụng **TTL Index**:
     + Sau khi tạo chỉ mục **TTL Index** có thể có rất nhiều document đủ điều kiện để xoá cùng lúc. Khối lượng công việc này có thể gây sự cố về hiệu suất trên server
@@ -1268,7 +1310,7 @@
     ])
     ```
 
-- **Projection** với `$project` Chuyển các document có các trường được yêu cầu đến giai đoạn tiếp theo trong pipeline. Các trường được chỉ định có thể là các trường hiện có từ các tài liệu đầu vào hoặc các trường mới được tính toán
+- **Projection** với `$project` Chuyển các document có các trường được yêu cầu đến giai đoạn tiếp theo trong pipeline. Các trường được chỉ định có thể là các trường hiện có từ các document đầu vào hoặc các trường mới được tính toán
 
     ```js
     // Return product aggregate documents with name and type field, without _id field
