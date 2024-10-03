@@ -1,5 +1,12 @@
 # **Angular**
 
+## 🔷 MỤC LỤC
+
+- **[Tổng quan Angular](#-tổng-quan-angular)**
+- **[Component](#-component)**
+- **[Pipe](#-pipe)**
+- **[Một số lỗi thường gặp và cách khắc phục](#-một-số-lỗi-thường-gặp-và-cách-khắc-phục)**
+
 ## 🔷 Tổng quan Angular
 
 ### Angular
@@ -11,20 +18,24 @@
 - **Angular CLI**: là một công cụ command line để khởi tạo, phát triển và duy trì các ứng dụng Angular trực tiếp từ shell lệnh
 
 ### Một số câu lệnh cài đặt môi trường cơ bản
+
 - Cài đặt công cụ Angular CLI
-    ```
+
+    ```sh
     npm install -g @angular/cli
     ```
 
 - Khởi tạo và build Angular project
-    ```
+
+    ```sh
     ng new angular-project
     ng serve --port 4000
     ```
 
-## 🔹 Component
+## 🔷 Component
 
 ### Khái niệm
+
 - **Component** là các khổi xây dựng chính cho ứng dụng Angular. Mỗi component bao gồm:
     + HTML Template kiểm soát những gì được hiển thị vào DOM
     + TypeScript class để xác định hành vi như xử lý dữ liệu đầu vào của client và lấy dữ liệu từ server
@@ -32,7 +43,8 @@
     + Ngoài ra, còn có CSS Styles áp dụng cho template
 
 - Khởi tạo một component:
-    ```
+
+    ```sh
     // full command
     ng generate component <component_name>
     ng generate component <folder/component_name>
@@ -42,7 +54,8 @@
     ```
 
 - Trong file component.ts, component sẽ được khai báo như sau
-    ```TS
+
+    ```ts
     @Component({
         selector: 'app-component-name',                 // CSS Selector
         templateUrl: './component-name.component.html', // HTML Template
@@ -56,10 +69,12 @@
     ``` 
 
 ### Vòng đời của Component (Component Lifecycle)
+
 - **Component Lifecycle** là chuỗi các bước diễn ra giữa quá trình khởi tạo và hủy component. Mỗi bước đại diện cho mỗi phần khác nhau của quy trình Angular để kết xuất các component và kiểm tra chúng để cập nhật theo thời gian
 
 - Thứ tự diễn ra trong Component Lifecycle như sau:
-    ```TS
+
+    ```ts
     export class ComponentNameComponent {
         // Contructor
         ComponentNameComponent() {}
@@ -82,22 +97,26 @@
     + **ngOnDestroy** chạy một lần ngay trước khi một component bị hủy bỏ. Angular hủy một component khi nó không còn hiển thị trên trang nữa.
 
     + **ngDoCheck** chạy trước mỗi lần Angular kiểm tra template của component để tìm kiếm sự thay đổi. **ngDoCheck** lần chạy đầu tiên sau **ngDoInit**
-    
-## 🔹 Pipe
 
-## 🔹 Một số lỗi thường gặp và cách khắc phục
+## 🔷 Pipe
+
+## 🔷 Một số lỗi thường gặp và cách khắc phục
 
 ### Không thể sử dụng command 'ng'
+
 - Thông báo lỗi
-    ``` 
+
+    ```sh
     ng : File C:....Roaming\npm\ng.ps1 cannot be loaded because running scripts is disabled on this system.
     ```
+
 - Xử lý
-    ```
+
+    ```sh
     set-ExecutionPolicy RemoteSigned -Scope CurrentUser
     Get-ExecutionPolicy
     Get-ExecutionPolicy -list
     ```
-- Link chi tiết     
-https://www.c-sharpcorner.com/article/how-to-fix-ps1-can-not-be-loaded-because-running-scripts-is-disabled-on-this-sys/
 
+- Link chi tiết
+<https://www.c-sharpcorner.com/article/how-to-fix-ps1-can-not-be-loaded-because-running-scripts-is-disabled-on-this-sys/>

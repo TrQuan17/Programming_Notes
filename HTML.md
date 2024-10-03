@@ -1,6 +1,6 @@
 # **HTML - HyperText Markup Language**
 
-## 🔷 Lý thuyết cơ sở
+## 🔷 Tổng quan HTML
 
 ### HTML & HTML DOM
 
@@ -21,7 +21,8 @@
 ## 🔷 Truy vấn Element
 
 - Một số hàm truy vấn cơ bản
-    ``` HTML
+
+    ```html
     <div class="wrapper">
         <h1 id="title"> Title </h1>
         <a href="www.google.com"> Google </a>
@@ -31,7 +32,7 @@
     </div>    
     ```
 
-    ```JS
+    ```js
     document.getElementById('title') // h1#title
     document.getElementsByClassName('wrapper') // [div.wrapper]
     document.getElementsByTagName('h1') // [h1]
@@ -40,14 +41,15 @@
     docment.forms['firstForm'] // [form#firstForm]
     docment.forms[0] // [form#firstForm]
     docment.forms.firstForm // [form#firstForm]
-    ```   
+    ```
+
 - **innerText và textContent**
     + **innerText**: Lấy nội dung văn bản trong thẻ đó ( Những nội dung mà mình có thể nhìn thấy ), thuộc tính chỉ tồn tại trên ElementNode
     + **textContent**: Lấy tất cả TextNode trong thẻ đó ( Khoảng trắng, xuống dòng, code trong thẻ script, style cũng được xem như là một TextNode ), thuộc tính tồn tại ở cả TextNode và ElementNode
 
 - **innerHTML và outerHTML**
 
-    ``` HTML
+    ```html
     <div class='box'></div>
     ```
 
@@ -68,4 +70,5 @@
     + **outerHTML**: Đối với get, Lấy tất cả nội dung HTML chứa bên trong tag và chính nó, với set thì nó sẽ ghi đè tất cả nội dung HTML bên trong cũng như chính nó
 
 ## 🔷Tip
+
 - Attribute 'contenteditable': một số ElementNode có thể chỉnh sửa như thẻ input cũng như có thể thực hiện các thao tác định dạng chữ như Bôi đậm (Ctrl + B), In nghiệm (Ctrl + I), Gạch chân (Ctrl + U), ...

@@ -1,10 +1,19 @@
 # **Javascript**
 
-## 🔹 Lý thuyết cơ sở
+## 🔷 MỤC LỤC
+
+- **[Tổng quan Javascript](#-tổng-quan-javascript)**
+- **[Bất đồng bộ](#-bất-đồng-bộ)**
+- **[Module](#-module)**
+- **[Tip](#-tip)**
+
+## 🔷 Tổng quan Javascript
 
 ### Kiểu dữ liệu và khai báo biến
+
 - **const**: không thể thay đổi giá trị nguyên thuỷ, tuy nhiên có thể thay đổi thuộc tính của đối tượng const cũng như các thao tác như thêm, xoá, thay đổi phần tử với mảng const
-    ``` JS
+
+    ```js
     const num = 12
     num = 16 // TypeError: Assignment to constant variable
 
@@ -22,9 +31,12 @@
 
     arr = [7, 8, 9] // TypeError: Assignment to constant variable
     ```
+
 ### Hoisting
-- Được hiểu là khai báo biến và hàm được xử lý trước khi được thực thi 
-    ``` JS
+
+- Được hiểu là khai báo biến và hàm được xử lý trước khi được thực thi
+
+    ```js
     console.log(hello) // undefined
     var hello = 'hello'
 
@@ -33,16 +45,20 @@
         console.log('hello')
     }
     ```
+
 - Khai báo hàm được đưa lên trên để thực thi tuy nhiên biển thức hàm thì không
-    ``` JS
+
+    ```js
     helloFunc() // TypeError: helloFunc is not a function
     var helloFunc = () => {
         console.log('hello')
     }
     ```
-## 🔹 Bất đồng bộ
+
+## 🔷 Bất đồng bộ
 
 ### Cơ chế Event-Loop
+
 - Câu lệnh **Asynchronous** được đưa vào **call stack**
 - **Call stack** nhận diện đưa qua **Web APIs**
 - **Call stack** tiếp tục được nhận những câu lệnh khác
@@ -50,16 +66,19 @@
 - **Call stack** xử lý xong các câu lệnh **synchronized,** đưa hàm **callback** từ **callback queue** thực hiện
 
 ### Callback
+
 - Là hàm được sử dụng như một tham số của hàm khác
 - Được sử dụng như gọi API, kết nối cơ sở dữ liệu, xử lý file, xử lý sự kiện, ...
 
 ### Callback hell
 
-## 🔹 Module
+## 🔷 Module
 
 ### Module Inport và Export
+
 - Module.exports (CommonJS Modules)
-    ``` JS
+
+    ```js
     // fileModuleExports.js
     module.exports = { function, class }
     
@@ -68,9 +87,10 @@
     const function = fileImport.function()
     const class = fileImport.class
     ```
-    
+
 - Import / export (ES6 - ECMAScript 6 Module)
-    ``` JS
+
+    ```js
     // fileModuleExports.js
     export const func = ( /* variable */ ) => { /* code */ }
 
@@ -82,11 +102,12 @@
     import { func } from 'fileModuleExports.js'
     ```
 
-## 🔹 Tip
+## 🔷 Tip
 
-- Chuyển đổi nhanh giữa string sang number và ngược 
-lại: 
-    ``` JS
+- Chuyển đổi nhanh giữa string sang number và ngược
+lại:
+
+    ```js
     const str = '12'
     console.log(typeof +str) // number
 
