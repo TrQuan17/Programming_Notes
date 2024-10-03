@@ -1,6 +1,6 @@
 # **Angular**
 
-## 🔹 Tổng quan Angular
+## 🔷 Tổng quan Angular
 
 ### Angular
 
