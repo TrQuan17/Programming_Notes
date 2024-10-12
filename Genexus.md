@@ -1,6 +1,6 @@
 # **Genexus**
 
-## 🔷 MỤC LỤC
+## 🔷  MỤC LỤC
 
 - **[Tổng quan Genexus](#-tổng-quan-genexus)**
 - **[Transaction](#-transaction)**
@@ -43,6 +43,7 @@
 ### Rule
 
 - Xử lý ở phía Client (Client-Side Validation - xử lý và hiển thị tức thời khi người dùng thao tác) và được thực hiện tại Server thêm một lần nữa như thể đó là người dùng (đối với các rule check lỗi)
+
 - **Serial**: Tự động đánh số cấp độ level 2, level 3 hoặc các level lồng nhau khác của đối tượng Transaction.
 
 	```js
@@ -164,7 +165,7 @@
 * Phân loại theo điều hướng
 	- **Aggregate Formulas** :
 		+ Cho phép xác định một số loại tính toán hoặc tìm kiếm, bao gồm nhiều bản ghi của một bảng (và được liên kết bằng Extended Table).
-  		+ Bao gồm: Sum, Count, Average, Max, Min, Find.
+		+ Bao gồm: Sum, Count, Average, Max, Min, Find.
 
 	- **Horizontal Formulas** :
 		+ Cho phép xác định các biểu thức (số học hoặc bất kỳ loại nào khác).
@@ -196,7 +197,7 @@
 		For Each Attraction, Category
 			Where Attraction.CategoryId = Category.CategoryId
 			Where Attraction.CountryId = Category.CountryId
-			...
+			/* code */
 		EndFor
 		```
 
@@ -229,7 +230,7 @@
 ### Unique Clause
 
 - Cho phép chỉ ra Attribute hoặc tập hợp các Attribute có giá trị không được lặp lại trong đầu ra truy vấn
-
+	
 	```js
 	// Unique clause with For Each
 	For Each Attraction
@@ -249,19 +250,18 @@
 
 - Các hạn chế khi sử dụng Unique Clause
 	+ Không thể sử dụng biểu thức trong danh sách các Attribute được khai báo trong Unique Clause
-
 		```js
 		// Cannot use
 		Unique ReservationDate.Year()
-		```
+  		```
 
 	+ Cả trong nội dung lệnh For Each và trong nhóm của Data Provider (trừ các công thức nội tuyến) chỉ có thể bao gồm các Attribute có giá trị duy nhất được khai báo trong Unique Clause và Attribute liên quan (cùng 1 record)
-  	+ Không thể sử dụng Unique Commnand trong Nested For Each. Cho đến nay, nó không thể sử dụng để thực hiện Control Break.
+	+ Không thể sử dụng Unique Commnand trong Nested For Each. Cho đến nay, nó không thể sử dụng để thực hiện Control Break.
 
 ### Data Selector
 
 - **Data Selector** cho phép lưu trữ một tập hợp các Parameters, Conditions, Orders và Defined By để người dùng có thể gọi từ các truy vấn và tính toán khác nhau đồng thời tái sử dụng cùng một cơ chế điều hướng nhiều lần
-
+	
 	```js
 	// Filter using Data Selector with For Each command
 	For Each Customer
@@ -302,7 +302,7 @@
 
 - **Global Events**: cho phép xác định các sự kiện toàn cục cho tất cả các thành phần của ứng dụng. Một Web Page có thể được tạo thành từ một số Component, vì vậy ý tưởng của Global Events là để các Component và Web Panel có thể giao tiếp với nhau. Thông qua Global Events, tất cả các thành phần của màn hình có thể tương tác với nhau vì các sự kiện có thể định nghĩa và được gọi từ bất kì thành phần nào.
   
-- Global Events được triển khai thông qua GlobalEvents External Object, được import tự động bởi Genexus, nó cho phép bạn tạo Global Events để đạt được sự tương tác linh hoạt hơn giữa các thành phần của Form, trong ứng dụng Web và thiết bị thông minh
+- **Global Events** được triển khai thông qua GlobalEvents External Object, được import tự động bởi Genexus, nó cho phép bạn tạo Global Events để đạt được sự tương tác linh hoạt hơn giữa các thành phần của Form, trong ứng dụng Web và thiết bị thông minh
 
 	```js
 	// Home Web Panel
@@ -341,7 +341,7 @@
 	+ &collections.Sort(key): sắp xếp collection theo key (Sort theo nhiều key)
 
 - Truy vấn dữ liệu:
-
+	
 	```js
 	For &collectionItem in &collections
 		/* code */
@@ -405,8 +405,8 @@
 - Sử dụng các lệnh như New, Delete,... để cập nhật dữ liệu, tuy nhiên cách này có nhiều hạn chế:
 	+ Không thể kiểm tra tính toàn vẹn của tham chiếu
 	+ Không thể kích hoạt được các Rule
- 	+ Chỉ được sử dụng ở Procedure
-
+	+ Chỉ được sử dụng ở Procedure
+	
 	```js
 	// Create with new command
 	New
@@ -435,21 +435,21 @@
 - Một số lưu ý khi sử dụng Procedure Command:
 	+ Với mọi Procedure Command, tất cả Attribute của bản ghi và các Attribute liên quan của Extended Table đều có thể cập nhật, ngoại trừ Primary Key
 	+ Khi sử dụng New Command, nếu Primary Key của bản ghi thêm mới vào trùng với Primary Key đã tồn tại trong CSDL, thì quá trình thêm mới sẽ không được thực hiện. Vì vậy có thể sử dụng New Command như để kiểm tra dữ liệu, bản ghi thêm mới chưa có trong CSDL (chỉ kiểm tra tồn tại đối với Primary Key) thì thêm mới bản ghi, ngược lại thì cập nhật bản ghi đã có.
-
+		
 		```js
-  		New
-  			AttractionId = 1
-  			AttractionName = 'Eiffel Tower'
+		New
+			AttractionId = 1
+			AttractionName = 'Eiffel Tower'
 
-  		When Duplicate
-  			For Each Attraction
-  				AttractionName = 'Eiffel Tower'
-  			EndFor
-  		EndNew
-  		```
+		When Duplicate
+			For Each Attraction
+				AttractionName = 'Eiffel Tower'
+			EndFor
+		EndNew
+		```
 
-  	+ Khi cần cập nhật với một số lượng lớn bản ghi, việc giảm số lượng khứ hồi về hệ quản trị CSDL (Database Management System - DBMS) là một giải pháp. Việc chặn các hoạt động cập nhật dữ liệu yêu cầu phải lưu trữ chúng trong bộ nhớ và gửi chúng theo nhóm tới DBMS. Thay vì thao tác với DBMS trong mọi thao tác cập nhật CSDL, tương tác chỉ diễn ra sau mỗi N thao tác cập nhật, trong đó N là số chỉ định. Vì vậy Blocking Command là giải pháp cho vấn đề trên, nó sẽ giảm số lượng khứ hồi đến Server, một tập hợp các bản cập nhật CSDL chỉ được gửi tới DBMS sau N lần chỉ định
-
+	+ Khi cần cập nhật với một số lượng lớn bản ghi, việc giảm số lượng khứ hồi về hệ quản trị CSDL (Database Management System - DBMS) là một giải pháp. Việc chặn các hoạt động cập nhật dữ liệu yêu cầu phải lưu trữ chúng trong bộ nhớ và gửi chúng theo nhóm tới DBMS. Thay vì thao tác với DBMS trong mọi thao tác cập nhật CSDL, tương tác chỉ diễn ra sau mỗi N thao tác cập nhật, trong đó N là số chỉ định. Vì vậy Blocking Command là giải pháp cho vấn đề trên, nó sẽ giảm số lượng khứ hồi đến Server, một tập hợp các bản cập nhật CSDL chỉ được gửi tới DBMS sau N lần chỉ định
+		
 		```js
 		For Each Attraction
 			Blocking 100
@@ -457,9 +457,9 @@
 		EndFor
 		```
 
-  	+ Mặc dù các Procedure Command không kiểm tra tính toàn vẹn, tuy nhiên trong CSDL sẽ có. Chẳng hạn nến thêm mới một bản ghi có trường là khoá ngoại đến bảng khác và giá trị của trường đó là không tồn tại trong bảng đó, mặc dù New Command đã có gắng thực hiện thêm mới nhưng CSDL không cho phép và Server sẽ đưa ra SQLExeception. Để tắt tính năng này của CSDL, trong Data Stores SQL Server Properties, đổi Declare referential integrity property thành No (mặc định là Yes)
+	+ Mặc dù các Procedure Command không kiểm tra tính toàn vẹn, tuy nhiên trong CSDL sẽ có. Chẳng hạn nến thêm mới một bản ghi có trường là khoá ngoại đến bảng khác và giá trị của trường đó là không tồn tại trong bảng đó, mặc dù New Command đã có gắng thực hiện thêm mới nhưng CSDL không cho phép và Server sẽ đưa ra SQLExeception. Để tắt tính năng này của CSDL, trong Data Stores SQL Server Properties, đổi Declare referential integrity property thành No (mặc định là Yes)
 
-  	+ Nếu Formula Attribute phụ thuộc vào Attribute đang được cập nhật, Genexus sẽ không tìm kiếm hoặc tính toán giá trị mới, vì vậy, quá trình này phải được thực hiện thủ công
+	+ Nếu Formula Attribute phụ thuộc vào Attribute đang được cập nhật, Genexus sẽ không tìm kiếm hoặc tính toán giá trị mới, vì vậy, quá trình này phải được thực hiện thủ công
 
 	+ Khi sử dụng các lệnh New, Delete, ... hoặc cập nhật dữ liệu của Procedure, chỉ khi thực hiện Commit thì dữ liệu mới được cập nhật, tuy nhiên cấu hình mặc định của Genexus là tự động commit khi kết thúc Procedure. Để tắt tính năng này, trong Property của Procedure, có tuỳ chọn Commit On Exit mặc định là Yes, vì vậy nên chuyển về No để tránh việc không kiểm soát được dữ liệu commit lên CSDL
 
@@ -481,12 +481,12 @@
 
 - Có các đặc điểm chính như sau:
 	+ **Đa trải nghiệm**: Web responsive, Native Mobile, Chatbots, Inbox-driven
-  	+ **Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, Genexusflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
-  	+ **Standard Module**: được phát triển trong một Genexus Module và được phát hành dưới dạng là một Module
-  	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
+	+ **Cross product** (có khả năng tích hợp vào các Product khác nhau): GAM, Genexusflow(Hệ thống quản lý quy trình làm việc - Workflow Management System), Chatbots và Dashboards
+	+ **Standard Module**: được phát triển trong một Genexus Module và được phát hành dưới dạng là một Module
+	+ **Xây dựng dựa trên công nghệ mới nhất**: DSO (Design System Object) xác định các tính năng style cho Screen controls, nhằm mục đích tăng cường sự trừu tượng trong thiết kế ứng dụng, cho phép tái sử dụng và lắp ghép dễ dàng hơn
 	+ **Cá nhân hoá và mở rộng**: thiết kế riêng cho bản thân, cho giải pháp hoặc doanh nghiệp
 
-- Unanimo bao gồm 4 phần chính:
+- **Unanimo** bao gồm 4 phần chính:
 	+ Design System (Tokens - Styles)
 	+ Hình ảnh và các tài nguyên khác
 	+ User Controls (Custom UI - Chameleon Library)
@@ -501,7 +501,7 @@
 - **Sử dụng Formula Attribute như một Attribute thông thường và tồn tại vật lý**
 
 	Để sử dụng như một Formula Attribute (Virual Attribute) nhưng Attribute vẫn được lưu trong DB thì có thể sử dụng Formula trong Rule
-
+	
 	```js
 	// Rule
 	FlightCapacity = count(FlightSeatLocation)
@@ -514,7 +514,7 @@
 - **Lưu ý khi sử dụng Aggregate Formula**
 
 	Không nên dùng Aggregate Formula trong For Each với điều kiện chứa các Attribute của Transaction truy vấn, lúc này Genexus sẽ tự động đặt các Attribute vào ngữ cảnh của For Each vì vậy Aggregate Formula chỉ được tính với 1 record
-
+	
 	```js
 	// Should not be used
 	For Each Trip
@@ -551,8 +551,8 @@
 	Price     0
 	```
 
-	Trong mục **Property** của attribute/biến, có thể chỉnh ở phần Picture. Ngoài ra, ta có thể set picture với control name bằng thuộc tính **picture**
-
+	Trong mục **Property** của attribute/biến, có thể chỉnh ở phần Picture. Ngoài ra, ta có thể set picture với control name bằng thuộc tính **Picture**
+	
 	```js
 	price.picture = 'ZZ,ZZZ,ZZ9.99' // set picture with control name of price
 	```

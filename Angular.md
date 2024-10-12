@@ -66,7 +66,7 @@
     export class ComponentNameComponent {
         // code
     }
-    ``` 
+    ```
 
 ### Vòng đời của Component (Component Lifecycle)
 

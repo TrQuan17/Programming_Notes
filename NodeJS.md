@@ -3,7 +3,7 @@
 ## 🔷 MỤC LỤC
 
 - **[Tổng quan NodeJS](#-tổng-quan-nodejs)**
-- **[CORS (Cross-Origin Resource Sharing)](#cors-cross-origin-resource-sharing)**
+- **[CORS (Cross-Origin Resource Sharing)](#-cors-cross-origin-resource-sharing)**
 - **[REST API (REpresentational State Transfer)](#-rest-api-representational-state-transfer)**
 - **[Authentication và Json Web Token (JWT)](#-authentication-và-json-web-token-jwt)**
 - **[Tip](#-tip)**
@@ -23,14 +23,14 @@
 
 - Khi gõ code JS lên màn hình shell, NodeJS sẽ thực hiện việc đọc thông tin (Read) và tự động lưu trữ trong bộ nhớ; tự động đánh giá cấu trúc dữ liệu và sự hợp lệ của các dòng lệnh (Eval); xử lý thực thi code sau đó in ra kết quả nếu có (Print) và hỗ trợ lặp lại các dòng lệnh trên để thực thi chương trình (Loop).
 
-## 🔷CORS (Cross-Origin Resource Sharing)
+## 🔷 CORS (Cross-Origin Resource Sharing)
 
 - **CORS** là một cơ chế cho phép chia sẻ tài nguyên có nhiều nguồn gốc khác nhau. Định nghĩa của tương đồng là protocol, domain và port của liên kết truy cập là giống nhau
 
 - Tiêu chuẩn CORS xác định cách trình duyệt và server giao tiếp khi truy cập tài nguyên miền chéo. Ý tưởng cơ bản là sử dụng tiêu đề HTTP để cho phép trình duyệt giao tiếp với server để xác định xem yêu cầu có thể thành công hay không
 
 - Một số các cài đặt CORS sử dụng NodeJS
-  - Set vào response header
+    + Set vào response header
 
         ```js
         const app = express()
@@ -44,7 +44,7 @@
         })
         ```
 
-  - Sử dụng thư viện cors của npm
+    + Sử dụng thư viện cors của npm
 
         ```js
         const cors = require('cors')
