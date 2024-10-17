@@ -1,6 +1,12 @@
 # **HTML - HyperText Markup Language**
 
-## 🔷 Lý thuyết cơ sở
+## 🔷 MỤC LỤC
+
+- **[Tổng quan HTML](#-tổng-quan-html)**
+- **[Truy vấn Element](#-truy-vấn-element)**
+- **[Tip](#-tip)**
+
+## 🔷 Tổng quan HTML
 
 ### HTML & HTML DOM
 
@@ -10,7 +16,7 @@
 
 - **HTML DOM**: là một tiêu chuẩn cho phép bạn thực hiện những công việc thao tác với bất kì một trang web: get, change, add, hoặc delete các thành phần của HTML.
 
-- HTML DOM là một chuẩn mô hình object và programming interface cho HTML. Nó định nghĩa:
+- **HTML DOM** là một chuẩn mô hình object và programming interface cho HTML. Nó định nghĩa:
     - HTML elements như là objects
     - Properties của tất cả HTML elements
     - Methods để truy cập đến tất cả HTML elements
@@ -21,7 +27,8 @@
 ## 🔷 Truy vấn Element
 
 - Một số hàm truy vấn cơ bản
-    ``` HTML
+
+    ```html
     <div class="wrapper">
         <h1 id="title"> Title </h1>
         <a href="www.google.com"> Google </a>
@@ -31,7 +38,7 @@
     </div>    
     ```
 
-    ```JS
+    ```js
     document.getElementById('title') // h1#title
     document.getElementsByClassName('wrapper') // [div.wrapper]
     document.getElementsByTagName('h1') // [h1]
@@ -40,18 +47,19 @@
     docment.forms['firstForm'] // [form#firstForm]
     docment.forms[0] // [form#firstForm]
     docment.forms.firstForm // [form#firstForm]
-    ```   
+    ```
+
 - **innerText và textContent**
     + **innerText**: Lấy nội dung văn bản trong thẻ đó ( Những nội dung mà mình có thể nhìn thấy ), thuộc tính chỉ tồn tại trên ElementNode
     + **textContent**: Lấy tất cả TextNode trong thẻ đó ( Khoảng trắng, xuống dòng, code trong thẻ script, style cũng được xem như là một TextNode ), thuộc tính tồn tại ở cả TextNode và ElementNode
 
 - **innerHTML và outerHTML**
 
-    ``` HTML
+    ```html
     <div class='box'></div>
     ```
 
-    ``` JS
+    ```js
     const boxDiv = document.querySelector('.box')
     console.log(boxDiv.innnerHTML) // ''
     console.log(boxDiv.outerHTML) // '<div class='box'></div>'
@@ -67,5 +75,6 @@
     + **innerHTML**: Đối với get, lấy tất cả nội dung HTML chứa bên trong tag, với set thì nó sẽ ghi đè nội dung HTML bên trong tag
     + **outerHTML**: Đối với get, Lấy tất cả nội dung HTML chứa bên trong tag và chính nó, với set thì nó sẽ ghi đè tất cả nội dung HTML bên trong cũng như chính nó
 
-## 🔷Tip
+## 🔷 Tip
+
 - Attribute 'contenteditable': một số ElementNode có thể chỉnh sửa như thẻ input cũng như có thể thực hiện các thao tác định dạng chữ như Bôi đậm (Ctrl + B), In nghiệm (Ctrl + I), Gạch chân (Ctrl + U), ...

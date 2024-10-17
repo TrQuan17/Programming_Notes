@@ -3,12 +3,15 @@
 ## 🔷 Tổng quan Docker
 
 ### Docker
+
 - **Docker** là nền tảng cho phép dựng, kiểm thử và triển khai ứng dụng một cách nhanh chóng
 - Docker đóng gói phần mềm vào các đơn vị tiêu chuẩn hoá được gọi là container có mọi thứ mà phần mềm cần chạy, trong đó có thư viện, công cụ hệ thống, code và thời gian chạy
 - Bằng cách sử dụng Docker, có thể nhanh chóng triển khai và thay đổi quy mô ứng dụng vào bất kì môi trường nào và biết chắc rằng code sẽ chạy được
 
 ### Container
+
 - **Container** là các môi trường hoàn toàn cách ly. Trong chúng có thể chứa các quy trình hoặc service riêng, các netword, các mounts. Các container giống như các máy ảo ngoại trừ chúng đểu được chia sẻ cùng một nhân hệ điều hành
+
 - Ưu điểm của Container:
     + **Linh hoạt**: Quản lý, cấp phát và chia sẻ tài nguyên hiệu quả hơn. Tài nguyên được chia sẻ linh hoặc giữa các container, không bị giới hạn tài nguyên **cứng** như Virtual Machine (VM)
     + **Tiết kiệm tài nguyên hệ thống** vì không phải lãng phí tài nguyên (CPU, RAM, Storage) cho Hypervisor và hệ điều hành như khi dùng VM
