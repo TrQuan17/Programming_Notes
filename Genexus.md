@@ -182,7 +182,7 @@
 
 ### Truy vấn dữ liệu các giữa các Transaction
 
-- Sử dụng For Each Command truy xuất dữ liệu từ cơ sở dữ liệu. Khi được sử dụng với Procedure, ngoài việc đọc dữ liệu nó còn được sử dụng để cập nhật cơ sở dữ liệu
+- Sử dụng **For Each Command** truy xuất dữ liệu từ cơ sở dữ liệu. Khi được sử dụng với Procedure, ngoài việc đọc dữ liệu nó còn được sử dụng để cập nhật cơ sở dữ liệu
 - Để sắp xếp các dữ liệu được in ra, sử dụng order
 
 	```js
@@ -190,8 +190,17 @@
 	For Each Attraction Order (AttractionName) ... // sắp xếp AttractionName theo DESC
 	```
 
-- Inner Join (Natural Join) và Outer Join (Left Join)
-	+ Inner Join (Natural Join):
+- **Phân trang trong Genexus** Kết hợp sử dụng 2 mạnh đề **Skip** và **Count** trong lệnh For Each cho phép thực hiện phân trang ở truy vấn. Điều này có nghĩa là thông tin hiển thị được chia thành một số trang và số dòng nhất định trên mỗi trang. Với mệnh đề **Skip** được sử dụng để chỉ ra số lượng bản ghi bị bỏ qua. Mặc khác, mệnh đề **Count** được sử dụng để chỉ ra số lượng bản ghi trên mỗi trang
+
+	```js
+	// first (&Page - 1)*&PageRows records are skipped
+	// display the next &PageRows records per page 
+	For each Products
+		Skip (&Page - 1)*&PageRows Count &PageRows
+	EndFor
+	```
+- Các kiểu liên kết bảng trong Genexus
+	+ **Inner Join (Natural Join)**:
 
 		```js
 		For Each Attraction, Category
@@ -201,7 +210,7 @@
 		EndFor
 		```
 
-	+ Outer Join (Left Join):
+	+ **Outer Join (Left Join)**:
 
 		```js
 		For Each Attraction
@@ -213,7 +222,16 @@
 		EndFor
   		```
 
-- Các trường hợp For Each lòng nhau (Nested For Each)
+	+ **Cross Join (Cartesian Join)**:
+
+		```js
+		// Where condition is not specified
+		For each Attraction, Category
+			/* code */
+		EndFor
+		```
+
+- Các trường hợp **For Each lòng nhau (Nested For Each)**
 	+ **Control Break**: các Base Table của mỗi vòng For là giống nhau
 
 	+ **Cartesian Product**: các Base Table của mỗi vòng For đều khác nhau và chúng không có mối quan hệ trực tiếp hoặc gián tiếp N - 1. Vì vậy, kết quả thu được là Tích Descartes của các bảng này: đối với mỗi bảng ghi của bảng For Each cơ sở chính, nó truy xuất tấp cả bản ghi của bảng For Each cơ sở lòng nhau
