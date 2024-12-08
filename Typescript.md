@@ -21,7 +21,27 @@
     + **Tích hợp và cấu hình bổ sung** Để sử dụng Typescript cần phải cấu hình trình biên dịch và có thể tích hợp các công cụ đóng gói và xây dựng khác như Webpack, Rollup, hoăc Parcel. Điều này có thể tăng thêm độ phức tạp cho quá trình thiết lập dự án
     + **Một số lỗi ngầm khi biên dịch qua Javascript** Việc biên dịch từ Typescript sang Javascript đôi khi có thể che giấu các lỗi hoặc hành vi không mong muốn, đặc biệt là nếu tính nghiêm ngặt của kiểm tra kiểu dữ liệu không được cấu hình đúng cách
 
-## 🔷 Type, Enum, Keyof
+- Cấu hình **Typescript**
+    + Cài đặt  **Typescript**
+    
+        ```sh
+        npm install -g typescript
+        ```
+    
+    + Biên dịch file **Typescript**
+
+        ```sh
+        tsc index.ts
+        ```
+
+## 🔷 Các kiểu dữ liệu cơ bản trong Typescript
+
+- Có 3 kiểu **dữ liệu nguyên thuỷ** trong TS đó là:
+    + **number** Bao gồm tất cả các số, không có sự phân biệt giữa số nguyên và số thực
+    
+    + **string** Bao gồm tất cả các giá trị văn bản
+
+    + **boolean** Chỉ có duy nhất 2 giá trị `true` và `false`, không có giá trị `truthy` hoặc `falsy`
 
 ## 🔷 Generic type
 
