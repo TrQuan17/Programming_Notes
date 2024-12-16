@@ -3,6 +3,7 @@
 ## 🔷 MỤC LỤC
 
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
+- **[Các kiểu dữ liệu cơ bản trong Typescript](#-các-kiểu-dữ-liệu-cơ-bản-trong-typescript)**
 
 ## 🔷 Tổng quan Typescript
 
@@ -23,11 +24,11 @@
 
 - Cấu hình **Typescript**
     + Cài đặt  **Typescript**
-    
+
         ```sh
         npm install -g typescript
         ```
-    
+
     + Biên dịch file **Typescript**
 
         ```sh
@@ -42,7 +43,7 @@
 
 - Có 3 kiểu **dữ liệu nguyên thuỷ** trong TS đó là:
     + **number** Bao gồm tất cả các số, không có sự phân biệt giữa số nguyên và số thực
-    
+
     + **string** Bao gồm tất cả các giá trị văn bản
 
     + **boolean** Chỉ có duy nhất 2 giá trị `true` và `false`, không có giá trị `truthy` hoặc `falsy`
@@ -83,6 +84,23 @@
 
     + **Chú thích** Thay vì dựa vào các chú thích để truyền đạt kiểu dữ liệu mong đợi của một biến hoặc kiểu dữ trả về của một hàm, các chú thích kiểu dữ liệu trong code đã cung cấp thông tin này
 
-## 🔷 Generic type
+### Tuples
 
-## 🔷 Interface, Class
+- **Tuples** là một kiểu dữ liệu trong **Typescript** được sử dụng để biểu diễn một mảng trong đó kiểu của một số phần tử cố định được khai báo từ ban đầu, nhưng không phải cho tất cả các phần tử. Nó cung cấp một cách để biểu diễn tập hợp các kiểu phần tử được sắp xếp cho các phần tử được sắp xếp cho các phần tử nhất định trong một mảng Typescript. Tuples luôn có một số phần tử cố định và mỗi phần tử trong số chúng có các kiểu được liên kết với chúng
+
+    ```ts
+    let point: [number, number] = [1, 2]
+
+    const role: [string, number] = ['admin', 0]
+
+    // Error
+    // Type '[string, number, number]' is not assignable to type '[string, number]'.
+    // Source has 3 element(s) but target allows only 2
+    const role: [string, number] = ['admin', 0, 4]
+
+    // Success
+    // Link refer: https://stackoverflow.com/questions/64069552/typescript-array-push-method-cant-catch-a-tuple-type-of-the-array
+    role.push(4)
+    ```
+
+### Enums
