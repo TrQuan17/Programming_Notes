@@ -22,18 +22,35 @@
     + **Tích hợp và cấu hình bổ sung** Để sử dụng Typescript cần phải cấu hình trình biên dịch và có thể tích hợp các công cụ đóng gói và xây dựng khác như Webpack, Rollup, hoăc Parcel. Điều này có thể tăng thêm độ phức tạp cho quá trình thiết lập dự án
     + **Một số lỗi ngầm khi biên dịch qua Javascript** Việc biên dịch từ Typescript sang Javascript đôi khi có thể che giấu các lỗi hoặc hành vi không mong muốn, đặc biệt là nếu tính nghiêm ngặt của kiểm tra kiểu dữ liệu không được cấu hình đúng cách
 
+### Cài đặt và cấu hình Typescript
+
+- Cài đặt **Typescript**
+
+    ```ts
+    npm install -g typescript       // init global package
+
+    npm install --save typescript   // init project package
+    ```
+
 - Cấu hình **Typescript**
-    + Cài đặt  **Typescript**
+    + **tsc** là công cụ command line cho **Typescript Compiler**. Nó biên dịch mã Typescript thành mã Javascript, làm cho nó tương thích với trình duyệt hoặc bất kỳ môi trường chạy Javascript nào
 
-        ```sh
-        npm install -g typescript
+        ```ts
+        tsc             // compile all TS file config in tsconfig.json
+        tsc index.ts    // compile index.ts
         ```
 
-    + Biên dịch file **Typescript**
+    + `tsconfig.json` là một tệp cấu hình trong Typescript chỉ định các tuỳ chọn biên dịch để thực hiện xây dựng dự án. Nó giúp Typescript Compiler hiểu cấu trúc dự án và cách biên dịch thành Javascript. Một số tuỳ chọn cơ bản bao gồm
+        - `target` Phiên bản Javascript cần biên dịch `es5`, `es6`, ...
+        - `module` Thiết lập hệ thống module sử dụng `node16`, `esnext`, ...
+        - `strict` Bật/tắt kiểm tra nghiêm ngặt
+        - `outDir` Thư mục để xuất ra các tập tin JS
 
         ```sh
-        tsc index.ts
+        tsc --init
         ```
+
+
 
 ## 🔷 Các kiểu dữ liệu cơ bản trong Typescript
 
