@@ -44,10 +44,29 @@
         - `target` Phiên bản Javascript cần biên dịch `es5`, `es6`, ...
         - `module` Thiết lập hệ thống module sử dụng `node16`, `esnext`, ...
         - `strict` Bật/tắt kiểm tra nghiêm ngặt
-        - `outDir` Thư mục để xuất ra các tập tin JS
+        - `outDir` Thư mục để xuất ra các tập tin JS đã biên dịch
+        - `rootDir` Thư mục gốc của các tập tin JS
+        - `include` Mảng các file hoặc thư mục để thực hiện biên dịch
+        - `exclude` Mảng các file hoác thư mục để loại trừ khỏi quá trình biên dịch
 
-        ```sh
+        ```ts
+        // Init tsconfig.json 
         tsc --init
+        ```
+        
+        ```json
+        // tsconfig.json example
+        {
+            "compilerOptions": {
+                "target": "es6",
+                "module": "commonjs",
+                "strict": true,
+                "outDir": "./src/js/compiler",
+                "rootDir": "/src/js"
+            },
+            "include": ["src"],
+            "exclude": ["node_mudules", ".vscode"]    
+        }
         ```
 
 
