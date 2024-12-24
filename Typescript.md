@@ -69,8 +69,6 @@
         }
         ```
 
-
-
 ## 🔷 Các kiểu dữ liệu cơ bản trong Typescript
 
 ### Static Types (kiểu dữ liệu tĩnh)
@@ -178,3 +176,10 @@
             WRITE_READ  // Error: Enum member must have initializer
         }
         ```
+
+### Một số kiểu dữ liệu đặc biệt
+
+- **Any** 
+    + Là một kiểu dữ liệu đặc biệt của Typescript, **any** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
+
+    + Khi một giá trị có kiểu là **any**, có thể truy cập bất kì thuộc tính vào của nó, có thể gọi nó như một hàm, gán cho nó một giá trị có kiểu dữ liệu bất kì hoặc một thứ gì đó khác miễn là hợp lệ về mặt cú pháp
