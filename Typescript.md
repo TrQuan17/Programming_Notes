@@ -183,3 +183,24 @@
     + Là một kiểu dữ liệu đặc biệt của Typescript, **any** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
 
     + Khi một giá trị có kiểu là **any**, có thể truy cập bất kì thuộc tính vào của nó, có thể gọi nó như một hàm, gán cho nó một giá trị có kiểu dữ liệu bất kì hoặc một thứ gì đó khác miễn là hợp lệ về mặt cú pháp
+
+    ```ts
+    let obj: any = { x: 0}
+    
+    // No error
+    obj.foo()
+    obj()
+    obj.bar = 100
+    obj = 'Hello'
+    ```
+
+    + Trong một số trường hợp biến không được khai báo, TS sẽ đặt mặc định kiểu dữ liệu cho một biến là `any` khi không thể suy ra kiểu dữ liệu của biến đó. Điều này có thể dẫn đến một số lỗi bị bỏ sót. Với **noImplicitAny option** - Cho phép báo cáo lỗi cho các biểu thức và khai báo kiểu dữ liệu có ngụ ý là `any`
+    
+        ```ts
+        // config tsconfig.json
+        {
+            "compilerOptions": {
+                "noImplicitAny": true
+            }
+        }
+        ```
