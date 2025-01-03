@@ -179,8 +179,7 @@
 
 ### Một số kiểu dữ liệu đặc biệt
 
-- **Any** 
-    + Là một kiểu dữ liệu đặc biệt của Typescript, **any** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
+- **Any Types** Là một kiểu dữ liệu đặc biệt của Typescript, **any** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
 
     + Khi một giá trị có kiểu là **any**, có thể truy cập bất kì thuộc tính vào của nó, có thể gọi nó như một hàm, gán cho nó một giá trị có kiểu dữ liệu bất kì hoặc một thứ gì đó khác miễn là hợp lệ về mặt cú pháp
 
@@ -196,7 +195,7 @@
 
     + Trong một số trường hợp biến không được khai báo, TS sẽ đặt mặc định kiểu dữ liệu cho một biến là `any` khi không thể suy ra kiểu dữ liệu của biến đó. Điều này có thể dẫn đến một số lỗi bị bỏ sót. Với **noImplicitAny option** - Cho phép báo cáo lỗi cho các biểu thức và khai báo kiểu dữ liệu có ngụ ý là `any`
     
-        ```ts
+        ```js
         // config tsconfig.json
         {
             "compilerOptions": {
@@ -204,3 +203,43 @@
             }
         }
         ```
+
+- **Union Types** Cho phép chỉ định nhiều loại có thể có cho một biến hoặc tham số. **Union Types** được viết dưới dạng danh sách các loại được phân tách bằng `|`
+
+    ```js
+    // variable
+    const log: number | string = 'log'
+
+    // arrow function
+    const logData = (data: number | boolean | string): number | boolean | string => data
+    ```
+
+- **Literal Types** Chỉ định chính xác giá trị của biến hoặc tham số thay vì chỉ định kiểu dữ liệu. **Literal Types** có thể được sử dụng để thực thi rằng một giá trị phải thuộc một kiểu cụ thể và một giá trị cụ thể
+
+    ```ts
+    let season: 'spring' | 'summer' | 'autumn' | 'winter'
+
+    // Error: Type '"season"' is not assignable to type '"spring" | "summer" | "autumn" | "winter"'
+    season = 'season'
+    ```
+
+- **Custom Types (Type Aliases)** Cho phép đặt bí danh cho một kiểu dữ liệu
+
+    ```ts
+    // create account type
+    type Account = {
+        username: string,
+        password: string,
+        fullname: string,
+        age: number
+    }
+
+    const acc: Account = {
+        username: 'TrQuan17',
+        password: '12345678',
+        fullname: 'Quan',
+        age: 24
+    }
+    ```
+
+
