@@ -179,7 +179,7 @@
 
 ### Một số kiểu dữ liệu đặc biệt
 
-- **Any Types** Là một kiểu dữ liệu đặc biệt của Typescript, **any** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
+- **Any Types** Là một kiểu dữ liệu đặc biệt của Typescript, **Any Types** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
 
     + Khi một giá trị có kiểu là **any**, có thể truy cập bất kì thuộc tính vào của nó, có thể gọi nó như một hàm, gán cho nó một giá trị có kiểu dữ liệu bất kì hoặc một thứ gì đó khác miễn là hợp lệ về mặt cú pháp
 
@@ -242,4 +242,17 @@
     }
     ```
 
+- **Unknown Types** là một kiểu dữ liệu tương tự **Any Types**. Bất kì thứ gì cũng có thể gán cho **Unknown Types** tuy nhiên nó không thể được gán cho bất kì thứ gì ngoài chính nó và **Any Types**. Không có thao tác nào được phép trên **Unknown Types** mà không được khẳng định hoặc thu hẹp thành một kiểu dữ liệu cụ thể
+
+    ```ts
+    let obj: unknown
+    let variable: any
+    let age: number
+
+    // Success
+    variable = obj
+
+    // Error: Type 'unknown' is not assignable to type 'number'.ts(2322)
+    age = obj
+    ```
 
