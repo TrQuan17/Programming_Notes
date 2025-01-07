@@ -54,7 +54,7 @@
         tsc --init
         ```
         
-        ```json
+        ```json5
         // tsconfig.json example
         {
             "compilerOptions": {
@@ -256,3 +256,37 @@
     age = obj
     ```
 
+- **Never Types** là kiểu dữ liệu mà **Typescript** để biểu diễn trạng thái không nên tồn tại. **Never Types** có thể gán cho mọi kiểu, tuy nhiên, không có kiểu dữ dữ liệu nào có thể gán cho **Never Types** (trừ chính nó)
+
+    + **Never Types** thường được sử dụng cho mệnh đề Switch để thực hiện kiểm tra toàn diện (khi đã loại bỏ tất cả khả năng và không còn gì nữa)
+
+    + Ngoài ra, **Never Types** là kiểu trả về cho biểu thức hàm hoặc biểu thức hàm 
+
+    ```ts
+    enum SEASON {
+        SPRING,
+        SUMMER,
+        AUTUMN,
+        WINTER
+    }
+
+    const getTemperature = (season: SEASON) => {
+        switch(season) {
+            case SEASON.SPRING:
+                return 30
+            case SEASON.SUMMER:
+                return 36
+            case SEASON.AUTUMN:
+                return 25
+            case SEASON.WINTER:
+                return 15
+            default:
+                // Success
+                const _exhaustiveCheck:never = season
+                return _exhaustiveCheck
+        }
+    }
+
+    // Error: Type '404' is not assignable to type 'never'.ts(2322)
+    const _exhaustiveCheck:never = 404
+    ```
