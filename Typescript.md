@@ -3,7 +3,8 @@
 ## 🔷 MỤC LỤC
 
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
-- **[Các kiểu dữ liệu cơ bản trong Typescript](#-các-kiểu-dữ-liệu-cơ-bản-trong-typescript)**
+- **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
+- **[Trình biên dịch Typescript ](#-trình-biên-dịch-typescript)**
 
 ## 🔷 Tổng quan Typescript
 
@@ -69,7 +70,7 @@
         }
         ```
 
-## 🔷 Các kiểu dữ liệu cơ bản trong Typescript
+## 🔷 Kiểu dữ liệu trong Typescript
 
 ### Static Types (kiểu dữ liệu tĩnh)
 
@@ -204,6 +205,13 @@
         }
         ```
 
+        ```ts
+        // Error: Parameter 's' implicitly has an 'any' type.ts(7006)
+        function fn(obj) {
+            return obj
+        }
+        ```
+
 - **Union Types** Cho phép chỉ định nhiều loại có thể có cho một biến hoặc tham số. **Union Types** được viết dưới dạng danh sách các loại được phân tách bằng `|`
 
     ```js
@@ -289,4 +297,17 @@
 
     // Error: Type '404' is not assignable to type 'never'.ts(2322)
     const _exhaustiveCheck:never = 404
+    ```
+
+## 🔷 Trình biên dịch Typescript (Typescript Compiler)
+
+### Một số tuỳ chọn cơ bản
+
+- **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`
+
+- **Watch option** Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file ts
+
+    ```ts
+    // Compiler app.ts
+    tsc app.ts --watch
     ```
