@@ -4,7 +4,6 @@
 
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
-- **[Trình biên dịch Typescript ](#-trình-biên-dịch-typescript)**
 
 ## 🔷 Tổng quan Typescript
 
@@ -39,6 +38,13 @@
         ```ts
         tsc             // compile all TS file config in tsconfig.json
         tsc index.ts    // compile index.ts
+        ```
+
+    - **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`. Ví dụ như **Watch option** - Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file ts
+
+        ```ts
+        // Compiler app.ts
+        tsc app.ts --watch
         ```
 
     + `tsconfig.json` là một tệp cấu hình trong Typescript chỉ định các tuỳ chọn biên dịch để thực hiện xây dựng dự án. Nó giúp Typescript Compiler hiểu cấu trúc dự án và cách biên dịch thành Javascript. Một số tuỳ chọn cơ bản bao gồm
@@ -299,15 +305,4 @@
     const _exhaustiveCheck:never = 404
     ```
 
-## 🔷 Trình biên dịch Typescript (Typescript Compiler)
-
-### Một số tuỳ chọn cơ bản
-
-- **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`
-
-- **Watch option** Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file ts
-
-    ```ts
-    // Compiler app.ts
-    tsc app.ts --watch
-    ```
+    
