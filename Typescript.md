@@ -3,17 +3,18 @@
 ## 🔷 MỤC LỤC
 
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
+- **[Cấu hình Typescript](#-cấu-hình-typescript)**
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
 
 ## 🔷 Tổng quan Typescript
 
-### Typescript
+### Typescript (TS)
 
-- **Typescript** là một ngôn ngữ lập trình kiểu tĩnh, là siêu tập hợp cú pháp nghiêm ngặt của **Javascript**. Ngôn ngữ này được phát triển và duy trì bởi Microsoft. **Typescript** được tạo ra để giải quyết những thách thức trong việc xây dựng các ứng dụng Javascript quy mô lớn và thêm các **class**, **interface** và các tính năng khác vào ngôn ngữ
+- **Typescript** là một ngôn ngữ lập trình kiểu tĩnh, là siêu tập hợp cú pháp nghiêm ngặt của **Javascript (JS)**. Ngôn ngữ này được phát triển và duy trì bởi Microsoft. **Typescript** được tạo ra để giải quyết những thách thức trong việc xây dựng các ứng dụng JS quy mô lớn và thêm các **class**, **interface** và các tính năng khác vào ngôn ngữ
 
 - Một số ưu điểm nổi bật của **Typescript**
 
-    + **Error Detection** Typescript xác định lỗi tại thời điểm biên dịch. Trong khi đó. Javascript phát hiện lỗi tại thời điểm chạy
+    + **Error Detection** Typescript xác định lỗi tại thời điểm biên dịch. Trong khi đó. JS phát hiện lỗi tại thời điểm chạy
 
     + **Kiểu dữ liệu tĩnh** Cung cấp các lợi ích của các tuỳ chọn kiểu dữ liệu tĩnh, cho phép thêm kiểu vào biến, hàm, thuộc tính, ...
 
@@ -23,11 +24,11 @@
 
 - Bên cạnh đó, **Typescript** vẫn còn tồn tại một số nhược điểm như sau
 
-    + **Thời gian biên dịch** Việc biên dịch Typescript mất nhiều thời gian hơn so với việc biên dịch Javascript bởi vì cần có thêm bước biên dịch để chuyển đổi Typescript sang Javascript để trình duyệt thực thi
+    + **Thời gian biên dịch** Việc biên dịch TS mất nhiều thời gian hơn so với việc biên dịch JS bởi vì cần có thêm bước biên dịch để chuyển đổi TS sang JS để trình duyệt thực thi
 
-    + **Tích hợp và cấu hình bổ sung** Để sử dụng Typescript cần phải cấu hình trình biên dịch và có thể tích hợp các công cụ đóng gói và xây dựng khác như Webpack, Rollup, hoăc Parcel. Điều này có thể tăng thêm độ phức tạp cho quá trình thiết lập dự án
+    + **Tích hợp và cấu hình bổ sung** Để sử dụng TS cần phải cấu hình trình biên dịch và có thể tích hợp các công cụ đóng gói và xây dựng khác như Webpack, Rollup, hoăc Parcel. Điều này có thể tăng thêm độ phức tạp cho quá trình thiết lập dự án
 
-    + **Một số lỗi ngầm khi biên dịch qua Javascript** Việc biên dịch từ Typescript sang Javascript đôi khi có thể che giấu các lỗi hoặc hành vi không mong muốn, đặc biệt là nếu tính nghiêm ngặt của kiểm tra kiểu dữ liệu không được cấu hình đúng cách
+    + **Một số lỗi ngầm khi biên dịch qua Javascript** Việc biên dịch từ TS sang JS đôi khi có thể che giấu các lỗi hoặc hành vi không mong muốn, đặc biệt là nếu tính nghiêm ngặt của kiểm tra kiểu dữ liệu không được cấu hình đúng cách
 
 ### Cài đặt Typescript
 
@@ -39,28 +40,33 @@
     npm install --save typescript   // init project package
     ```
 
-### Cấu hình **Typescript**
+## 🔷 Cấu hình Typescript
 
-- **tsc** là công cụ command line cho **Typescript Compiler**. Nó biên dịch mã Typescript thành mã Javascript, làm cho nó tương thích với trình duyệt hoặc bất kỳ môi trường chạy Javascript nào
+### Công cụ tsc và tệp cấu hình tsconfig.json
+
+- **tsc** là công cụ command line cho **Typescript Compiler**. Nó biên dịch mã TS thành mã JS, làm cho nó tương thích với trình duyệt hoặc bất kỳ môi trường chạy JS nào
 
     ```ts
     tsc             // compile all TS file config in tsconfig.json
     tsc index.ts    // compile index.ts
     ```
 
-- **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`. Ví dụ như **Watch option** - Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file ts
+- **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`.
+ 
+- Ví dụ như **Watch option** - Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file  `.ts`
 
     ```ts
     // Compiler app.ts
     tsc app.ts --watch
     ```
 
-- `tsconfig.json` là một tệp cấu hình trong Typescript chỉ định các tuỳ chọn biên dịch để thực hiện xây dựng dự án. Nó giúp Typescript Compiler hiểu cấu trúc dự án và cách biên dịch thành Javascript. Một số tuỳ chọn cơ bản bao gồm
+- `tsconfig.json` là một tệp cấu hình trong TS chỉ định các tuỳ chọn biên dịch để thực hiện xây dựng dự án. Nó giúp Typescript Compiler hiểu cấu trúc dự án và cách biên dịch thành JS. Một số tuỳ chọn cơ bản bao gồm
+
     + `target` Phiên bản Javascript cần biên dịch `es5`, `es6`, ...
     + `module` Thiết lập hệ thống module sử dụng `node16`, `esnext`, ...
     + `strict` Bật/tắt kiểm tra nghiêm ngặt
     + `outDir` Thư mục để xuất ra các tập tin JS đã biên dịch
-    + `rootDir` Thư mục gốc của các tập tin JS
+    + `rootDir` Chỉ định thư mục gốc của project
     + `include` Mảng các file hoặc thư mục để thực hiện biên dịch
     + `exclude` Mảng các file hoác thư mục để loại trừ khỏi quá trình biên dịch
     
@@ -83,40 +89,58 @@
         "exclude": ["node_mudules", ".vscode"]    
     }
     ```
+### Emit Option
 
-    - Ngoài những config cơ bản trên, có một số config khá thú vị và hữu ích như là:
+- `sourceMap` Cho phép tạo tệp sourceMap. Các tệp này cho phép debug và các công cụ khác hiển thị mã nguồn TS gốc cùng với các tệp JS đã được biên dịch. Các tệp sourceMap được hiển thị dưới dạng `.js.map` hoặc `.jsx.map`. Các tệp `.js` sẽ chú thích trong mã nguồn để chỉ ra vị trí của tệp `sourceMap`, chẳng hạn:
 
-        + `sourceMap` Cho phép tạo tệp sourceMap. Các tệp này cho phép debug và các công cụ khác hiển thị mã nguồn TS gốc cùng với các tệp JS đã được biên dịch. Các tệp sourceMap được hiển thị dưới dạng `.js.map` hoặc `.jsx.map`. Các tệp `.js` sẽ chú thích trong mã nguồn để chỉ ra vị trí của tệp `sourceMap`, chẳng hạn:
+    ```js
+    // File name: app.ts
+    const log = (mess: string) => { console.log(mess) }
 
-            ```js
-            // File name: app.ts
-            const log = (mess: string) => { console.log(mess) }
+    log('Hello world!')
+    ```
 
-            log('Hello world!')
-            ```
+    ```js
+    // File name: app.js
+    "use strict";
+    const log = (mess) => { console.log(mess); };
+    log('Hello world!');
+    //# sourceMappingURL=app.js.map
+    ```
 
-            ```js
-            // File name: app.js
-            "use strict";
-            const log = (mess) => { console.log(mess); };
-            log('Hello world!');
-            //# sourceMappingURL=app.js.map
-            ```
+    ```json5
+    // File name: app.js.map
+    {
+        "version": 3,
+        "file": "app.js",
+        "sourceRoot": "",
+        "sources": [
+            "app.ts"
+        ],
+        "names": [],
+        "mappings": ";AAAA,MAAM,GAAG,GAAG,CAAC,IAAY,EAAE,EAAE,GAAG,OAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAA,CAAC,CAAC,CAAA;AAEnD,GAAG,CAAC,cAAc,CAAC,CAAA"
+    }
+    ```
 
-            ```json5
-            // File name: app.js.map
-            {
-                "version": 3,
-                "file": "app.js",
-                "sourceRoot": "",
-                "sources": [
-                    "app.ts"
-                ],
-                "names": [],
-                "mappings": ";AAAA,MAAM,GAAG,GAAG,CAAC,IAAY,EAAE,EAAE,GAAG,OAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAA,CAAC,CAAC,CAAA;AAEnD,GAAG,CAAC,cAAc,CAAC,CAAA"
-            }
-            ```
+### Type Check Option
 
+- Trong một số trường hợp biến không được khai báo, TS sẽ đặt mặc định kiểu dữ liệu cho một biến là `any` khi không thể suy ra kiểu dữ liệu của biến đó. Điều này có thể dẫn đến một số lỗi bị bỏ sót. Với **noImplicitAny option** - Cho phép báo cáo lỗi cho các biểu thức và khai báo kiểu dữ liệu có ngụ ý là `any`
+
+    ```js
+    // config tsconfig.json
+    {
+        "compilerOptions": {
+            "noImplicitAny": true
+        }
+    }
+    ```
+
+    ```ts
+    // Error: Parameter 's' implicitly has an 'any' type.ts(7006)
+    function fn(obj) {
+        return obj
+    }
+    ```
 
 ## 🔷 Kiểu dữ liệu trong Typescript
 
@@ -161,16 +185,17 @@
         }
     ```
 
-- Một số lợi ích của việc sử dụng **Static Types** như sau
-  - **Phát hiện lỗi** Một trong những lợi ích chính của **Static Types** là phát hiện lỗi sớm. Trình biên dịch Typescript kiểm tra các kiểu và cung cấp phản hồi ngay lập tức về các kiểu không khớp hoặc các lỗi liên quan đến kiểu khác
+- Một số lợi ích của việc sử dụng **Static Types** như sau:
 
-  - **Khả năng đọc code** Bằng các khai báo rõ ràng các kiểu dữ liệu, code trở nên dễ đọc hơn. Điều này giúp những người bảo trì code trong tương lai có thể nhanh chống hiểu được các cấu trúc dữ liệu và kiểu dữ liệu dự kiến sử dụng
+    + **Phát hiện lỗi** Một trong những lợi ích chính của **Static Types** là phát hiện lỗi sớm. Trình biên dịch TS kiểm tra các kiểu và cung cấp phản hồi ngay lập tức về các  kiểu không khớp hoặc các lỗi liên quan đến kiểu khác
 
-  - **Chú thích** Thay vì dựa vào các chú thích để truyền đạt kiểu dữ liệu mong đợi của một biến hoặc kiểu dữ trả về của một hàm, các chú thích kiểu dữ liệu trong code đã cung cấp thông tin này
+    + **Khả năng đọc code** Bằng các khai báo rõ ràng các kiểu dữ liệu, code trở nên dễ đọc hơn. Điều này giúp những người bảo trì code trong tương lai có thể nhanh chống hiểu được các cấu trúc dữ liệu và kiểu dữ liệu dự kiến sử dụng
+
+    + **Chú thích** Thay vì dựa vào các chú thích để truyền đạt kiểu dữ liệu mong đợi của một biến hoặc kiểu dữ trả về của một hàm, các chú thích kiểu dữ liệu trong code đã cung cấp thông tin này
 
 ### Tuples
 
-- **Tuples** là một kiểu dữ liệu trong **Typescript** được sử dụng để biểu diễn một mảng trong đó kiểu của một số phần tử cố định được khai báo từ ban đầu, nhưng không phải cho tất cả các phần tử. Nó cung cấp một cách để biểu diễn tập hợp các kiểu phần tử được sắp xếp cho các phần tử được sắp xếp cho các phần tử nhất định trong một mảng Typescript. Tuples luôn có một số phần tử cố định và mỗi phần tử trong số chúng có các kiểu được liên kết với chúng
+- **Tuples** là một kiểu dữ liệu trong **Typescript** được sử dụng để biểu diễn một mảng trong đó kiểu của một số phần tử cố định được khai báo từ ban đầu, nhưng không phải cho tất cả các phần tử. Nó cung cấp một cách để biểu diễn tập hợp các kiểu phần tử được sắp xếp cho các phần tử được sắp xếp cho các phần tử nhất định trong một mảng TS. **Tuples** luôn có một số phần tử cố định và mỗi phần tử trong số chúng có các kiểu được liên kết với chúng
 
     ```ts
     let point: [number, number] = [1, 2]
@@ -189,11 +214,11 @@
 
 ### Enums
 
-- **Enums** là tập hợp các **const** được đặt tên. Sử dụng **Enums** có thể giúp ghi lại ý định dễ dàng hơn hoặc tạo một tập hợp các trường hợp riêng biệt. Typescript cung cấp cả enums dạng **string** và dạng **number**
+- **Enums** là tập hợp các **const** được đặt tên. Sử dụng **Enums** có thể giúp ghi lại ý định dễ dàng hơn hoặc tạo một tập hợp các trường hợp riêng biệt. TS cung cấp cả enums dạng **string** và dạng **number**
 
 - Các loại **Enums** cơ bản:
 
-    + **Number Enums** Typescript xác định giá trị số của một thành phần Enums dựa trên thứ tự của thành phần đó xuất hiện trong định nghĩa Enums
+    + **Number Enums** TS xác định giá trị số của một thành phần Enums dựa trên thứ tự của thành phần đó xuất hiện trong định nghĩa Enums
 
         ```ts
         enum MOVE {
@@ -230,7 +255,7 @@
 
 ### Một số kiểu dữ liệu đặc biệt
 
-- **Any Types** Là một kiểu dữ liệu đặc biệt của Typescript, **Any Types** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
+- **Any Types** Là một kiểu dữ liệu đặc biệt của TS, **Any Types** có thể sử dụng bất cứ khi nào mà không muốn một giá trị cụ thể nào đó gây ra lỗi kiểu tra kiểu dữ liệu
 
 - Khi một giá trị có kiểu là **any**, có thể truy cập bất kì thuộc tính vào của nó, có thể gọi nó như một hàm, gán cho nó một giá trị có kiểu dữ liệu bất kì hoặc một thứ gì đó khác miễn là hợp lệ về mặt cú pháp
 
@@ -242,24 +267,6 @@
     obj()
     obj.bar = 100
     obj = 'Hello'
-    ```
-
-- Trong một số trường hợp biến không được khai báo, TS sẽ đặt mặc định kiểu dữ liệu cho một biến là `any` khi không thể suy ra kiểu dữ liệu của biến đó. Điều này có thể dẫn đến một số lỗi bị bỏ sót. Với **noImplicitAny option** - Cho phép báo cáo lỗi cho các biểu thức và khai báo kiểu dữ liệu có ngụ ý là `any`
-
-    ```js
-    // config tsconfig.json
-    {
-        "compilerOptions": {
-            "noImplicitAny": true
-        }
-    }
-    ```
-
-    ```ts
-    // Error: Parameter 's' implicitly has an 'any' type.ts(7006)
-    function fn(obj) {
-        return obj
-    }
     ```
 
 - **Union Types** Cho phép chỉ định nhiều loại có thể có cho một biến hoặc tham số. **Union Types** được viết dưới dạng danh sách các loại được phân tách bằng `|`
@@ -316,7 +323,7 @@
 
 - **Never Types** là kiểu dữ liệu mà **Typescript** để biểu diễn trạng thái không nên tồn tại. **Never Types** có thể gán cho mọi kiểu, tuy nhiên, không có kiểu dữ dữ liệu nào có thể gán cho **Never Types** (trừ chính nó)
 
-- **Never Types** thường được sử dụng cho mệnh đề Switch để thực hiện kiểm tra toàn diện (khi đã loại bỏ tất cả khả năng và không còn gì nữa)
+- **Never Types** thường được sử dụng cho `Switch clause` để thực hiện kiểm tra toàn diện (khi đã loại bỏ tất cả khả năng và không còn gì nữa)
 
 - Ngoài ra, **Never Types** là kiểu trả về cho biểu thức hàm hoặc biểu thức hàm
 
