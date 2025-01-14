@@ -5,6 +5,8 @@
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
 - **[Cấu hình Typescript](#-cấu-hình-typescript)**
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
+- **[Classes & Interface]()**
+- **[Tip](#-tip)**
 
 ## 🔷 Tổng quan Typescript
 
@@ -14,13 +16,13 @@
 
 - Một số ưu điểm nổi bật của **Typescript**
 
-    + **Error Detection** Typescript xác định lỗi tại thời điểm biên dịch. Trong khi đó. JS phát hiện lỗi tại thời điểm chạy
+    + **Kiểu dữ liệu** TS có chú thích kiểu dữ liệu tuỳ chọn trong khi JS là kiểu dữ liệu động. Với TS, có thể chỉ định kiểu dữ liệu của biến, tham số và giá trị trả về, có thể giúp phát hiện lỗi liên quan đế kiểu dữ liệu tại thời điểm biên dịch
 
-    + **Kiểu dữ liệu tĩnh** Cung cấp các lợi ích của các tuỳ chọn kiểu dữ liệu tĩnh, cho phép thêm kiểu vào biến, hàm, thuộc tính, ...
+    + **Cú pháp** TS mở rộng cú pháp JS với các tính năng như **Interface**, **Class** và **Namespaces**. Điều này cung cấp cấu trúc mạnh mẽ và có tổ chức hơn trong các dự án quy mô lớn
 
-    + **Cấu trúc code** Tổ chức và cấu trúc code một cách hiệu quả
+    + **Công cụ** TS hỗ trợ công cụ tốt hơn, chẳng hạn như tích hợp trình soạn thảo, kiểm tra kiểu dữ liệu và tái cấu trúc mã tốt hơn
 
-    + **Hỗ trợ Namespace** Giới thiệu về các khái niệm Namespace bằng các xác định các Module
+    + **Khả năng tương thích** TS có thể biên dịch thành bất kì phiên bản nào của mã JS
 
 - Bên cạnh đó, **Typescript** vẫn còn tồn tại một số nhược điểm như sau
 
@@ -354,4 +356,32 @@
 
     // Error: Type '404' is not assignable to type 'never'.ts(2322)
     const _exhaustiveCheck:never = 404
+    ```
+
+## 🔷 Classes & Interface
+
+
+
+## 🔷 Tip
+
+- **Rest Parameters** 
+
+    + Cho phép một hàm chấp nhận không hoặc nhiều đối số của kiểu được chỉ định
+    
+    + Trong TS các **Rest Parameters** tuân theo các quy tắc sau:
+ 
+        - Một hàm chỉ có một **Rest Parameters** 
+        - **Rest Parameters** chỉ xuất hiện ở cuối danh sách tham số
+        - Loại của **Rest Parameters** là mảng
+
+    ```ts
+    // Init sum function
+    const sum = (...nums: number[]) => {
+        return nums.reduce((sum, current) => sum + current)
+    }
+
+    // Limit params with tuple
+    const sum = (...nums: [number, number, number]) => {
+        return nums.reduce((sum, current) => sum + current)
+    }
     ```
