@@ -5,7 +5,7 @@
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
 - **[Cấu hình Typescript](#-cấu-hình-typescript)**
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
-- **[Classes & Interface]()**
+- **[Classes & Interface](#-classes--interface)**
 - **[Tip](#-tip)**
 
 ## 🔷 Tổng quan Typescript
@@ -54,7 +54,7 @@
     ```
 
 - **Typescript Compiler** chấp nhận một số tuỳ chọn dòng lệnh cho phép tuỳ chình quá trình biên dịch. Các option này có thể được chuyển đến trình biên dịch bằng cách sử dụng tiền tố `--`.
- 
+
 - Ví dụ như **Watch option** - Thực hiện biên dịch khi file có thay đổi. Tuỳ theo việc config trong file `tsconfig.json` mà có thể thực hiện cho một hoặc nhiều file  `.ts`
 
     ```ts
@@ -71,7 +71,7 @@
     + `rootDir` Chỉ định thư mục gốc của project
     + `include` Mảng các file hoặc thư mục để thực hiện biên dịch
     + `exclude` Mảng các file hoác thư mục để loại trừ khỏi quá trình biên dịch
-    
+
     ```ts
     // Init tsconfig.json 
     tsc --init
@@ -91,6 +91,7 @@
         "exclude": ["node_mudules", ".vscode"]    
     }
     ```
+
 ### Emit Option
 
 - `sourceMap` Cho phép tạo tệp sourceMap. Các tệp này cho phép debug và các công cụ khác hiển thị mã nguồn TS gốc cùng với các tệp JS đã được biên dịch. Các tệp sourceMap được hiển thị dưới dạng `.js.map` hoặc `.jsx.map`. Các tệp `.js` sẽ chú thích trong mã nguồn để chỉ ra vị trí của tệp `sourceMap`, chẳng hạn:
@@ -360,17 +361,51 @@
 
 ## 🔷 Classes & Interface
 
+### Classes
 
+- **Classes** là bản thiết kế để tạo đối tượng, cung cấp cách để cấu trúc đối tượng và đóng gói dữ liệu và hành vi. Một **class** trong TS được định nghĩa bằng từ khoá `class`, theo sau là tên của **class**. Định nghĩa một **class** có thể bao gồm các **trường (properties hoặc attributes)**, **phương thức (functions)** và một **constructor**
+
+    ```ts
+    class Account {
+        /* Attributes */
+        public username?: string
+        public password?: string
+        public firstName?: string
+        lastName?: string
+
+        /* Constructor */
+        constructor(
+            username?: string,
+            pass?: string,
+            first?: string,
+            last?: string
+        ) {
+            this.username = username
+            this.password = pass
+            this.firstName = first
+            this.lastName = last
+        }
+
+        /* Methods */
+        public showFullName(): string {
+            return `${this.firstName} ${this.lastName}`
+        }
+    }
+
+    const account = new Account('TrQuan17', '12345678', 'Quan', 'Tran')
+
+    console.log(account.showFullName())
+    ```
 
 ## 🔷 Tip
 
-- **Rest Parameters** 
+- **Rest Parameters**
 
     + Cho phép một hàm chấp nhận không hoặc nhiều đối số của kiểu được chỉ định
-    
+
     + Trong TS các **Rest Parameters** tuân theo các quy tắc sau:
- 
-        - Một hàm chỉ có một **Rest Parameters** 
+
+        - Một hàm chỉ có một **Rest Parameters**
         - **Rest Parameters** chỉ xuất hiện ở cuối danh sách tham số
         - Loại của **Rest Parameters** là mảng
 
