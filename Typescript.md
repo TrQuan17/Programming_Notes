@@ -371,7 +371,7 @@
         public username?: string
         public password?: string
         public firstName?: string
-        lastName?: string
+        public lastName?: string
 
         /* Constructor */
         constructor(
@@ -397,6 +397,103 @@
     console.log(account.showFullName())
     ```
 
+- **Constructor** Trong TS, các tham số **Constructor** có thể được khai báo với các **Access Modifiers** và chú thích kiểu dữ liệu hoặc chỉ đơn giản là tham số với kiểu dữ liệu. Với tham số được khai báo với các **Access Modifiers**, TS sẽ tự động gán cho các thuộc tính có cùng tên trong **Constructor** và có thể truy cập trong class
+
+    ```ts
+    class Account {
+        public username?: string
+        public password?: string
+        public firstName?: string
+        public lastName?: string
+
+        // Normal signature with defaults
+        constructor(
+            username?: string,
+            pass?: string,
+            first?: string,
+            last?: string
+        ) {
+            this.username = username
+            this.password = pass
+            this.firstName = first
+            this.lastName = last
+        }
+    }
+
+    class Account {
+        constructor(
+            public username?: string,
+            private password?: string,
+            public firstName?: string,
+            public lastName?: string
+        )
+    }
+    ```
+
+- **Access Modifiers** Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các **attributes** và **methods** của **class**. Có 3 **Access Modifiers** trong TS:
+
+    + **Public Modifier** là Access Modifiers mặc định, Attribute và Method được khai báo là public có thể truy cập từ bất kỳ đâu, cả bên trong và bên ngoài class
+
+        ```ts
+        class Account {
+            username: string
+            firstName?: string
+            lastName?: string
+
+            constructor(user: string) {
+                this.username = user
+            }
+
+            getUserName() {
+                return this.username
+            }
+        }
+
+        const account = new Account('TrQuan17')
+
+        console.log(acount.getUserName())   // 'TrQuan17'
+
+        account.username = 'TrQuan'
+
+        console.log(account.username)       // 'TrQuan'
+        console.log(acount.getUserName())   // 'TrQuan'
+        ```
+
+    + **Private Modifier** Thuộc tính và phương thức được khai báo là **private** chỉ có thể được truy cập trong cùng một class. Chúng không thể truy cập từ bên ngoài class
+
+        ```ts
+        class Account {
+            private username: string
+            public firstName?: string
+            public lastName?: string
+
+            constructor(user: string) {
+                this.username = user
+            }
+
+            setUserName(user: string) {
+                this.username = user
+            }
+
+            getUserName() {
+                return this.username
+            }
+        }
+
+        const account = new Account('TrQuan17')
+
+        console.log(account.getUserName())  // 'TrQuan17'
+
+        // Error: Property 'username' is private and only accessible within class 'Account'.ts(2341)
+        console.log(account.username)
+
+        // account.username = 'TrQuan'
+        account.setUserName('TrQuan')
+        console.log(account.getUserName())  // 'TrQuan'
+        ```
+
+    + **Protected** Thuộc tính và phương thức được khai báo là **protected** có thể được truy cập trong class và các subclasses của nó. Chúng không thể truy cập bên ngoài class và các subclasses của nó
+
 ## 🔷 Tip
 
 - **Rest Parameters**
@@ -420,3 +517,21 @@
         return nums.reduce((sum, current) => sum + current)
     }
     ```
+
+- **Read-only trong Typescript**
+
+    + TS cung cấp tiền tố `readonly` cho phép đánh dấu các thuộc tính của một class là không thể thay đổi
+
+        ```ts
+        class Account {
+            constructor(
+                private readonly id: string,
+                public username: string
+            ) {}
+
+            setId(id: string) {
+                // Error: Cannot assign to 'id' because it is a read-only property.ts(2540)
+                this.id = id
+            }
+        }
+        ```
