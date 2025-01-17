@@ -5,7 +5,8 @@
 - **[Tổng quan Typescript](#-tổng-quan-typescript)**
 - **[Cấu hình Typescript](#-cấu-hình-typescript)**
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
-- **[Classes & Interface](#-classes--interface)**
+- **[Classes](#-classes)**
+- **[Interface](#-interface)**
 - **[Tip](#-tip)**
 
 ## 🔷 Tổng quan Typescript
@@ -359,7 +360,7 @@
     const _exhaustiveCheck:never = 404
     ```
 
-## 🔷 Classes & Interface
+## 🔷 Classes
 
 ### Classes
 
@@ -430,7 +431,9 @@
     }
     ```
 
-- **Access Modifiers** Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các **attributes** và **methods** của **class**. Có 3 **Access Modifiers** trong TS:
+### Access Modifiers
+
+- Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các **attributes** và **methods** của **class**. Có 3 **Access Modifiers** trong TS:
 
     + **Public Modifier** là Access Modifiers mặc định, Attribute và Method được khai báo là public có thể truy cập từ bất kỳ đâu, cả bên trong và bên ngoài class
 
@@ -493,6 +496,69 @@
         ```
 
     + **Protected** Thuộc tính và phương thức được khai báo là **protected** có thể được truy cập trong class và các subclasses của nó. Chúng không thể truy cập bên ngoài class và các subclasses của nó
+
+        ```ts
+        class Department {
+            constructor(
+                private id: string,
+                public name: string,
+                protected employees: string[] = []
+            ) { }
+        }
+
+        class ITDepartment extends Department {
+            getAdmin() {
+                return this.employees[1]
+            }
+        }
+
+        const IT = new ITDepartment('1', 'IT Department', ['Quan'])
+
+        console.log(IT.getAdmin())  // 'Quan'
+        
+        // Error: Property 'employees' is protected and only accessible within class 'Department' and its subclasses.ts(2445)
+        console.log(IT.employees)
+        ```
+
+### Kế thừa (Inheritance)
+
+- **Kế thừa (Inheritance)** là một cơ chế mà một lớp con kế thừa các thuộc tính và phương thức từ lớp cha của nó. Điều này cho phép một lớp con sử dụng lại mã và hành vi của lớp cha đồng thời có thể thêm và sửa đổi hành vi của riêng nó. Trong TS, kế thừa được thực hiện bằng cách sử dụng từ khoá `extends`
+
+    ```ts
+    class Department {
+        constructor(
+            private id: string,
+            private name: string,
+            protected employees: string[] = []
+        ) { }
+    }
+
+    class ITDepartment extends Department {
+        constructor(
+            id: string,
+            employees: string[],
+            private mainTech: string
+        ) {
+            super(id, 'IT Department', employees)
+        }
+
+        getAdmin() {
+            return this.employees[0]
+        }
+
+        getMainTech() {
+            return this.mainTech
+        }
+    }
+
+    const IT = new ITDepartment('1', ['Quan', 'TrQuan17', 'QuanTT'], 'Web App')
+
+    console.log(IT.getAdmin())      // 'Quan'
+
+    console.log(IT.getMainTech())   // 'Web App'
+    ```
+
+## 🔷 Interface
 
 ## 🔷 Tip
 
