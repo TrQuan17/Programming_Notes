@@ -520,6 +520,45 @@
         console.log(IT.employees)
         ```
 
+### Getter và Setter
+
+- **Getter** và **Setter** cho phép kiểm soát quyền truy cập vào các thuộc tính của **class**. Đối với mỗi thuộc tính, bao gồm: phương thức **getter (accessor)** trả về giá trị của thuộc tính và phương thức **setter (mutator)** cập nhật giá trị của thuộc tính
+
+    ```ts
+    class Department {
+        constructor(
+            private name: string,
+            private employee?:string,
+            private employees: string[] = []
+        ) {}
+
+        get lastEmployee() {
+            if (!this.employee) {
+                throw new Error(`No employees in ${this.name} department`)
+            }
+            return this.employee
+        }
+
+        set lastEmployee(employee: string) {
+            if (!employee) {
+                throw new Error('Employee is required!!!')
+            }
+
+            this.employees.push(employee)
+            this.employee = employee
+        }
+    }
+
+    const dep = new Department('IT Department')
+
+    // Using setter method
+    dep.lastEmployee = 'TrQuan17'
+    dep.lastEmployee = 'Quan'
+
+    // Using getter method
+    console.log(dep.lastEmployee)   // Return 'Quan'
+    ```
+
 ### Kế thừa (Inheritance)
 
 - **Kế thừa (Inheritance)** là một cơ chế mà một lớp con kế thừa các thuộc tính và phương thức từ lớp cha của nó. Điều này cho phép một lớp con sử dụng lại mã và hành vi của lớp cha đồng thời có thể thêm và sửa đổi hành vi của riêng nó. Trong TS, kế thừa được thực hiện bằng cách sử dụng từ khoá `extends`
