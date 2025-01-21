@@ -632,6 +632,66 @@
 - **Abstract class** hữu ích để định nghĩa một giao diện chung hoặc chức năng cơ bản mà lớp khác có thể kế thừa và xây dựng dựa trên đó
 
     ```ts
+    abstract class Department {
+    
+        abstract name: string
+
+        constructor(private id: string){}
+
+        abstract addEmployees():void
+    }
+
+    // Error: Non-abstract class 'ITDepartment' is missing implementations 
+    // for the following members of 'Department': 'name', 'addEmployees'.ts(2654)
+    class ITDepartment extends Department {}
+    ```
+
+    ```ts
+    type Employee = {
+        name: string,
+        language: string
+    }
+
+    abstract class Department {
+
+        abstract name: string
+
+        constructor(protected id: string) { }
+
+        abstract addEmployees(employee: Employee): void
+    }
+
+    class ITDepartment extends Department {
+        constructor(
+            id: string,
+            public name: string = 'IT Department',
+            private employees: Employee[] = []
+        ) {
+            super(id)
+        }
+
+        addEmployees(employee: Employee): void {
+            if (!employee.language) {
+                throw new Error(`Not eligible to join ${this.name}`)
+            }
+
+            this.employees.push(employee)
+        }
+
+        get employeesList() {
+            return this.employees
+        }
+    }
+
+    const IT = new ITDepartment('1')
+
+    const employee: Employee = {
+        name: 'TrQuan',
+        language: 'Typescript'
+    }
+    IT.addEmployees(employee)
+
+    console.log(IT.employeesList)
     ```
 
 ## 🔷 Interface
