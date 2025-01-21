@@ -364,11 +364,11 @@
 
 ### Classes
 
-- **Classes** là bản thiết kế để tạo đối tượng, cung cấp cách để cấu trúc đối tượng và đóng gói dữ liệu và hành vi. Một **class** trong TS được định nghĩa bằng từ khoá `class`, theo sau là tên của **class**. Định nghĩa một **class** có thể bao gồm các **trường (properties hoặc attributes)**, **phương thức (functions)** và một **constructor**
+- **Classes** là bản thiết kế để tạo đối tượng, cung cấp cách để cấu trúc đối tượng và đóng gói dữ liệu và hành vi. Một **class** trong TS được định nghĩa bằng từ khoá `class`, theo sau là tên của **class**. Định nghĩa một **class** có thể bao gồm các **thuộc tính (properties hoặc properties)**, **phương thức (functions)** và một **constructor**
 
     ```ts
     class Account {
-        /* Attributes */
+        /* properties */
         public username?: string
         public password?: string
         public firstName?: string
@@ -433,9 +433,9 @@
 
 ### Access Modifiers
 
-- Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các **attributes** và **methods** của **class**. Có 3 **Access Modifiers** trong TS:
+- Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các thuộc tính và phương thức của **class**. Có 3 **Access Modifiers** trong TS:
 
-    + **Public Modifier** là Access Modifiers mặc định, Attribute và Method được khai báo là public có thể truy cập từ bất kỳ đâu, cả bên trong và bên ngoài class
+    + **Public Modifier** là Access Modifiers mặc định, thuộc tính và phương thức được khai báo là public có thể truy cập từ bất kỳ đâu, cả bên trong và bên ngoài class
 
         ```ts
         class Account {
@@ -508,7 +508,7 @@
 
         class ITDepartment extends Department {
             getAdmin() {
-                return this.employees[1]
+                return this.employees[0]
             }
         }
 
@@ -534,7 +534,7 @@
 
         get lastEmployee() {
             if (!this.employee) {
-                throw new Error(`No employees in ${this.name} department`)
+                throw new Error(`No employees in ${this.name}`)
             }
             return this.employee
         }
@@ -559,7 +559,35 @@
     console.log(dep.lastEmployee)   // Return 'Quan'
     ```
 
-### Kế thừa (Inheritance)
+### Thuộc tính và phương thức tĩnh (Static)
+
+- **Thuộc tính và phương thức tĩnh** được chia sẻ giữa tất cả các instance của một class. Để khai báo một thuộc tính hoặc một phương thức tĩnh, sử dụng từ khoá `static` làm tiền tố
+
+    ```ts
+    class Department {
+        private static count: number = 0
+
+        constructor(
+            private id: string,
+            private name: string
+        ) {
+            // Using static property without static method
+            Department.count++
+        }
+
+        static get getNumOfEmployees() {
+            // Using static property with static method
+            return this.count
+        }
+    }
+
+    const JsDep = new Department('1', 'JS Department')
+    const GxDep = new Department('2', 'GX Department')
+
+    console.log(Department.getNumOfEmployees)
+    ```
+
+### OOP - Kế thừa (Inheritance)
 
 - **Kế thừa (Inheritance)** là một cơ chế mà một lớp con kế thừa các thuộc tính và phương thức từ lớp cha của nó. Điều này cho phép một lớp con sử dụng lại mã và hành vi của lớp cha đồng thời có thể thêm và sửa đổi hành vi của riêng nó. Trong TS, kế thừa được thực hiện bằng cách sử dụng từ khoá `extends`
 
@@ -595,6 +623,15 @@
     console.log(IT.getAdmin())      // 'Quan'
 
     console.log(IT.getMainTech())   // 'Web App'
+    ```
+
+### OOP - Trừu tượng (Abstract)
+
+- **Abstract class** trong TS là các lớp không thể tự khởi tạo, thay vào đó, phải có một lớp dẫn xuất để triển khai các lớp trừu tượng. **Abstract class** cung cấp một bản thiết kế cho các lớp khác. **Abstract class** có thể có các **phương thức abstract**, là các phương thức không có phần thân và phải được các lớp con ghi đè.
+
+- **Abstract class** hữu ích để định nghĩa một giao diện chung hoặc chức năng cơ bản mà lớp khác có thể kế thừa và xây dựng dựa trên đó
+
+    ```ts
     ```
 
 ## 🔷 Interface
