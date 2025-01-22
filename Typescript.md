@@ -431,6 +431,31 @@
     }
     ```
 
+- **Singletons Pattern với Private Constructor**
+
+    + **Singletons Pattern** là một **Design Pattern** đảm bảo rằng một class chỉ có duy nhất một instance và có thể cung cấp một cách toàn cầu để truy cập tới instance đó
+
+        ```ts
+        class Singleton {
+            static instance: Singleton
+
+            private constructor() {}
+
+            static getInstance() {
+                if (!this.instance) {
+                    this.instance = new Singleton()
+                }
+
+                return this.instance
+            }
+        }
+
+        const singleton1 = Singleton.getInstance()
+        const singleton2 = Singleton.getInstance()
+
+        console.log(singleton1 === singleton2)  // true
+        ```
+
 ### Access Modifiers
 
 - Trong TS, **Access Modifiers** là các từ khoá được sử dụng để kiểm soát khả năng hiển thị và khả năng truy cập của các thuộc tính và phương thức của **class**. Có 3 **Access Modifiers** trong TS:
@@ -627,9 +652,9 @@
 
 ### OOP - Trừu tượng (Abstract)
 
-- **Abstract class** trong TS là các lớp không thể tự khởi tạo, thay vào đó, phải có một lớp dẫn xuất để triển khai các lớp trừu tượng. **Abstract class** cung cấp một bản thiết kế cho các lớp khác. **Abstract class** có thể có các **phương thức abstract**, là các phương thức không có phần thân và phải được các lớp con ghi đè.
+- **Abstract class** trong TS là các lớp không thể tự khởi tạo, thay vào đó, nó phải có một lớp dẫn xuất để triển khai các lớp trừu tượng. **Abstract class** cung cấp một bản thiết kế cho các lớp khác. **Abstract class** có thể có các **phương thức abstract**, đây là các phương thức không có phần thân và phải được các lớp con ghi đè.
 
-- **Abstract class** hữu ích để định nghĩa một giao diện chung hoặc chức năng cơ bản mà lớp khác có thể kế thừa và xây dựng dựa trên đó
+- **Abstract class** hữu ích khi để định nghĩa một giao diện chung hoặc chức năng cơ bản mà lớp khác có thể kế thừa và xây dựng dựa trên đó
 
     ```ts
     abstract class Department {
