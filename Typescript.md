@@ -616,6 +616,8 @@
 
 - **Kế thừa (Inheritance)** là một cơ chế mà một lớp con kế thừa các thuộc tính và phương thức từ lớp cha của nó. Điều này cho phép một lớp con sử dụng lại mã và hành vi của lớp cha đồng thời có thể thêm và sửa đổi hành vi của riêng nó. Trong TS, kế thừa được thực hiện bằng cách sử dụng từ khoá `extends`
 
+- **Kế thừa** cho phép chia sẻ một số chức năng chung và tạo ra các bản thiết kế chuyên biệt hơn
+
     ```ts
     class Department {
         constructor(
@@ -720,6 +722,37 @@
     ```
 
 ## 🔷 Interface
+
+### Interface
+
+- **Interface** trong TS cung cấp một cách để xác định kiểu dữ liệu, bao gồm tập hợp các thuộc tính, phương thức và sự kiện. Nó được sử dụng để thực thi một cấu trúc cho một đối tượng, class hoặc tham số của hàm. **Interface** không được biên dịch sang JS và chỉ được TS sử dụng tại thời điểm biên dịch cho mục đích kiểm tra kiểu dữ liệu
+
+    ```ts
+    interface DateTime {
+        year: number
+        month: number
+        date: number
+        hour: number
+        minute: number
+        second: number
+        toString(): string
+    }
+
+    const datetime: DateTime = {
+        year: 2025,
+        month: 1,
+        date: 24,
+        hour: 8,
+        minute: 0,
+        second: 0,
+
+        toString() {
+            return `${this.year}/${this.month}/${this.date} ${this.hour}:${this.minute}:${this.second}`
+        }
+    }
+
+    console.log(datetime.toString())    // '2025/1/24 8:0:0'
+    ```
 
 ## 🔷 Tip
 
