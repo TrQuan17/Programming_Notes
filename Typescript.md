@@ -311,25 +311,28 @@
     }
     ```
 
-- **Unknown Types** là một kiểu dữ liệu tương tự **Any Types**. Bất kì thứ gì cũng có thể gán cho **Unknown Types** tuy nhiên nó không thể được gán cho bất kì thứ gì ngoài chính nó và **Any Types**. Không có thao tác nào được phép trên **Unknown Types** mà không được khẳng định hoặc thu hẹp thành một kiểu dữ liệu cụ thể
+- **Unknown Types** là một kiểu dữ liệu an toàn tương ứng của **Any Types**. Bất kì thứ gì cũng có thể gán cho **Unknown Types** tuy nhiên nó không thể được gán cho bất kì thứ gì ngoài chính nó và **Any Types**. Không có thao tác nào được phép trên **Unknown Types** mà không được khẳng định hoặc thu hẹp thành một kiểu dữ liệu cụ thể
 
     ```ts
     let obj: unknown
     let variable: any
-    let age: number
+    let age: number = 5
 
     // Success
-    variable = obj
+    obj = variable
+    obj = age
 
-    // Error: Type 'unknown' is not assignable to type 'number'.ts(2322)
-    age = obj
+    // Error: 'obj' is of type 'unknown'.ts(18046)
+    obj.call()
     ```
 
-- **Never Types** là kiểu dữ liệu mà **Typescript** để biểu diễn trạng thái không nên tồn tại. **Never Types** có thể gán cho mọi kiểu, tuy nhiên, không có kiểu dữ dữ liệu nào có thể gán cho **Never Types** (trừ chính nó)
+- **Never Types**
 
-- **Never Types** thường được sử dụng cho `Switch clause` để thực hiện kiểm tra toàn diện (khi đã loại bỏ tất cả khả năng và không còn gì nữa)
+    + Là kiểu dữ liệu mà **Typescript** để biểu diễn trạng thái không nên tồn tại. **Never Types** có thể gán cho mọi kiểu, tuy nhiên, không có kiểu dữ dữ liệu nào có thể gán cho **Never Types** (trừ chính nó)
 
-- Ngoài ra, **Never Types** là kiểu trả về cho biểu thức hàm hoặc biểu thức hàm
+    + Thường được sử dụng cho `Switch clause` để thực hiện kiểm tra toàn diện (khi đã loại bỏ tất cả khả năng và không còn gì nữa)
+
+    + Ngoài ra, **Never Types** là kiểu trả về cho biểu thức hàm hoặc biểu thức hàm
 
     ```ts
     enum SEASON {
@@ -364,7 +367,7 @@
 
 ### Classes
 
-- **Classes** là bản thiết kế để tạo đối tượng, cung cấp cách để cấu trúc đối tượng và đóng gói dữ liệu và hành vi. Một **class** trong TS được định nghĩa bằng từ khoá `class`, theo sau là tên của **class**. Định nghĩa một **class** có thể bao gồm các **thuộc tính (properties hoặc properties)**, **phương thức (functions)** và một **constructor**
+- **Classes** là bản thiết kế để tạo đối tượng, cung cấp cách để cấu trúc đối tượng và đóng gói dữ liệu và hành vi. Một **class** trong TS được định nghĩa bằng từ khoá `class`, theo sau là tên của **class**. Định nghĩa một **class** có thể bao gồm các **thuộc tính (attributes hoặc properties)**, **phương thức (methods)** và một **constructor**
 
     ```ts
     class Account {
@@ -609,7 +612,7 @@
     const JsDep = new Department('1', 'JS Department')
     const GxDep = new Department('2', 'GX Department')
 
-    console.log(Department.getNumOfEmployees)
+    console.log(Department.getNumOfEmployees)   // 2
     ```
 
 ### OOP - Kế thừa (Inheritance)
@@ -625,6 +628,10 @@
             private name: string,
             protected employees: string[] = []
         ) { }
+
+        get departmentName() {
+            return this.name
+        }
     }
 
     class ITDepartment extends Department {
@@ -650,11 +657,13 @@
     console.log(IT.getAdmin())      // 'Quan'
 
     console.log(IT.getMainTech())   // 'Web App'
+
+    console.log(IT.departmentName)  // 'IT Department'
     ```
 
 ### OOP - Trừu tượng (Abstract)
 
-- **Abstract class** trong TS là các lớp không thể tự khởi tạo, thay vào đó, nó phải có một lớp dẫn xuất để triển khai các lớp trừu tượng. **Abstract class** cung cấp một bản thiết kế cho các lớp khác. **Abstract class** có thể có các **phương thức abstract**, đây là các phương thức không có phần thân và phải được các lớp con ghi đè.
+- **Abstract class** trong TS là các class không thể tự khởi tạo, thay vào đó, nó phải có một class dẫn xuất để triển khai các class trừu tượng. **Abstract class** cung cấp một bản thiết kế cho các class khác. **Abstract class** có thể có các **phương thức abstract**, đây là các phương thức không có phần thân và phải được các lớp con ghi đè.
 
 - **Abstract class** hữu ích khi để định nghĩa một giao diện chung hoặc chức năng cơ bản mà lớp khác có thể kế thừa và xây dựng dựa trên đó
 
@@ -718,7 +727,7 @@
     }
     IT.addEmployees(employee)
 
-    console.log(IT.employeesList)
+    console.log(IT.employeesList)   // [ { name: 'TrQuan', language: 'Typescript' } ]
     ```
 
 ## 🔷 Interface
