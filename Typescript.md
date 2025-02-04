@@ -737,7 +737,7 @@
 - **Interface** trong TS cung cấp một cách để xác định kiểu dữ liệu, bao gồm tập hợp các thuộc tính, phương thức và sự kiện. Nó được sử dụng để thực thi một cấu trúc cho một đối tượng, class hoặc tham số của hàm. **Interface** không được biên dịch sang JS và chỉ được TS sử dụng tại thời điểm biên dịch cho mục đích kiểm tra kiểu dữ liệu
 
     ```ts
-    interface DateTime {
+    interface IDateTime {
         year: number
         month: number
         date: number
@@ -747,7 +747,7 @@
         toString(): string
     }
 
-    const datetime: DateTime = {
+    const datetime: IDateTime = {
         year: 2025,
         month: 1,
         date: 24,
@@ -761,6 +761,141 @@
     }
 
     console.log(datetime.toString())    // '2025/1/24 8:0:0'
+    ```
+
+### Sử dụng Interface với Classes
+
+- Trong TS, mệnh đề **implements** có thể được sử dụng để xác minh rằng một class phải tuân thủ một interface cụ thể. Nếu một class không triển khai đúng interface, lỗi sẽ được sinh ra
+
+    ```ts
+    interface IDateTime {
+        year: number
+        month: number
+        date: number
+        hour: number
+        minute: number
+        second: number
+
+        toString(): string
+    }
+
+    class Time implements IDateTime {
+        constructor(
+            public year: number,
+            public month: number,
+            public date: number,
+            public hour: number,
+            public minute: number,
+            public second: number
+        ) {}
+
+        toString(): string {
+            return `${this.year}/${this.month}/${this.date} ${this.hour}:${this.minute}:${this.second}`
+        }
+
+        convertTimeToDays() {
+            return (this.second/(60*60*24) + this.minute/(60*24) + this.hour/24).toFixed(3)
+        }
+    }
+
+    const time = new Time(2025, 2, 4, 14, 20, 20)
+    console.log(time.toString())            // 2025/2/4 14:20:20
+    console.log(time.convertTimeToDays())   // 0.597
+
+    // Error: Class 'DateCustom' incorrectly implements interface 'IDateTime'.
+    //        Type 'DateCustom' is missing the following properties from type 'IDateTime': hour, minute, secondts(2420)
+    class DateCustom implements IDateTime {
+        constructor(
+            public year: number,
+            public month: number,
+            public date: number,
+        ) {}
+    }
+    ```
+
+- Một class có thể triển khai một hoặc nhiều interface cùng một lúc
+
+    ```ts
+    interface IProduct {
+        name: string
+        price: number
+    }
+
+    interface IBill {
+        id: string
+        nums: number
+        discount: number
+    }
+
+    class Pay implements IProduct, IBill {
+        constructor(
+            public id: string,
+            public nums: number,
+            public discount: number,
+            public name: string,
+            public price: number,
+        ) {}
+
+        get payable() {
+            return (this.nums * this.price) * this.discount/100
+        }
+    }
+    ```
+
+- Việc triển khai một interface với thuộc tính tuỳ chọn sẽ không tạo ra thuộc tính đó
+
+    ```ts
+    interface ICommonRole {
+        name: string
+        level: string
+        sublevel?: string
+    }
+
+    class Guest implements ICommonRole {
+        constructor(
+            public name: string,
+            public level: string = '1'
+        ) { }
+    }
+
+    const guest = new Guest('Quan')
+
+    // Error: Property 'sublevel' does not exist on type 'Guest'.ts(2339)
+    console.log(guest.sublevel)
+    ```
+
+- Ngoài ra, với một biến hoặc hằng số có kiểu dữ liệu là một interface có thể thực sự được dùng để lưu trữ class
+
+    ```ts
+    const time: IDateTime = new Time(2025, 2, 4, 14, 20, 20)
+    console.log(time.toString())    // 2025/2/4 14:20:20
+
+    // Error: Property 'convertTimeToDays' does not exist on type 'IDateTime'.ts(2339)
+    console.log(time.convertTimeToDays())
+
+    const bill: IBill        = new Pay('1', 5, 4, 'Phone', 1250000)
+    const product: IProduct  = new Pay('1', 5, 4, 'Phone', 1250000)
+    ```
+
+### Kế thừa với Interface
+
+- Trong TS, có thể mở rộng interface bằng cách tạo interface mới kế thừa từ interface gốc bằng từ khoá `extends`. Interface mới có thể bao gồm các thuộc tính, phương thức của interface gốc và bổ sung thêm các thuộc tính hoặc phương thức mới
+
+    ```ts
+    interface IPerson {
+        name: string
+        age: number
+    }
+
+    interface IEmployee extends IPerson {
+        department: string
+    }
+
+    const employee: IEmployee = {
+        name: 'Quan',
+        age: 24,
+        department: 'IT'
+    }
     ```
 
 ## 🔷 Tip
@@ -789,9 +924,10 @@
 
 - **Read-only trong Typescript**
 
-    + TS cung cấp tiền tố `readonly` cho phép đánh dấu các thuộc tính của một class là không thể thay đổi
+    + TS cung cấp tiền tố `readonly` cho phép đánh dấu các thuộc tính của một class là không thể thay đổi. Ngoài ra nó cũng được sử dụng trong interface, aliases type, ...
 
         ```ts
+        /* Readonly in class */
         class Account {
             constructor(
                 private readonly id: string,
@@ -803,4 +939,47 @@
                 this.id = id
             }
         }
+
+        /* Readonly in interface */
+        interface CommonRole {
+            name: string
+            readonly level: string
+            sublevel?: string
+        }
+
+        class Guest implements CommonRole {
+            constructor(
+                public name: string,
+                public level: string
+            ) { }
+        }
+
+        const guestI:CommonRole = new Guest('Quan', '1')
+
+        // Error: Cannot assign to 'level' because it is a read-only property.ts(2540)
+        guestI.level = '2'
+
+        const guestC = new Guest('Quan', '1')
+
+        // Success
+        guestC.level = '2'
         ```
+
+- **Function Types với Aliases Types và Interface**
+
+    ```ts
+    /* Function Types with Aliases */
+    type AddFn = (...nums: number[]) => number
+
+    const add: AddFn = (...nums: number[]) => nums.reduce((result, element) => result + element)
+    ```
+
+    ```ts
+    interface AddFn {
+        (...nums: number[]): number
+    }
+
+    const add: AddFn = (...nums: number[]) => nums.reduce((result, element) => result + element)
+
+    console.log(add(1, 2, 3))
+    ```
