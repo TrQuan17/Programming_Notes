@@ -363,6 +363,100 @@
     const _exhaustiveCheck:never = 404
     ```
 
+- **Intersection Types**
+
+    + **Intersection Types** trong TS cho phép tạo ra kiểu dữ liệu mới bằng cách kết hợp nhiều kiểu dữ liệu lại với nhau. Kiểu mới có tất cả tính năng của các kiểu kết hợp
+
+        ```ts
+        type Admin = {
+            name: string
+            privileges: string[]
+        }
+
+        type Employee = {
+            name: string
+            startDate: Date
+        }
+
+        type ElevatedEmployee = Admin & Employee
+
+        const e: ElevatedEmployee = {
+            name: 'Quan',
+            privileges: ['build-server'],
+            startDate: new Date()
+        }
+        ```
+
+    + Với **Intersection Types** các thuộc tính có các kiểu dữ liệu khác nhau sẽ được tự động hợp nhất. Khi kiểu dữ liệu được sử dụng sau đó, TS sẽ mong đợi thuộc tính thoả mãn cả hai kiểu dữ liệu cùng một lúc, điều này có thể tạo ra kết quả không mong muốn
+
+        ```ts
+        type Numeric    = number | boolean
+
+        type Characters = string | number
+
+        type VarChar = Numeric & Characters // typeof VarChar = number
+        ```
+
+        ```ts
+        type Numeric    = number
+
+        type Characters = string
+
+        type VarChar = Numeric & Characters // typeof VarChar = never
+        ```
+
+### Type Guards
+
+- **Toán tử instanceof** là một cách để thu hẹp biến. Nó được sử dụng để kiểm tra một đối tượng có phải là một thể hiện của một class hay không
+
+    ```ts
+    class Bird {
+        constructor(public flySpeed: number) {}
+    }
+
+    class Horse {
+        constructor(public runSpeed: number) {}
+    }
+
+    const getAnimalSpeed = (animal: Bird | Horse) => {
+        if (animal instanceof Bird) {
+            return animal.flySpeed
+        }
+        
+        return animal.runSpeed
+    }
+    ```
+
+- **Toán tử typeof** được sử dụng để kiểm tra kiểu dữ liệu của một biến. Nó trả về một giá trị chuỗi biểu diễn kiểu dữ liệu của biến
+
+    ```ts
+    const logData = (data: number | string) => {
+        if (typeof data === 'number') {
+            data = data.toFixed(2)
+        }
+
+        return data
+    }
+
+    console.log(logData(5.2566))    // '5.26'
+    ```
+
+- **Các toán tử kiểm tra tính bằng nhau `===` `!==` `==` `!==`** TS cũng sử dụng các câu lệnh chuyển đổi và kiểm tra tính bằng nhau để thu hẹp các kiểu dữ liệu
+
+    ```ts
+    const showLimit = (x: number, y: string | number) => {
+        // x === y => typeof x === typeof y
+        if (x === y) {
+            return `[${x.toFixed(2)}; ${y.toFixed(2)}]`
+        } 
+        
+        return `[${x.toFixed(2)}; ${y.toString()})`
+    }
+
+    console.log(showLimit(3, '∞'))  // [3.00; ∞)
+    console.log(showLimit(4, 4))    // [4.00; 4.00]
+    ```
+
 ## 🔷 Classes
 
 ### Classes
