@@ -363,47 +363,47 @@
     const _exhaustiveCheck:never = 404
     ```
 
-- **Intersection Types**
+### Intersection Types
 
-    + **Intersection Types** trong TS cho phép tạo ra kiểu dữ liệu mới bằng cách kết hợp nhiều kiểu dữ liệu lại với nhau. Kiểu mới có tất cả tính năng của các kiểu kết hợp
+- **Intersection Types** trong TS cho phép tạo ra kiểu dữ liệu mới bằng cách kết hợp nhiều kiểu dữ liệu lại với nhau. Kiểu mới có tất cả tính năng của các kiểu kết hợp
 
-        ```ts
-        type Admin = {
-            name: string
-            privileges: string[]
-        }
+    ```ts
+    type Admin = {
+        name: string
+        privileges: string[]
+    }
 
-        type Employee = {
-            name: string
-            startDate: Date
-        }
+    type Employee = {
+        name: string
+        startDate: Date
+    }
 
-        type ElevatedEmployee = Admin & Employee
+    type ElevatedEmployee = Admin & Employee
 
-        const e: ElevatedEmployee = {
-            name: 'Quan',
-            privileges: ['build-server'],
-            startDate: new Date()
-        }
-        ```
+    const e: ElevatedEmployee = {
+        name: 'Quan',
+        privileges: ['build-server'],
+        startDate: new Date()
+    }
+    ```
 
-    + Với **Intersection Types** các thuộc tính có các kiểu dữ liệu khác nhau sẽ được tự động hợp nhất. Khi kiểu dữ liệu được sử dụng sau đó, TS sẽ mong đợi thuộc tính thoả mãn cả hai kiểu dữ liệu cùng một lúc, điều này có thể tạo ra kết quả không mong muốn
+- Với **Intersection Types** các thuộc tính có các kiểu dữ liệu khác nhau sẽ được tự động hợp nhất. Khi kiểu dữ liệu được sử dụng sau đó, TS sẽ mong đợi thuộc tính thoả mãn cả hai kiểu dữ liệu cùng một lúc, điều này có thể tạo ra kết quả không mong muốn
 
-        ```ts
-        type Numeric    = number | boolean
+    ```ts
+    type Numeric    = number | boolean
 
-        type Characters = string | number
+    type Characters = string | number
 
-        type VarChar = Numeric & Characters // typeof VarChar = number
-        ```
+    type VarChar = Numeric & Characters // typeof VarChar = number
+    ```
 
-        ```ts
-        type Numeric    = number
+    ```ts
+    type Numeric    = number
 
-        type Characters = string
+    type Characters = string
 
-        type VarChar = Numeric & Characters // typeof VarChar = never
-        ```
+    type VarChar = Numeric & Characters // typeof VarChar = never
+    ```
 
 ### Type Guards
 
@@ -455,6 +455,16 @@
 
     console.log(showLimit(3, '∞'))  // [3.00; ∞)
     console.log(showLimit(4, 4))    // [4.00; 4.00]
+    ```
+
+### Index Signatures (Index Properties)
+
+- Trong TS, **Index Signatures** cho phép định nghĩa các kiểu object với các key động, trong đó các key có thể thuộc một kiểu dữ liệu cụ thể và các giá trị tương ứng có thể thuộc một kiểu khác. Điều này đặc biệt hữu ích khi muốn làm việc với các đối tượng có các thuộc tính không được biết tại thời điểm biên dịch nhưng phải tuân theo một mẫu cụ thể
+
+    ```ts
+    interface ErrorHandle {
+        [prop: string]: string
+    }
     ```
 
 ## 🔷 Classes
