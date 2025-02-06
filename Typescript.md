@@ -407,7 +407,9 @@
 
 ### Type Guards
 
-- **Toán tử instanceof** là một cách để thu hẹp biến. Nó được sử dụng để kiểm tra một đối tượng có phải là một thể hiện của một class hay không
+- **Type Guards** là một cách để thu hẹp kiểu dữ liệu của một biến, là một pattern code kiểm tra một kiểu nhất định trước khi thực hiện điều gì đó khi thực thi chương trình
+
+- **Toán tử instanceof** được sử dụng để kiểm tra một đối tượng có phải là một thể hiện của một class hay không
 
     ```ts
     class Bird {
@@ -463,7 +465,28 @@
 
     ```ts
     interface ErrorHandle {
+        id: string
         [prop: string]: string
+    }
+
+    const errorHandle: ErrorHandle = {
+        id: '1',
+        mail: 'Incorrect mail format!',
+        username: 'Username is required!',
+    }
+
+    console.log(errorHandle.mail)   // 'Incorrect mail format!'
+
+    // Success
+    console.log(errorHandle.age)    // undefined    
+    ```
+
+- Key của **Index Signatures** chỉ có thể `string`, `number` hoặc `symbol`. Các loại khác không được phép
+
+    ```ts
+    // Error: An index signature parameter type cannot be a literal type or generic type. Consider using a mapped object type instead.ts(1337)
+    interface Seasion {
+        [prop: 'Summer' | 'Winner']: string
     }
     ```
 
@@ -1002,6 +1025,8 @@
     }
     ```
 
+## 🔷 Generics
+
 ## 🔷 Tip
 
 - **Rest Parameters**
@@ -1087,3 +1112,13 @@
 
     console.log(add(1, 2, 3))
     ```
+
+- **Một số toán tử đặc biệt**
+
+    + **Nullish Coalescing `??`** là toán tử logic trả về toán hạng bên phải của nó khi toán hạng bên trái của nó là `null` hoặc `undefined`, nếu không thì trả về toán hạng bên trái của nó
+
+        ```ts
+        let data = undefined
+
+        console.log(data ?? 'DEFAULT')
+        ```
