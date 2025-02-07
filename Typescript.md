@@ -1027,6 +1027,104 @@
 
 ## 🔷 Generics
 
+- **Generics** trong TS là một cách để viết code có thể hoạt động với nhiều kiểu dữ liệu, thay vì bị giới hạn ở một kiểu dữ liệu duy nhất
+
+### Generic Types
+
+- **Generic Types** cho phép khởi tạo các đối tượng, hàm và class hoạt động với nhiều kiểu dữ liệu, thay vì bị giới hạn ở một kiểu dữ liệu duy nhất. **Generic Types** được định nghĩa bằng dấu ngoặc nhọn `<T>` và được sử dụng như một kiểu dữ liệu đại diện. Kiểu dữ liệu thực tế được chỉ định khi hàm hoặc class được sử dụng
+
+    ```ts
+    const convertString = <T>(data: T) => data?.toString()
+
+    console.log(convertString(5))           // '5'
+
+    console.log(convertString([1, 2, 3]))   // '1,2,3'
+    ```
+
+- Class với **Generic Types**
+
+    ```ts
+    class DataStorage<T> {
+        private data: T[] = []
+
+        add(...items: T[]) {
+            this.data.push(...items)
+        }
+
+        remove(item: T) {
+            this.data = this.data.filter((value) => !this.data.includes(item))
+        }
+
+        get dataList() {
+            return this.data
+        }
+    }
+
+    // With number type
+    const numberStorage = new DataStorage<number>()
+
+    numberStorage.add(1, 2, 4, 5, 4)
+
+    console.log(numberStorage.dataList) // [ 1, 2, 4, 5, 4 ]
+
+    // With string type
+    const stringStorage = new DataStorage<string>()
+
+    stringStorage.add('VietNam', 'China', 'Singapore')
+
+    console.log(stringStorage.dataList) // [ 'VietNam', 'China', 'Singapore' ]
+    ```
+
+### Generic Constraints
+
+- **Generic Constraints** cho phép chỉ định các yêu cầu cho các tham số kiểu dữ liệu được sử dụng trong **Generic Types**. Các ràng buộc này đảm bảo rằng các tham số kiểu dữ liệu được sử dụng trong **Generic Types** đáp ứng các yêu cầu nhất định
+
+- **Generic Constraints** được chỉ định bằng cách sử dụng từ khoá `extends`, theo sau là kiểu dữ liệu mà tham số kiểu dữ liệu phải mở rộng hoặc triển khai
+
+    ```ts
+    // Error: No overload matches this call
+    //        Overload 1 of 4, '(target: {}, source: T): {} & T', gave the following error.
+    //        Argument of type 'T' is not assignable to parameter of type '{}'.
+    //        Overload 2 of 4, '(target: object, ...sources: any[]): any', gave the following error.
+    //        Argument of type 'T' is not assignable to parameter of type 'object'.ts(2769)
+    function merge<T>(objA: T, objB: T) {
+        return Object.assign(objA, objB)
+    }
+    ```
+
+    ```ts
+    function merge<T extends {}>(objA: T, objB: T) {
+        return Object.assign(objA, objB)
+    }
+
+    console.log(merge({ language: 'typescript' }, { version: '1.2.3' }))    // { language: 'typescript', version: '1.2.3' }
+    ```
+
+- **`keyof` Generic Constraints** có thể sử dụng 2 kiểu như sau
+
+    ```ts
+    function getValueByKey<T>(obj: T, key: keyof T) {
+        return obj[key]
+    }
+
+    const account = {
+        username: 'QuanTT',
+        age: 24
+    }
+
+    // return getValueByKey: string | number
+    console.log(getValueByKey(account, 'username')) // 'QuanTT'
+    console.log(getValueByKey(account, 'age'))      // 24
+    ```
+
+    hoặc
+
+    ```ts
+    function getValueByKey<T, K extends keyof T>(obj: T, key: K) {
+        return obj[key]
+    }
+    ```
+
 ## 🔷 Tip
 
 - **Rest Parameters**
