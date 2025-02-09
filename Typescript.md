@@ -7,6 +7,7 @@
 - **[Kiểu dữ liệu trong Typescript](#-kiểu-dữ-liệu-trong-typescript)**
 - **[Classes](#-classes)**
 - **[Interface](#-interface)**
+- **[Generics](#-generics)**
 - **[Tip](#-tip)**
 
 ## 🔷 Tổng quan Typescript
@@ -1124,6 +1125,72 @@
         return obj[key]
     }
     ```
+
+### Generic Utility Types Build-in
+
+- **Utility Types** cung cấp một số kiểu tiện ích có thể được sử dụng để thao tác và chuyển đổi các kiểu hiện có. Sau đây là một số kiểu phổ biến
+
+    + **Partial** làm cho tất cả thuộc tính của một kiểu trở thành thuộc tính tuỳ chọn
+
+        ```ts
+        interface Setting {
+            id: string,
+            theme: 'LIGHT' | 'DARK'
+            language: string
+            background: string
+        }
+
+        // Error: Property 'background' is missing in type '{ id: string; theme: "LIGHT"; language: string; }'
+        //        but required in type 'Setting'.ts(2741)
+        const setting: Setting = {
+            id: '1',
+            theme: 'LIGHT',
+            language: 'VN',
+        }
+
+        // Success
+        const settingP: Partial<Setting> = {
+            id: '1',
+            theme: 'LIGHT'
+        }
+        ```
+
+    + **Readonly** làm cho tất cả thuộc tính của một kiểu thành không thể thay đổi
+
+        ```ts
+        interface Setting {
+            id: string,
+            theme: 'LIGHT' | 'DARK'
+            language: string
+            background: string
+        }
+
+        const setting: Setting = {
+            id: '1',
+            theme: 'LIGHT',
+            language: 'VN',
+            background: 'summer.jpg'
+        }
+
+        // Success
+        setting.id = '2'
+
+        const settingR: Readonly<Setting> = {
+            id: '1',
+            theme: 'DARK',
+            language: 'EN',
+            background: 'summer.jpg'
+        }
+
+        // Error: Cannot assign to 'id' because it is a read-only property.ts(2540)
+        settingR.id = '1'
+        ```
+
+## 🔷 Decorators
+
+### Decorators
+
+- **Decorators**
 
 ## 🔷 Tip
 
