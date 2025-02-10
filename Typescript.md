@@ -1190,7 +1190,80 @@
 
 ### Decorators
 
-- **Decorators**
+- **Decorators** là một tính năng của TS cho phép sửa đổi hành vi của một class, thuộc tính, phương thức hoặc tham số. Chúng là một cách để thêm chức năng bổ sung vào code hiện có và có thể được sử dụng cho nhiều tác vụ, bao gồm ghi nhật kí, tối ưu hoá hiệu suất và xác thực
+
+    ```ts
+    function Logger(args: Function) {
+        console.log(args.toString())
+    }
+
+    @Logger
+    class Setting {
+        constructor(
+            private id?: string,
+            private theme?: 'LIGHT' | 'DARK',
+            private language?: string,
+            private background?: string
+        ) {}
+
+        set setLanguage(lang: string) {
+            this.language = lang
+        }
+    }
+
+    // Output: 
+    // class Setting {
+    //     constructor(id, theme, language, background) {
+    //         this.id = id;
+    //         this.theme = theme;
+    //         this.language = language;
+    //         this.background = background;
+    //     }
+    //     set setLanguage(lang) {
+    //         this.language = lang;
+    //     }
+    // }
+    ```
+
+- **Decorator Factories** về cơ bản nó trả về một **Decorator Function**, cho phép định cấu hình để gán nó làm decorator cho class, phương thức.... Vì vậy, việc sử dụng **Decorator Factories** có thể cung cấp nhiều sức mạnh và nhiều khả năng hơn để cấu hình những gì mà decorator thực hiện
+
+    ```ts
+    function Logger(log: string) {
+        console.log(log)
+
+        return function(args: Function) {
+            console.log(args.toString())
+        }
+    }
+
+    @Logger('LOG - SETTING')
+    class Setting {
+        constructor(
+            private id?: string,
+            private theme?: 'LIGHT' | 'DARK',
+            private language?: string,
+            private background?: string
+        ) {}
+
+        set setLanguage(lang: string) {
+            this.language = lang
+        }
+    }
+
+    // Output:
+    // LOG - SETTING
+    // class Setting {
+    //     constructor(id, theme, language, background) {
+    //         this.id = id;
+    //         this.theme = theme;
+    //         this.language = language;
+    //         this.background = background;
+    //     }
+    //     set setLanguage(lang) {
+    //         this.language = lang;
+    //     }
+    // }
+    ```
 
 ## 🔷 Tip
 
