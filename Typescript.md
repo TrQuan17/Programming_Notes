@@ -1225,7 +1225,7 @@
     // }
     ```
 
-- **Decorator Factories** về cơ bản nó trả về một **Decorator Function**, cho phép định cấu hình để gán nó làm decorator cho class, phương thức.... Vì vậy, việc sử dụng **Decorator Factories** có thể cung cấp nhiều sức mạnh và nhiều khả năng hơn để cấu hình những gì mà decorator thực hiện
+- **Decorator Factory** về cơ bản nó trả về một **Decorator Function**, cho phép định cấu hình để gán nó làm decorator cho class, phương thức.... Vì vậy, việc sử dụng **Decorator Factory** có thể cung cấp nhiều sức mạnh và nhiều khả năng hơn để cấu hình những gì mà decorator thực hiện
 
     ```ts
     function Logger(log: string) {
@@ -1263,6 +1263,43 @@
     //         this.language = lang;
     //     }
     // }
+    ```
+
+### Multiple Decorators
+
+- Khi nhiều decorator áp dụng cho một khai báo duy nhất, việc đánh giá của chúng tương tự như việc hợp thành hàm trong toán học. Chẳng hạn như với các hàm f và g, khi hợp thành `(f ∘ g)(x)` tương đương với `f(g(x))`
+
+- Các bước được thực hiện khi đánh giá nhiều decorator trên một khai báo duy nhất trong TS như sau
+
+    + Biểu thức của mỗi decorator được đánh giá từ trên xuống
+    + Sau đó kết quả được trả về từ dưới lên
+
+    ```ts
+    function Logger() {
+        console.log('LOGGER FACTORY')
+
+        return function(args: Function) {
+            console.log('RETURN LOGGER')
+        }
+    }
+
+    function Display() {
+        console.log('DISPLAY FACTORY')
+
+        return function(args: Function) {
+            console.log('RETURN DISPLAY')
+        }
+    }
+
+    @Logger()
+    @Display()
+    class Setting {}
+
+    /* console.log */
+    // LOGGER FACTORY
+    // DISPLAY FACTORY
+    // RETURN DISPLAY 
+    // RETURN LOGGER 
     ```
 
 ## 🔷 Tip
